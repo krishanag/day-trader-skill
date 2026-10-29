@@ -1,0 +1,23 @@
+{
+  "as_of": "2026-10-29",
+  "note": "Built by running  results.py facts SAMPLE --file ... --metrics  on the three SAMPLE fixture files in tests/fixtures/trader-results. SAMPLE INDUSTRIES LIMITED is a fictional company and every number is made up; the exchanges serve no real XBRL file to a plainly identified script, so there is no real run to show here.",
+  "companies": [
+    {
+      "symbol": "SAMPLE",
+      "name": "SAMPLE INDUSTRIES LIMITED",
+      "basis": "consolidated",
+      "period_end": "2026-09-30",
+      "fiscal": "Q2 FY27",
+      "revenue_ttm_cr": 4350.0,
+      "pat_ttm_cr": 502.5,
+      "eps_ttm": 50.05,
+      "revenue_growth_yoy": 22.4,
+      "pat_growth_yoy": 31.0,
+      "eps_growth_yoy": 31.1,
+      "ebitda_margin": 22.6,
+      "pat_margin": 11.9,
+      "as_of": "2026-10-29",
+      "source": "Ind AS XBRL financial results (NSE/BSE filing, downloaded by you)"
+    }
+  ]
+}

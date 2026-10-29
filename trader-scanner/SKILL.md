@@ -1,91 +1,100 @@
 ---
 name: trader-scanner
 description: >-
-  Chart Scanner. Scans thousands of charts for setups: opening-range
-  breakouts, flags, oversold bounces. Builds the list of US-listed common
-  stocks, ordinary shares and ADRs from Nasdaq Trader's symbol directories,
-  runs a pre-market scan of daily closes (20-day closing-high breakout, bull
-  flag, reclaimed the 20-day average, oversold, oversold bounce) and an
-  intraday opening-range breakout scan on 5-minute bars, then writes
-  trader/watchlist.json for trader-news and trader-entry. Free Yahoo data,
-  bar by bar. Use when the user says "scan the market", "find me setups",
-  "what is breaking out", "opening range breakouts", "scan for bull flags",
-  "oversold stocks", "pre-market scan", "build my watchlist", "what should I
-  look at today", or at the start of a trading day before /trader-news.
+  Chart Scanner. Scans NSE charts for setups through Zerodha Kite Connect:
+  opening-range breakouts, flags, oversold bounces. Builds the list of liquid
+  NSE stocks from Kite's instrument dump and one quote pass (plain EQ series,
+  Rs 50 and up, Rs 5 crore a day traded), runs a pre-market scan of daily
+  closes (20-day closing-high breakout, bull flag, reclaimed the 20-day
+  average, oversold, oversold bounce) and an intraday opening-range breakout
+  scan on 5-minute bars (the 09:15, 09:20 and 09:25 bars), then writes
+  trader/watchlist.json for trader-news and trader-entry. Rupees, IST, bar by
+  bar. Use when the user says "scan the market", "find me setups", "what is
+  breaking out", "opening range breakouts", "scan for bull flags", "oversold
+  stocks", "pre-market scan", "build my watchlist", "what should I look at
+  today", or at the start of a trading day before /trader-news.
 argument-hint: "[universe | daily | orb] [--at HH:MM]"
 ---
 
 # trader-scanner
 
-The Chart Scanner is the first step of a day trade. It reads thousands of
-free charts and lists the ones that match a rule. That is all it does. A scan
-is a list of charts that match a rule, not a list of stocks to buy, and a
-setup on a chart is not a prediction. Most people who day trade lose money;
-the scanner does not change that. It only saves you from flipping through
-5,000 charts by hand.
+The Chart Scanner is the first step of a day trade. It reads NSE charts
+through your Zerodha Kite session and lists the ones that match a rule. That
+is all it does. A scan is a list of charts that match a rule, not a list of
+stocks to buy, and a setup on a chart is not a prediction. Most people who
+day trade lose money; the scanner does not change that. It only saves you
+from flipping through 3,000 charts by hand.
 
 `${CLAUDE_SKILL_DIR}` below is this skill's folder (where this SKILL.md lives).
+Run it from the user's project folder: `trader/` and `.env` are relative to it,
+and it needs today's Kite session (`/trader-kite`).
 
 ```bash
-python3 "${CLAUDE_SKILL_DIR}/scan.py" universe                       # -> trader/universe.txt
-python3 "${CLAUDE_SKILL_DIR}/scan.py" daily                          # before the open -> trader/watchlist.json
-python3 "${CLAUDE_SKILL_DIR}/scan.py" daily --symbols TSLA,NVDA,AMD  # or --watchlist FILE, --limit 200
-python3 "${CLAUDE_SKILL_DIR}/scan.py" orb                            # after 9:50 AM ET -> trader/watchlist.json
-python3 "${CLAUDE_SKILL_DIR}/scan.py" orb --at 10:15                 # cut the clock at 10:15 AM ET
-python3 "${CLAUDE_SKILL_DIR}/scan.py" orb --watchlist trader/watchlist.json --json
+python3 "${CLAUDE_SKILL_DIR}/scan.py" universe                                # -> trader/universe.txt
+python3 "${CLAUDE_SKILL_DIR}/scan.py" daily                                   # before the open -> trader/watchlist.json
+python3 "${CLAUDE_SKILL_DIR}/scan.py" daily --symbols RELIANCE,INFY,SBIN      # or --watchlist FILE, --limit 200
+python3 "${CLAUDE_SKILL_DIR}/scan.py" orb                                     # after 09:35 IST, the daily hits -> trader/watchlist.json
+python3 "${CLAUDE_SKILL_DIR}/scan.py" orb --at 10:15 --universe               # cut the clock at 10:15, the whole universe
+python3 "${CLAUDE_SKILL_DIR}/scan.py" orb --now "2026-10-29 10:15" --symbols RELIANCE,SJVN   # replay a past session
 ```
 
-Flags: `--min-price 5` and `--min-volume` (daily 1,000,000, orb 0),
-`--or-minutes 15`, `--max-confirm 200` (orb stage 2),
-`--now "2026-10-19 10:15"` (New York time) to pin the clock, `--offline PATH`
-to read saved Yahoo files, `--no-write`, `--show N`, `--json`. Exit code 0
-when the scan found something, 1 when it found nothing or could not run (the
-reason is one plain line).
+Flags: `--min-price 50` (rupees) and `--min-value` (rupees traded, price times
+volume: 50000000 = Rs 5 crore for `universe` and `daily`, 0 for `orb`),
+`--or-minutes 15`, `--max-confirm 200` (orb stage 2), `--now "2026-10-29 10:15"`
+(IST) to pin the clock, `--no-write`, `--show N`, `--json`. Exit code 0 when
+the scan found something, 1 when it found nothing or could not run (the
+reason is one plain line). Without a Kite session it prints the login line
+from `/trader-kite` and stops.
 
 ## What it reads and writes
 
 | file | what |
 | --- | --- |
-| `trader/universe.txt` | written by `universe`: one `SYMBOL\|Name` a line, read by `daily` and `orb` |
-| `trader/watchlist.json` | written by `daily` and `orb`: `mode`, `as_of`, `universe`, `scanned`, `failed`, `hits[]`. trader-news and trader-entry read `hits[].symbol` |
-| `trader/config.json` | read by `orb`: `no_entries_after` (default 15:30) |
+| `trader/kite_session.json` | today's Kite session, through `kite.Kite.connect()`; `/trader-kite` writes it |
+| `trader/universe.txt` | written by `universe`: one `SYMBOL\|Name` a line, read by `daily` (and by `orb --universe`) |
+| `trader/watchlist.json` | written by `daily` and `orb`: `mode`, `as_of` (ISO, +05:30), `universe`, `scanned`, `failed`, `hits[]` with `symbol`, `name`, `setup`, `price`, `cas`, `tick_size`, `opening_range` (orb), `detail`. trader-news and trader-entry read `hits[].symbol`. `orb` reads the daily hits by default; an orb file keeps the symbols it scanned under `input.symbols`, so a re-run sees every chart again |
+| `trader/config.json` | read by `orb`: `no_entries_after` (default 14:30) |
+| `trader/cache/` | the instrument dump and the F&O (CAS) list per day (kite.py); `quotes-<date>.json`, the universe's quote pass; `daily/<SYMBOL>-<session>.json`, one file per symbol per session |
 
 ## The universe
 
-`universe` downloads `nasdaqlisted.txt` and `otherlisted.txt` from
-nasdaqtrader.com/dynamic/SymDir and keeps a row when, in this order:
+`universe` reads Kite's NSE instrument list (10,251 equity rows on
+2026-10-29) and keeps a row when, in this order:
 
-1. It is not a test issue, not an ETF, not NextShares.
-2. It is a plain ticker: 1 to 5 letters, or 1 to 4 letters plus one class
-   letter after a dot (BRK.B). A `$` preferred (ABR$D) is out, and so is a
-   `.U`, `.W` or `.R` suffix (units, warrants, rights).
-3. Out, whatever else the name says: warrants; SPAC units and rights ("Units,
-   each consisting of", "Rights to receive"); notes, ETNs, debentures; a %
-   coupon; "Depositary Shares" that are not American or Global (those carry a
-   preferred).
-4. In: the name calls it common stock, common shares or units, ordinary
-   shares, shares of beneficial interest, ADS / ADR / American or Global
-   depositary shares, or partnership or trust units.
-5. Out: the name still says unit, right, bond, preferred or preference.
-6. In: everything else (plain names like "AMETEK, Inc.").
+1. The trading symbol has no two-character series suffix. `XYZ-BE`, `-BZ`
+   (trade for trade), `-SM`, `-ST` (SME), `-SG`, `-GS`, `-GB` (gilts and
+   gold bonds), `-N0` to `-NZ`, `-Y*`, `-Z*` (bonds) and the rest are out:
+   7,173 rows. `BAJAJ-AUTO` and `NAM-INDIA` keep their hyphen; what follows
+   it is not a series code.
+2. The name does not mark a fund unit: the word ETF or NAV (the iNAV
+   ticks), or a fund house's scheme listing ("DSPAMC - DSPGOLD",
+   "BFAM - BANKBETF"): 701 rows. A liquid ETF with a plain name would slip
+   through; none did on Oct 29.
+3. One quote pass over what is left (2,377 symbols, 500 a call, one call a
+   second, 5 calls): `last_price` at least `--min-price` (Rs 50) and
+   `volume` times `last_price` at least `--min-value` (Rs 5 crore). Before
+   the open the quote carries the previous session's figures; during the
+   session it is the day so far, so run it before 09:15 or after the close.
 
-On the Oct 19 2026 files this keeps 5,943. The reel said 5,259: that count
-came from an ad hoc filter (names that say common or ordinary, no ADRs). All
-5,259 of those are in this list; the 684 extra are mostly ADRs, closed-end
-funds and partnership units. The Oct 20 files gave 5,942.
+On Oct 29 2026 at 19:26 IST that kept 951 stocks in 4.7 seconds (456 under
+Rs 50, 970 under Rs 5 crore). The quote pass is saved under
+`trader/cache/quotes-<date>.json`, so a second run the same day is free. Run
+it once a week or so; the F&O list and the instrument dump refresh daily on
+their own.
 
 ## The daily scan (before the open)
 
-Yahoo's spark endpoint returns closes for 20 symbols a request, so 5,942
-symbols take 298 requests. On Oct 20 2026 that took 145 seconds with the
-polite pause (0.3 s). Liquidity comes from the spark meta: last price at
-least `--min-price` and last session's volume at least `--min-volume`. Run it
-before the open or after the close: during the session the volume is the
-day's so far, and today's daily bar is left out until 4:00 PM.
+`daily` fetches one "day" historical call per symbol, the last 60 sessions
+(`nse.previous_trading_days`, so holidays are skipped), at Kite's 3 calls a
+second: 1,000 symbols take about six minutes the first time. Every chart is
+cached under `trader/cache/daily/<SYMBOL>-<session>.json`, keyed by the last
+complete session, so a re-run that morning is free and a run during the
+session uses yesterday's bar: today's daily bar counts only after 15:35 IST,
+when the closing auction has set the close. Liquidity comes from the last
+complete bar: close at least `--min-price` and close times volume at least
+`--min-value`.
 
-The setups are computed from daily closes only (spark has no highs or lows),
-so they are close cousins of the reel's `refs/scan.py`, which used highs and
-lows:
+The setups are computed from daily closes only:
 
 | setup | the rule on closes |
 | --- | --- |
@@ -95,88 +104,94 @@ lows:
 | `oversold` | RSI 14 (Wilder) under 30 |
 | `oversold_bounce` | RSI 14 was under 30 yesterday and today closed up |
 
-A closing-high breakout fires more often than an intraday-high one (KO on
-Oct 16 broke its 20-day closing high, not its 20-day intraday high). Hits are
-listed most traded first (price times volume).
+A closing-high breakout fires more often than an intraday-high one. Hits
+are listed most traded first (price times volume of the last bar), with
+`setup` the first rule that matched and `setups` all of them.
 
 ## The opening-range breakout scan (during the session)
 
-The opening range is the first `--or-minutes` (15) of the session: the 9:30,
-9:35 and 9:40 five-minute bars. A hit is the first completed 5-minute bar
-to CLOSE above the range high, at that bar's close time.
+The opening range is the first `--or-minutes` (15) of the session: the
+09:15, 09:20 and 09:25 five-minute bars. A hit is the first completed
+5-minute bar to CLOSE above the range high, at that bar's close time. Bars
+are numbered from 1 at 09:15, so the 09:35 bar is bar 5 and it closes at
+09:40.
 
-1. Stage 1, every symbol: spark closes of today's 5-minute bars, 20 a
-   request. A chart goes on only if a completed bar after the range closed at
-   or above the highest close of the range. That is a necessary condition
-   (the range high is at least every range close), so no breakout is lost.
-2. Stage 2, each candidate: the v8 chart with real highs and lows, one
-   request each. Range high = the highest high of the range bars, range low =
-   the lowest low. On a strong morning most charts are candidates, so stage 2
-   checks at most `--max-confirm` (200) of them, the most traded first (price
-   times volume so far), and prints PARTIAL with the count it skipped.
-   `--max-confirm 0` checks them all.
+1. Stage 1, every symbol: one quote pass (500 a call, never cached). A chart
+   goes on only if it clears the price floor and the day's high is above the
+   day's open. That is a necessary condition (a close above the range high is
+   above the open), so no breakout is lost; on a strong morning most charts
+   are candidates.
+2. Stage 2, each candidate: the day's 5-minute candles, one call each at 3 a
+   second. Range high = the highest high of the range bars, range low = the
+   lowest low. Stage 2 checks at most `--max-confirm` (200) candidates, the
+   most traded first (price times volume so far), about 70 seconds, and
+   prints PARTIAL with the count it skipped. `--max-confirm 0` checks them
+   all; the 951-stock universe is then about six minutes.
 
-Timing, live on Tue Oct 20 2026 (a strong morning): 100 liquid names at
-10:01 AM took 35 seconds (5 spark requests, 70 v8 charts, 51 of 91 usable
-charts broke out). The whole universe at 10:03 AM took about 4 minutes (298
-spark requests, then 200 v8 charts): 2,448 usable charts, 1,782 candidates,
-the 200 most traded checked, 119 of those broke out. For a fast answer, scan
-the daily watchlist or a list of names you trade (`--watchlist`, `--symbols`).
-
-A chart is usable only when every 5-minute bar from 9:30 to the cutoff is
-there; a missing bar means a halt or a thin stock. Null closes are dropped,
-a bar off the 5-minute grid (the live tick, like 10:58:07) is dropped, and a
-bar counts only once it is complete (start + 5 minutes). Before 9:50 AM, on a
-weekend or holiday, after the close, or after `no_entries_after` (an expired
-setup) it prints one plain line and writes nothing. The 1:00 PM early closes
-are in the calendar.
+By default `orb` scans the daily watchlist (a handful of names, a few
+seconds), `--universe` the whole file, `--watchlist FILE` or `--symbols` a
+list of your own. A chart is usable only when every 5-minute bar from 09:15
+to the cutoff is there; a missing bar means a halt or a thin stock. A bar
+counts only once it is complete (start + 5 minutes). Stocks in the Closing
+Auction Session (the F&O names, `cas: true` in the hits) stop at the 15:10
+bar; every other stock runs to 15:25. Before 09:35, on a weekend or holiday,
+after the close, or after `no_entries_after` (an expired setup) it prints one
+plain line and writes nothing. A past day replays live from Kite with
+`--now "YYYY-MM-DD HH:MM"`; stage 1 is skipped then (quotes are today's).
 
 ## Data and limits
 
-- Yahoo's chart and spark endpoints are free, unofficial and can lag. Bars are
-  5-minute bars, bar by bar, never tick by tick. query2 first, query1 on a 429
-  or 5xx, one retry after a 5-second wait on a 429.
-- Partial results are said as partial: "Fetched 4,980 of 5,259 charts (279
-  failed or had no data)". Never round a partial scan up to "the whole market".
-- NYSE holidays and early closes for 2026 and 2027 (nyse.com, read 2026-10-13).
+- Kite Connect is Zerodha's official API; its candles are the exchange's.
+  Rate limits are in the shared client: quotes one call a second, candles
+  three a second, with retries on a 429. If another tool shares your API
+  key at the same time both slow down.
+- Partial results are said as partial: "Fetched 940 of 951 charts (11 failed
+  or had no data)". Never round a partial scan up to "the whole market".
+- NSE's 2026 holiday list lives in `trader-kite/nse.py`; a date past it is
+  flagged, not guessed.
 
-## Steps
+## How Claude runs it
 
-1. Once a week or so: `scan.py universe`.
-2. Before the open: `scan.py daily`. Tell the user the counts (fetched,
-   liquid, scanned, hits) and the top few by setup.
-3. After 9:50 AM ET (10:15 is the classic): `scan.py orb`. Tell the user how
-   many usable charts broke their range and when, and that a later hit is
-   closer to the price now.
-4. The user picks one chart. Hand it on: `/trader-news TICKER` (what is moving
-   it), then `/trader-entry TICKER` (the entry bar by bar). Never pick for them.
+1. Once a week or so: `scan.py universe`. Say how many stocks it kept and
+   how many it dropped under each floor.
+2. Before 09:15: `scan.py daily`. Tell the user the counts (fetched, liquid,
+   scanned, hits) and the top few by setup, with the session the closes run
+   through.
+3. After 09:35 (10:15 is the classic): `scan.py orb`. Tell the user how many
+   usable charts broke their range and when, that a later hit is closer to
+   the price now, and whether the scan was PARTIAL.
+4. The user picks one chart. Hand it on: `/trader-news SYMBOL` (what is
+   moving it), then `/trader-entry SYMBOL` (the entry bar by bar). Never
+   pick for them.
+5. If it prints "not logged in to Kite" or "expired at 06:00 IST", run
+   `/trader-kite` first and come back.
 
-## Example: the reel
+## Example: Thursday Oct 29 2026
 
-Monday Oct 19 2026, scan at 10:15 AM over the reel's 234-ticker wall
-(`tests/fixtures/trader-scanner/wall5m-2026-10-19.json.gz`, real Yahoo charts):
+The 10:15 scan over six names, live from Kite (the fixtures in
+`tests/fixtures/trader-scanner/` are these candles):
 
 ```
-python3 scan.py orb --offline wall5m-2026-10-19.json.gz --now "2026-10-19 10:15" --min-price 0
-Fetched 233 of 234 charts (1 failed or had no data); 231 usable; 95 candidates, 95 confirmed with real highs and lows.
-42 of 231 charts closed above their opening-range high by 10:15 AM:
-   9:50 AM  AMC         $2.97  range 2.90 to 2.96  +0.50% over
-  ...
-  10:15 AM  TSLA      $364.18  range 354.47 to 362.18  +0.55% over
+python3 scan.py orb --at 10:15 --symbols RELIANCE,SJVN,ZEEL,TCS,ICICIBANK,HUDCO
+Stage 1: 6 of 6 quoted; 0 under the price / value floor, 0 never traded above the open; 6 candidates.
+Stage 2: fetched 6 charts; 6 usable, checked with real highs and lows.
+5 of 6 charts closed above their opening-range high by 10:15:
+  09:35  SJVN               Rs 52.60  range 50.50 to 52.21  +0.75% over
+  09:35  ZEEL               Rs 70.46  range 67.80 to 70.24  +0.31% over
+  09:40  RELIANCE        Rs 1,174.40  range 1,155.60 to 1,170.50  +0.33% over  CAS
+  09:45  HUDCO             Rs 148.75  range 147.05 to 148.70  +0.03% over
+  10:10  ICICIBANK       Rs 1,378.90  range 1,367.50 to 1,377.00  +0.14% over  CAS
 ```
 
-The reel's wall had no price floor (AMC at $2.97 is one of the 42), hence
-`--min-price 0`; with the default $5 floor it is 41. TSLA's range is the 9:30
-to 9:40 bars, high 362.18, low 354.47; the 10:10 bar closed at 364.18, 0.55 %
-over the high, at 10:15 AM. The user picks TSLA and Claude hands it to
-`/trader-news TSLA`, then `/trader-entry TSLA`. In the reel the universe was
-5,259 US stocks; this tool's rule gives 5,943 on the same files.
+RELIANCE's range is the 09:15 to 09:25 bars, high 1,170.50, low 1,155.60;
+bar 5 (09:35) closed at 1,174.40, 0.33 % over the high, at 09:40. TCS never
+closed above its range (2,480.90 to 2,509.50). The user picks RELIANCE and
+Claude hands it to `/trader-news RELIANCE`, then `/trader-entry RELIANCE`.
 
-The pre-market scan that morning (closes through Fri Oct 16, the reel's daily
-charts) tags BLK, CI, XOM and HD a 20-day breakout, CCL a bull flag, F, JPM
-and GE a reclaim of the 20-day average, and BAC, MS, RIVN and PLUG oversold,
-as the reel did. On closes it also tags KO (breakout), RCL (flag) and PNC (an
-oversold bounce).
+The pre-market scan that morning (closes through Wed Oct 28) tags LT a
+20-day closing-high breakout and a reclaim of the 20-day average, INFY a
+bull flag, HUDCO oversold and an oversold bounce, ZEEL an oversold bounce.
+YESBANK was oversold too, but at Rs 15.61 it is under the price floor.
 
 ## Rules
 
@@ -191,13 +206,13 @@ oversold bounce).
 It never places, sizes or checks an order, never says which stock to buy,
 never calls data real time, and never promises that a setup works.
 
-## Safety
+## Fine print
 
-- Education and tooling, not financial advice. A PASS is a rules check, not a recommendation.
-- Paper trading by default (`"paper": true`). Going live is the user's own decision, in their own config.
-- Nothing in this pack places an order except trader-broker, and only when all three hold: trader-risk
-  passed that exact order today, the user typed an explicit yes for that one order in the chat, and the
-  user clicked Allow once on Claude's own card because the order tool is set to "Needs approval"
-  (Customize > Connectors > tool permissions). Never set an order tool to "Always allow".
-- No options, margin, short selling or leverage unless the config allows it and the user confirms.
-- Broker keys live in environment variables or the Claude Desktop config, never in the chat.
+This is software that reads market data and does arithmetic. It is not
+financial advice. Most people who day trade lose money. Nothing in this pack
+places an order except `/trader-broker`, through Zerodha's Kite MCP server,
+and only after `/trader-risk` passed that exact order and the user typed yes
+for it in the chat; nothing is placed until the user says "yes". Paper
+trading (`"paper": true`) is the default. No F&O, no short selling, no MIS
+leverage unless the config allows it and the user confirms. Keys live in
+`.env` or the environment, never in the chat.

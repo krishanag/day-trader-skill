@@ -1,0 +1,84 @@
+{
+ "average_price": 168.68,
+ "buy_quantity": 0,
+ "depth": {
+  "buy": [
+   {
+    "orders": 0,
+    "price": 0,
+    "quantity": 0
+   },
+   {
+    "orders": 0,
+    "price": 0,
+    "quantity": 0
+   },
+   {
+    "orders": 0,
+    "price": 0,
+    "quantity": 0
+   },
+   {
+    "orders": 0,
+    "price": 0,
+    "quantity": 0
+   },
+   {
+    "orders": 0,
+    "price": 0,
+    "quantity": 0
+   }
+  ],
+  "sell": [
+   {
+    "orders": 15,
+    "price": 169.46,
+    "quantity": 3218
+   },
+   {
+    "orders": 0,
+    "price": 0,
+    "quantity": 0
+   },
+   {
+    "orders": 0,
+    "price": 0,
+    "quantity": 0
+   },
+   {
+    "orders": 0,
+    "price": 0,
+    "quantity": 0
+   },
+   {
+    "orders": 0,
+    "price": 0,
+    "quantity": 0
+   }
+  ]
+ },
+ "high_limit_price_protection": 0,
+ "indicative_close_price": 169.46,
+ "instrument_token": 895745,
+ "last_price": 169.46,
+ "last_quantity": 200,
+ "last_trade_time": "2026-10-29 15:59:41",
+ "low_limit_price_protection": 0,
+ "lower_circuit_limit": 152.52,
+ "net_change": 0,
+ "ohlc": {
+  "close": 169.27,
+  "high": 169.65,
+  "low": 167.91,
+  "open": 168.71
+ },
+ "oi": 0,
+ "oi_day_high": 0,
+ "oi_day_low": 0,
+ "reference_limit_price": 168.91,
+ "sell_quantity": 3218,
+ "timestamp": "2026-10-29 17:27:30",
+ "total_imbalance_qty": 0,
+ "upper_circuit_limit": 186.4,
+ "volume": 13728789
+}

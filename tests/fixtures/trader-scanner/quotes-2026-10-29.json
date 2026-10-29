@@ -1,0 +1,2774 @@
+{
+ "NSE:ADANIENT": {
+  "instrument_token": 6401,
+  "timestamp": "2026-10-29 17:27:30",
+  "last_trade_time": "2026-10-29 15:59:16",
+  "last_price": 2607.9,
+  "last_quantity": 12,
+  "buy_quantity": 0,
+  "sell_quantity": 27,
+  "volume": 2239851,
+  "average_price": 2569.47,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 2347.2,
+  "upper_circuit_limit": 2868.6,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 2615.8,
+  "indicative_close_price": 2607.9,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 2489,
+   "high": 2628.6,
+   "low": 2473.1,
+   "close": 2479.8
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 2607.9,
+     "quantity": 27,
+     "orders": 2
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:AXISBANK": {
+  "instrument_token": 1510401,
+  "timestamp": "2026-10-29 17:27:30",
+  "last_trade_time": "2026-10-29 15:59:05",
+  "last_price": 1225,
+  "last_quantity": 10,
+  "buy_quantity": 0,
+  "sell_quantity": 38149,
+  "volume": 4919264,
+  "average_price": 1222.56,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 1102.5,
+  "upper_circuit_limit": 1347.5,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 1225.3,
+  "indicative_close_price": 1225,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 1212,
+   "high": 1228,
+   "low": 1210.5,
+   "close": 1220
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 1225,
+     "quantity": 38149,
+     "orders": 7
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:BAJAJ-AUTO": {
+  "instrument_token": 4267265,
+  "timestamp": "2026-10-29 17:27:30",
+  "last_trade_time": "2026-10-29 15:59:26",
+  "last_price": 10383,
+  "last_quantity": 1,
+  "buy_quantity": 0,
+  "sell_quantity": 3,
+  "volume": 275473,
+  "average_price": 10376.7,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 9345,
+  "upper_circuit_limit": 11421,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 10385,
+  "indicative_close_price": 10383,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 10485,
+   "high": 10542,
+   "low": 10255,
+   "close": 10485
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 10383,
+     "quantity": 3,
+     "orders": 1
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:BAJAJHFL": {
+  "instrument_token": 6469121,
+  "timestamp": "2026-10-29 16:48:29",
+  "last_trade_time": "2026-10-29 15:58:40",
+  "last_price": 77.92,
+  "last_quantity": 22,
+  "buy_quantity": 454,
+  "sell_quantity": 0,
+  "volume": 1749026,
+  "average_price": 77.81,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 70.13,
+  "upper_circuit_limit": 85.71,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 0,
+  "indicative_close_price": 77.92,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 77.5,
+   "high": 78.18,
+   "low": 77.34,
+   "close": 77.48
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 77.92,
+     "quantity": 454,
+     "orders": 4
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:BEL": {
+  "instrument_token": 98049,
+  "timestamp": "2026-10-29 17:27:30",
+  "last_trade_time": "2026-10-29 15:59:51",
+  "last_price": 370,
+  "last_quantity": 25,
+  "buy_quantity": 3651,
+  "sell_quantity": 0,
+  "volume": 10690114,
+  "average_price": 365.94,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 333,
+  "upper_circuit_limit": 407,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 369.6,
+  "indicative_close_price": 370,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 364,
+   "high": 370.4,
+   "low": 363.15,
+   "close": 363.35
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 370,
+     "quantity": 3651,
+     "orders": 16
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:BHARTIARTL": {
+  "instrument_token": 2714625,
+  "timestamp": "2026-10-29 17:27:30",
+  "last_trade_time": "2026-10-29 15:59:44",
+  "last_price": 1972.1,
+  "last_quantity": 13,
+  "buy_quantity": 32486,
+  "sell_quantity": 0,
+  "volume": 6859219,
+  "average_price": 1965.23,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 1774.9,
+  "upper_circuit_limit": 2169.3,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 1969.1,
+  "indicative_close_price": 1972.1,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 1972,
+   "high": 1977.4,
+   "low": 1943.2,
+   "close": 1948.1
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 1972.1,
+     "quantity": 32486,
+     "orders": 8
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:HDFCBANK": {
+  "instrument_token": 341249,
+  "timestamp": "2026-10-29 17:27:30",
+  "last_trade_time": "2026-10-29 15:58:48",
+  "last_price": 683.3,
+  "last_quantity": 50,
+  "buy_quantity": 105828,
+  "sell_quantity": 0,
+  "volume": 31422790,
+  "average_price": 683.66,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 615,
+  "upper_circuit_limit": 751.6,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 684.7,
+  "indicative_close_price": 683.3,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 681.2,
+   "high": 686.8,
+   "low": 678.1,
+   "close": 685.3
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 683.3,
+     "quantity": 105828,
+     "orders": 95
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:HUDCO": {
+  "instrument_token": 5331201,
+  "timestamp": "2026-10-29 16:48:30",
+  "last_trade_time": "2026-10-29 15:55:42",
+  "last_price": 147.63,
+  "last_quantity": 5,
+  "buy_quantity": 0,
+  "sell_quantity": 1018,
+  "volume": 1743379,
+  "average_price": 147.67,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 118.11,
+  "upper_circuit_limit": 177.15,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 0,
+  "indicative_close_price": 147.63,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 147.4,
+   "high": 148.89,
+   "low": 146.62,
+   "close": 146.82
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 147.63,
+     "quantity": 1018,
+     "orders": 4
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:ICICIBANK": {
+  "instrument_token": 1270529,
+  "timestamp": "2026-10-29 17:27:30",
+  "last_trade_time": "2026-10-29 15:58:32",
+  "last_price": 1386.6,
+  "last_quantity": 10,
+  "buy_quantity": 58464,
+  "sell_quantity": 0,
+  "volume": 11553461,
+  "average_price": 1380.74,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 1248,
+  "upper_circuit_limit": 1525.2,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 1385.5,
+  "indicative_close_price": 1386.6,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 1374,
+   "high": 1389,
+   "low": 1367.5,
+   "close": 1377.6
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 1386.6,
+     "quantity": 58464,
+     "orders": 11
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:IDEA": {
+  "instrument_token": 3677697,
+  "timestamp": "2026-10-29 17:27:30",
+  "last_trade_time": "2026-10-29 15:59:54",
+  "last_price": 12.12,
+  "last_quantity": 1000,
+  "buy_quantity": 201196,
+  "sell_quantity": 0,
+  "volume": 239834626,
+  "average_price": 11.96,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 10.91,
+  "upper_circuit_limit": 13.33,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 12.07,
+  "indicative_close_price": 12.12,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 11.85,
+   "high": 12.13,
+   "low": 11.78,
+   "close": 11.86
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 12.12,
+     "quantity": 201196,
+     "orders": 113
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:IITL": {
+  "instrument_token": 4998401,
+  "timestamp": "2026-10-29 16:48:30",
+  "last_trade_time": "2026-10-29 15:29:55",
+  "last_price": 117.32,
+  "last_quantity": 20,
+  "buy_quantity": 2,
+  "sell_quantity": 0,
+  "volume": 93467,
+  "average_price": 115.85,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 93.86,
+  "upper_circuit_limit": 140.78,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 0,
+  "indicative_close_price": 117.32,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 114.32,
+   "high": 122,
+   "low": 113.51,
+   "close": 114.28
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 117.32,
+     "quantity": 2,
+     "orders": 1
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:INFY": {
+  "instrument_token": 408065,
+  "timestamp": "2026-10-29 17:27:30",
+  "last_trade_time": "2026-10-29 15:59:53",
+  "last_price": 1146.5,
+  "last_quantity": 25,
+  "buy_quantity": 557,
+  "sell_quantity": 0,
+  "volume": 14048472,
+  "average_price": 1136.85,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 1031.85,
+  "upper_circuit_limit": 1261.15,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 1143.3,
+  "indicative_close_price": 1146.5,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 1130,
+   "high": 1146.5,
+   "low": 1125.2,
+   "close": 1123.15
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 1146.5,
+     "quantity": 557,
+     "orders": 4
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:IRB": {
+  "instrument_token": 3920129,
+  "timestamp": "2026-10-29 16:48:30",
+  "last_trade_time": "2026-10-29 15:58:29",
+  "last_price": 16.23,
+  "last_quantity": 5,
+  "buy_quantity": 13480,
+  "sell_quantity": 0,
+  "volume": 6316572,
+  "average_price": 16.14,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 12.99,
+  "upper_circuit_limit": 19.47,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 0,
+  "indicative_close_price": 16.23,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 16.01,
+   "high": 16.3,
+   "low": 15.9,
+   "close": 16.07
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 16.23,
+     "quantity": 13480,
+     "orders": 15
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:IRCTC": {
+  "instrument_token": 3484417,
+  "timestamp": "2026-10-29 16:48:30",
+  "last_trade_time": "2026-10-29 15:59:10",
+  "last_price": 444.05,
+  "last_quantity": 1,
+  "buy_quantity": 4,
+  "sell_quantity": 0,
+  "volume": 404999,
+  "average_price": 443.01,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 355.25,
+  "upper_circuit_limit": 532.85,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 0,
+  "indicative_close_price": 444.05,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 442.8,
+   "high": 445.7,
+   "low": 440,
+   "close": 442.7
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 444.05,
+     "quantity": 4,
+     "orders": 1
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:ITC": {
+  "instrument_token": 424961,
+  "timestamp": "2026-10-29 17:27:30",
+  "last_trade_time": "2026-10-29 15:59:50",
+  "last_price": 265,
+  "last_quantity": 100,
+  "buy_quantity": 0,
+  "sell_quantity": 24724,
+  "volume": 23257133,
+  "average_price": 264.47,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 238.5,
+  "upper_circuit_limit": 291.5,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 265.75,
+  "indicative_close_price": 265,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 257.9,
+   "high": 266.95,
+   "low": 257.8,
+   "close": 259.5
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 265,
+     "quantity": 24724,
+     "orders": 26
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:ITI": {
+  "instrument_token": 428801,
+  "timestamp": "2026-10-29 16:48:30",
+  "last_trade_time": "2026-10-29 15:29:57",
+  "last_price": 221.65,
+  "last_quantity": 17,
+  "buy_quantity": 0,
+  "sell_quantity": 0,
+  "volume": 79670,
+  "average_price": 221.23,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 177.32,
+  "upper_circuit_limit": 265.98,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 0,
+  "indicative_close_price": 221.65,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 220.6,
+   "high": 222.91,
+   "low": 218.19,
+   "close": 220.93
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:LT": {
+  "instrument_token": 2939649,
+  "timestamp": "2026-10-29 17:27:30",
+  "last_trade_time": "2026-10-29 15:59:19",
+  "last_price": 3837.1,
+  "last_quantity": 3,
+  "buy_quantity": 6921,
+  "sell_quantity": 0,
+  "volume": 1754505,
+  "average_price": 3814.85,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 3453.4,
+  "upper_circuit_limit": 4220.8,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 3837.8,
+  "indicative_close_price": 3837.1,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 3808,
+   "high": 3844,
+   "low": 3765.6,
+   "close": 3801.3
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 3837.1,
+     "quantity": 6921,
+     "orders": 23
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:MASTERTR": {
+  "instrument_token": 6924033,
+  "timestamp": "2026-10-29 16:48:30",
+  "last_trade_time": "2026-10-29 15:29:31",
+  "last_price": 77.64,
+  "last_quantity": 1478,
+  "buy_quantity": 0,
+  "sell_quantity": 0,
+  "volume": 394363,
+  "average_price": 78.51,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 62.12,
+  "upper_circuit_limit": 93.16,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 0,
+  "indicative_close_price": 77.64,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 75.3,
+   "high": 82,
+   "low": 75.3,
+   "close": 76.27
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:NTPCGREEN": {
+  "instrument_token": 6957057,
+  "timestamp": "2026-10-29 16:48:30",
+  "last_trade_time": "2026-10-29 15:57:40",
+  "last_price": 83.93,
+  "last_quantity": 1,
+  "buy_quantity": 0,
+  "sell_quantity": 29,
+  "volume": 1324618,
+  "average_price": 83.73,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 67.15,
+  "upper_circuit_limit": 100.71,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 0,
+  "indicative_close_price": 83.93,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 83.22,
+   "high": 84.25,
+   "low": 82.8,
+   "close": 83.22
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 83.93,
+     "quantity": 29,
+     "orders": 1
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:OLAELEC": {
+  "instrument_token": 6342913,
+  "timestamp": "2026-10-29 16:48:30",
+  "last_trade_time": "2026-10-29 15:58:33",
+  "last_price": 35.16,
+  "last_quantity": 30,
+  "buy_quantity": 0,
+  "sell_quantity": 137350,
+  "volume": 72373077,
+  "average_price": 35.55,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 28.13,
+  "upper_circuit_limit": 42.19,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 0,
+  "indicative_close_price": 35.16,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 36,
+   "high": 36.08,
+   "low": 34.62,
+   "close": 36.66
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 35.16,
+     "quantity": 137350,
+     "orders": 55
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:RAILTEL": {
+  "instrument_token": 622337,
+  "timestamp": "2026-10-29 16:48:30",
+  "last_trade_time": "2026-10-29 15:53:14",
+  "last_price": 230.2,
+  "last_quantity": 200,
+  "buy_quantity": 235,
+  "sell_quantity": 0,
+  "volume": 813715,
+  "average_price": 227.53,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 184.2,
+  "upper_circuit_limit": 276.2,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 0,
+  "indicative_close_price": 230.2,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 230.9,
+   "high": 231,
+   "low": 220.85,
+   "close": 229.3
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 230.2,
+     "quantity": 235,
+     "orders": 4
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:RELIANCE": {
+  "instrument_token": 738561,
+  "timestamp": "2026-10-29 17:27:30",
+  "last_trade_time": "2026-10-29 15:59:57",
+  "last_price": 1167.4,
+  "last_quantity": 1,
+  "buy_quantity": 32293,
+  "sell_quantity": 0,
+  "volume": 20939623,
+  "average_price": 1170.4,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 1050.7,
+  "upper_circuit_limit": 1284.1,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 1168,
+  "indicative_close_price": 1167.4,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 1159,
+   "high": 1182.1,
+   "low": 1155.6,
+   "close": 1158
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 1167.4,
+     "quantity": 32293,
+     "orders": 35
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:RPOWER": {
+  "instrument_token": 3906305,
+  "timestamp": "2026-10-29 16:48:30",
+  "last_trade_time": "2026-10-29 15:59:15",
+  "last_price": 18.98,
+  "last_quantity": 14,
+  "buy_quantity": 304440,
+  "sell_quantity": 0,
+  "volume": 161886883,
+  "average_price": 18.6,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 15.19,
+  "upper_circuit_limit": 22.77,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 0,
+  "indicative_close_price": 18.98,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 17.5,
+   "high": 19.15,
+   "low": 17.42,
+   "close": 17.39
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 18.98,
+     "quantity": 304440,
+     "orders": 61
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:SBIN": {
+  "instrument_token": 779521,
+  "timestamp": "2026-10-29 17:27:30",
+  "last_trade_time": "2026-10-29 15:59:38",
+  "last_price": 971.9,
+  "last_quantity": 500,
+  "buy_quantity": 363,
+  "sell_quantity": 0,
+  "volume": 7852345,
+  "average_price": 963.99,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 874.75,
+  "upper_circuit_limit": 1069.05,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 969.5,
+  "indicative_close_price": 971.9,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 956.8,
+   "high": 971.9,
+   "low": 954.6,
+   "close": 956.8
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 971.9,
+     "quantity": 363,
+     "orders": 1
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:SILVERTUC": {
+  "instrument_token": 2412033,
+  "timestamp": "2026-10-29 16:48:30",
+  "last_trade_time": "2026-10-29 15:29:37",
+  "last_price": 122.84,
+  "last_quantity": 2483,
+  "buy_quantity": 2,
+  "sell_quantity": 0,
+  "volume": 303510,
+  "average_price": 124.53,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 98.28,
+  "upper_circuit_limit": 147.4,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 0,
+  "indicative_close_price": 122.84,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 125.21,
+   "high": 128.24,
+   "low": 121.35,
+   "close": 122.65
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 122.84,
+     "quantity": 2,
+     "orders": 1
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:SJVN": {
+  "instrument_token": 4834049,
+  "timestamp": "2026-10-29 16:48:30",
+  "last_trade_time": "2026-10-29 15:59:41",
+  "last_price": 52.4,
+  "last_quantity": 10,
+  "buy_quantity": 0,
+  "sell_quantity": 136,
+  "volume": 6211621,
+  "average_price": 52.23,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 41.92,
+  "upper_circuit_limit": 62.88,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 0,
+  "indicative_close_price": 52.4,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 50.5,
+   "high": 52.86,
+   "low": 50.5,
+   "close": 50.94
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 52.4,
+     "quantity": 136,
+     "orders": 1
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:SUNPHARMA": {
+  "instrument_token": 857857,
+  "timestamp": "2026-10-29 17:27:30",
+  "last_trade_time": "2026-10-29 15:54:30",
+  "last_price": 1761,
+  "last_quantity": 1,
+  "buy_quantity": 1465,
+  "sell_quantity": 0,
+  "volume": 1107854,
+  "average_price": 1761.63,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 1584.9,
+  "upper_circuit_limit": 1937.1,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 1760.8,
+  "indicative_close_price": 1761,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 1757.5,
+   "high": 1771.5,
+   "low": 1752.7,
+   "close": 1757.5
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 1761,
+     "quantity": 1465,
+     "orders": 8
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:SUZLON": {
+  "instrument_token": 3076609,
+  "timestamp": "2026-10-29 17:27:30",
+  "last_trade_time": "2026-10-29 15:59:25",
+  "last_price": 36.79,
+  "last_quantity": 500,
+  "buy_quantity": 80926,
+  "sell_quantity": 0,
+  "volume": 92594159,
+  "average_price": 37.01,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 33.12,
+  "upper_circuit_limit": 40.46,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 36.89,
+  "indicative_close_price": 36.79,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 37.6,
+   "high": 37.87,
+   "low": 36.33,
+   "close": 37.3
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 36.79,
+     "quantity": 80926,
+     "orders": 41
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:TATASTEEL": {
+  "instrument_token": 895745,
+  "timestamp": "2026-10-29 17:27:30",
+  "last_trade_time": "2026-10-29 15:59:41",
+  "last_price": 169.46,
+  "last_quantity": 200,
+  "buy_quantity": 0,
+  "sell_quantity": 3218,
+  "volume": 13728789,
+  "average_price": 168.68,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 152.52,
+  "upper_circuit_limit": 186.4,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 168.91,
+  "indicative_close_price": 169.46,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 168.71,
+   "high": 169.65,
+   "low": 167.91,
+   "close": 169.27
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 169.46,
+     "quantity": 3218,
+     "orders": 15
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:TCS": {
+  "instrument_token": 2953217,
+  "timestamp": "2026-10-29 17:27:30",
+  "last_trade_time": "2026-10-29 15:58:52",
+  "last_price": 2478,
+  "last_quantity": 1,
+  "buy_quantity": 0,
+  "sell_quantity": 407,
+  "volume": 3427569,
+  "average_price": 2479.72,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 2230.2,
+  "upper_circuit_limit": 2725.8,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 2481.9,
+  "indicative_close_price": 2478,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 2490,
+   "high": 2509.5,
+   "low": 2464,
+   "close": 2460
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 2478,
+     "quantity": 407,
+     "orders": 3
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:UCOBANK": {
+  "instrument_token": 2873089,
+  "timestamp": "2026-10-29 16:48:30",
+  "last_trade_time": "2026-10-29 15:59:58",
+  "last_price": 22.17,
+  "last_quantity": 15,
+  "buy_quantity": 1081,
+  "sell_quantity": 0,
+  "volume": 2222097,
+  "average_price": 22.15,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 17.74,
+  "upper_circuit_limit": 26.6,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 0,
+  "indicative_close_price": 22.17,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 22.01,
+   "high": 22.29,
+   "low": 22.01,
+   "close": 22.1
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 22.17,
+     "quantity": 1081,
+     "orders": 2
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:YESBANK": {
+  "instrument_token": 3050241,
+  "timestamp": "2026-10-29 17:27:30",
+  "last_trade_time": "2026-10-29 15:57:26",
+  "last_price": 15.43,
+  "last_quantity": 2000,
+  "buy_quantity": 14678,
+  "sell_quantity": 0,
+  "volume": 132852746,
+  "average_price": 15.47,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 13.89,
+  "upper_circuit_limit": 16.97,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 15.46,
+  "indicative_close_price": 15.43,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 15.61,
+   "high": 15.62,
+   "low": 15.3,
+   "close": 15.61
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 15.43,
+     "quantity": 14678,
+     "orders": 17
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ },
+ "NSE:ZEEL": {
+  "instrument_token": 975873,
+  "timestamp": "2026-10-29 16:48:31",
+  "last_trade_time": "2026-10-29 15:57:52",
+  "last_price": 70.51,
+  "last_quantity": 10,
+  "buy_quantity": 0,
+  "sell_quantity": 14537,
+  "volume": 15069377,
+  "average_price": 69.65,
+  "oi": 0,
+  "oi_day_high": 0,
+  "oi_day_low": 0,
+  "net_change": 0,
+  "lower_circuit_limit": 56.41,
+  "upper_circuit_limit": 84.61,
+  "low_limit_price_protection": 0,
+  "high_limit_price_protection": 0,
+  "reference_limit_price": 0,
+  "indicative_close_price": 70.51,
+  "total_imbalance_qty": 0,
+  "ohlc": {
+   "open": 69,
+   "high": 70.83,
+   "low": 67.8,
+   "close": 69.09
+  },
+  "depth": {
+   "buy": [
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ],
+   "sell": [
+    {
+     "price": 70.51,
+     "quantity": 14537,
+     "orders": 18
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    },
+    {
+     "price": 0,
+     "quantity": 0,
+     "orders": 0
+    }
+   ]
+  }
+ }
+}

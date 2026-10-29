@@ -1,13 +1,11 @@
 {
   "mcpServers": {
-    "alpaca": {
-      "command": "uvx",
-      "args": ["alpaca-mcp-server"],
+    "kite": {
+      "command": "/full/path/to/your/kite-mcp-server",
       "env": {
-        "ALPACA_API_KEY": "YOUR_PAPER_API_KEY_TYPED_HERE_NEVER_IN_CHAT",
-        "ALPACA_SECRET_KEY": "YOUR_PAPER_SECRET_KEY_TYPED_HERE_NEVER_IN_CHAT",
-        "ALPACA_PAPER_TRADE": "true",
-        "ALPACA_TOOLSETS": "account,trading,stock-data"
+        "APP_MODE": "stdio",
+        "KITE_API_KEY": "YOUR_KITE_CONNECT_API_KEY_TYPED_HERE_NEVER_IN_CHAT",
+        "KITE_API_SECRET": "YOUR_KITE_CONNECT_API_SECRET_TYPED_HERE_NEVER_IN_CHAT"
       }
     }
   }

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SAMPLE Ind AS financial-results XBRL instance for the day-trader-skill tests.
+     SAMPLE INDUSTRIES LIMITED is a fictional company; every number is made up.
+     The element names and the context / unit / dimension layout follow the
+     BSE / NSE Ind AS financial-results taxonomy (in-bse-fin, in-capmkt). -->
+<xbrli:xbrl xmlns:xbrli="http://www.xbrl.org/2003/instance"
+            xmlns:link="http://www.xbrl.org/2003/linkbase"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:xbrldi="http://xbrl.org/2006/xbrldi"
+            xmlns:iso4217="http://www.xbrl.org/2003/iso4217"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:in-bse-fin="http://www.bseindia.com/xbrl/fin/2020-03-31/in-bse-fin"
+            xmlns:in-capmkt="http://www.bseindia.com/xbrl/fin/2020-03-31/in-capmkt">
+  <link:schemaRef xlink:type="simple" xlink:href="in-bse-fin-entry-point-2020-03-31.xsd"/>
+  <xbrli:context id="OneD">
+    <xbrli:entity>
+      <xbrli:identifier scheme="http://www.bseindia.com">999999</xbrli:identifier>
+      <xbrli:segment>
+        <xbrldi:explicitMember dimension="in-bse-fin:ConsolidatedAndStandaloneAxis">in-bse-fin:ConsolidatedMember</xbrldi:explicitMember>
+      </xbrli:segment>
+    </xbrli:entity>
+    <xbrli:period>
+      <xbrli:startDate>2025-10-01</xbrli:startDate>
+      <xbrli:endDate>2025-12-31</xbrli:endDate>
+    </xbrli:period>
+  </xbrli:context>
+  <xbrli:context id="TwoD">
+    <xbrli:entity>
+      <xbrli:identifier scheme="http://www.bseindia.com">999999</xbrli:identifier>
+      <xbrli:segment>
+        <xbrldi:explicitMember dimension="in-bse-fin:ConsolidatedAndStandaloneAxis">in-bse-fin:ConsolidatedMember</xbrldi:explicitMember>
+      </xbrli:segment>
+    </xbrli:entity>
+    <xbrli:period>
+      <xbrli:startDate>2025-07-01</xbrli:startDate>
+      <xbrli:endDate>2025-09-30</xbrli:endDate>
+    </xbrli:period>
+  </xbrli:context>
+  <xbrli:context id="ThreeD">
+    <xbrli:entity>
+      <xbrli:identifier scheme="http://www.bseindia.com">999999</xbrli:identifier>
+      <xbrli:segment>
+        <xbrldi:explicitMember dimension="in-bse-fin:ConsolidatedAndStandaloneAxis">in-bse-fin:ConsolidatedMember</xbrldi:explicitMember>
+      </xbrli:segment>
+    </xbrli:entity>
+    <xbrli:period>
+      <xbrli:startDate>2024-10-01</xbrli:startDate>
+      <xbrli:endDate>2024-12-31</xbrli:endDate>
+    </xbrli:period>
+  </xbrli:context>
+  <xbrli:context id="FourD">
+    <xbrli:entity>
+      <xbrli:identifier scheme="http://www.bseindia.com">999999</xbrli:identifier>
+      <xbrli:segment>
+        <xbrldi:explicitMember dimension="in-bse-fin:ConsolidatedAndStandaloneAxis">in-bse-fin:ConsolidatedMember</xbrldi:explicitMember>
+      </xbrli:segment>
+    </xbrli:entity>
+    <xbrli:period>
+      <xbrli:startDate>2025-04-01</xbrli:startDate>
+      <xbrli:endDate>2025-12-31</xbrli:endDate>
+    </xbrli:period>
+  </xbrli:context>
+  <xbrli:context id="FiveD">
+    <xbrli:entity>
+      <xbrli:identifier scheme="http://www.bseindia.com">999999</xbrli:identifier>
+      <xbrli:segment>
+        <xbrldi:explicitMember dimension="in-bse-fin:ConsolidatedAndStandaloneAxis">in-bse-fin:ConsolidatedMember</xbrldi:explicitMember>
+      </xbrli:segment>
+    </xbrli:entity>
+    <xbrli:period>
+      <xbrli:startDate>2024-04-01</xbrli:startDate>
+      <xbrli:endDate>2024-12-31</xbrli:endDate>
+    </xbrli:period>
+  </xbrli:context>
+  <xbrli:context id="SixD">
+    <xbrli:entity>
+      <xbrli:identifier scheme="http://www.bseindia.com">999999</xbrli:identifier>
+      <xbrli:segment>
+        <xbrldi:explicitMember dimension="in-bse-fin:ConsolidatedAndStandaloneAxis">in-bse-fin:ConsolidatedMember</xbrldi:explicitMember>
+      </xbrli:segment>
+    </xbrli:entity>
+    <xbrli:period>
+      <xbrli:startDate>2024-04-01</xbrli:startDate>
+      <xbrli:endDate>2025-03-31</xbrli:endDate>
+    </xbrli:period>
+  </xbrli:context>
+  <xbrli:unit id="INR"><xbrli:measure>iso4217:INR</xbrli:measure></xbrli:unit>
+  <xbrli:unit id="INRPerShare">
+    <xbrli:divide>
+      <xbrli:unitNumerator><xbrli:measure>iso4217:INR</xbrli:measure></xbrli:unitNumerator>
+      <xbrli:unitDenominator><xbrli:measure>xbrli:shares</xbrli:measure></xbrli:unitDenominator>
+    </xbrli:divide>
+  </xbrli:unit>
+  <xbrli:unit id="pure"><xbrli:measure>xbrli:pure</xbrli:measure></xbrli:unit>
+  <in-capmkt:ScripCode contextRef="OneD">999999</in-capmkt:ScripCode>
+  <in-capmkt:NSESymbol contextRef="OneD">SAMPLE</in-capmkt:NSESymbol>
+  <in-capmkt:NameOfTheCompany contextRef="OneD">SAMPLE INDUSTRIES LIMITED</in-capmkt:NameOfTheCompany>
+  <in-capmkt:ClassOfSecurity contextRef="OneD">Equity Shares</in-capmkt:ClassOfSecurity>
+  <in-capmkt:DateOfStartOfReportingPeriod contextRef="OneD">2025-10-01</in-capmkt:DateOfStartOfReportingPeriod>
+  <in-capmkt:DateOfEndOfReportingPeriod contextRef="OneD">2025-12-31</in-capmkt:DateOfEndOfReportingPeriod>
+  <in-capmkt:WhetherResultsAreAuditedOrUnaudited contextRef="OneD">Unaudited</in-capmkt:WhetherResultsAreAuditedOrUnaudited>
+  <in-capmkt:NatureOfReportStandaloneConsolidated contextRef="OneD">Consolidated</in-capmkt:NatureOfReportStandaloneConsolidated>
+  <in-capmkt:LevelOfRoundingUsedInFinancialStatements contextRef="OneD">Lakhs</in-capmkt:LevelOfRoundingUsedInFinancialStatements>
+  <in-capmkt:ReportingQuarter contextRef="OneD">Third quarter</in-capmkt:ReportingQuarter>
+  <in-bse-fin:RevenueFromOperations contextRef="OneD" unitRef="INR" decimals="2">100000</in-bse-fin:RevenueFromOperations>
+  <in-bse-fin:OtherIncome contextRef="OneD" unitRef="INR" decimals="2">2000</in-bse-fin:OtherIncome>
+  <in-bse-fin:Income contextRef="OneD" unitRef="INR" decimals="2">102000</in-bse-fin:Income>
+  <in-bse-fin:FinanceCosts contextRef="OneD" unitRef="INR" decimals="2">3000</in-bse-fin:FinanceCosts>
+  <in-bse-fin:DepreciationDepletionAndAmortisationExpense contextRef="OneD" unitRef="INR" decimals="2">5000</in-bse-fin:DepreciationDepletionAndAmortisationExpense>
+  <in-bse-fin:EmployeeBenefitExpense contextRef="OneD" unitRef="INR" decimals="2">16500</in-bse-fin:EmployeeBenefitExpense>
+  <in-bse-fin:OtherExpenses contextRef="OneD" unitRef="INR" decimals="2">62500</in-bse-fin:OtherExpenses>
+  <in-bse-fin:Expenses contextRef="OneD" unitRef="INR" decimals="2">87000</in-bse-fin:Expenses>
+  <in-bse-fin:ProfitBeforeExceptionalItemsAndTax contextRef="OneD" unitRef="INR" decimals="2">15000</in-bse-fin:ProfitBeforeExceptionalItemsAndTax>
+  <in-bse-fin:ExceptionalItemsBeforeTax contextRef="OneD" unitRef="INR" decimals="2">0</in-bse-fin:ExceptionalItemsBeforeTax>
+  <in-bse-fin:ProfitBeforeTax contextRef="OneD" unitRef="INR" decimals="2">15000</in-bse-fin:ProfitBeforeTax>
+  <in-bse-fin:TaxExpense contextRef="OneD" unitRef="INR" decimals="2">3750</in-bse-fin:TaxExpense>
+  <in-bse-fin:ProfitLossForPeriod contextRef="OneD" unitRef="INR" decimals="2">11250</in-bse-fin:ProfitLossForPeriod>
+  <in-bse-fin:BasicEarningsLossPerShareFromContinuingOperations contextRef="OneD" unitRef="INRPerShare" decimals="2">11.25</in-bse-fin:BasicEarningsLossPerShareFromContinuingOperations>
+  <in-bse-fin:DilutedEarningsLossPerShareFromContinuingOperations contextRef="OneD" unitRef="INRPerShare" decimals="2">11.20</in-bse-fin:DilutedEarningsLossPerShareFromContinuingOperations>
+  <in-bse-fin:RevenueFromOperations contextRef="TwoD" unitRef="INR" decimals="2">98000</in-bse-fin:RevenueFromOperations>
+  <in-bse-fin:OtherIncome contextRef="TwoD" unitRef="INR" decimals="2">2000</in-bse-fin:OtherIncome>
+  <in-bse-fin:Income contextRef="TwoD" unitRef="INR" decimals="2">100000</in-bse-fin:Income>
+  <in-bse-fin:FinanceCosts contextRef="TwoD" unitRef="INR" decimals="2">3100</in-bse-fin:FinanceCosts>
+  <in-bse-fin:DepreciationDepletionAndAmortisationExpense contextRef="TwoD" unitRef="INR" decimals="2">4950</in-bse-fin:DepreciationDepletionAndAmortisationExpense>
+  <in-bse-fin:EmployeeBenefitExpense contextRef="TwoD" unitRef="INR" decimals="2">16000</in-bse-fin:EmployeeBenefitExpense>
+  <in-bse-fin:OtherExpenses contextRef="TwoD" unitRef="INR" decimals="2">61450</in-bse-fin:OtherExpenses>
+  <in-bse-fin:Expenses contextRef="TwoD" unitRef="INR" decimals="2">85500</in-bse-fin:Expenses>
+  <in-bse-fin:ProfitBeforeExceptionalItemsAndTax contextRef="TwoD" unitRef="INR" decimals="2">14500</in-bse-fin:ProfitBeforeExceptionalItemsAndTax>
+  <in-bse-fin:ExceptionalItemsBeforeTax contextRef="TwoD" unitRef="INR" decimals="2">0</in-bse-fin:ExceptionalItemsBeforeTax>
+  <in-bse-fin:ProfitBeforeTax contextRef="TwoD" unitRef="INR" decimals="2">14500</in-bse-fin:ProfitBeforeTax>
+  <in-bse-fin:TaxExpense contextRef="TwoD" unitRef="INR" decimals="2">3625</in-bse-fin:TaxExpense>
+  <in-bse-fin:ProfitLossForPeriod contextRef="TwoD" unitRef="INR" decimals="2">10875</in-bse-fin:ProfitLossForPeriod>
+  <in-bse-fin:BasicEarningsLossPerShareFromContinuingOperations contextRef="TwoD" unitRef="INRPerShare" decimals="2">10.88</in-bse-fin:BasicEarningsLossPerShareFromContinuingOperations>
+  <in-bse-fin:DilutedEarningsLossPerShareFromContinuingOperations contextRef="TwoD" unitRef="INRPerShare" decimals="2">10.83</in-bse-fin:DilutedEarningsLossPerShareFromContinuingOperations>
+  <in-bse-fin:RevenueFromOperations contextRef="ThreeD" unitRef="INR" decimals="2">90000</in-bse-fin:RevenueFromOperations>
+  <in-bse-fin:OtherIncome contextRef="ThreeD" unitRef="INR" decimals="2">1800</in-bse-fin:OtherIncome>
+  <in-bse-fin:Income contextRef="ThreeD" unitRef="INR" decimals="2">91800</in-bse-fin:Income>
+  <in-bse-fin:FinanceCosts contextRef="ThreeD" unitRef="INR" decimals="2">3200</in-bse-fin:FinanceCosts>
+  <in-bse-fin:DepreciationDepletionAndAmortisationExpense contextRef="ThreeD" unitRef="INR" decimals="2">4800</in-bse-fin:DepreciationDepletionAndAmortisationExpense>
+  <in-bse-fin:EmployeeBenefitExpense contextRef="ThreeD" unitRef="INR" decimals="2">15000</in-bse-fin:EmployeeBenefitExpense>
+  <in-bse-fin:OtherExpenses contextRef="ThreeD" unitRef="INR" decimals="2">55800</in-bse-fin:OtherExpenses>
+  <in-bse-fin:Expenses contextRef="ThreeD" unitRef="INR" decimals="2">78800</in-bse-fin:Expenses>
+  <in-bse-fin:ProfitBeforeExceptionalItemsAndTax contextRef="ThreeD" unitRef="INR" decimals="2">13000</in-bse-fin:ProfitBeforeExceptionalItemsAndTax>
+  <in-bse-fin:ExceptionalItemsBeforeTax contextRef="ThreeD" unitRef="INR" decimals="2">0</in-bse-fin:ExceptionalItemsBeforeTax>
+  <in-bse-fin:ProfitBeforeTax contextRef="ThreeD" unitRef="INR" decimals="2">13000</in-bse-fin:ProfitBeforeTax>
+  <in-bse-fin:TaxExpense contextRef="ThreeD" unitRef="INR" decimals="2">3250</in-bse-fin:TaxExpense>
+  <in-bse-fin:ProfitLossForPeriod contextRef="ThreeD" unitRef="INR" decimals="2">9750</in-bse-fin:ProfitLossForPeriod>
+  <in-bse-fin:BasicEarningsLossPerShareFromContinuingOperations contextRef="ThreeD" unitRef="INRPerShare" decimals="2">9.75</in-bse-fin:BasicEarningsLossPerShareFromContinuingOperations>
+  <in-bse-fin:DilutedEarningsLossPerShareFromContinuingOperations contextRef="ThreeD" unitRef="INRPerShare" decimals="2">9.70</in-bse-fin:DilutedEarningsLossPerShareFromContinuingOperations>
+  <in-bse-fin:RevenueFromOperations contextRef="FourD" unitRef="INR" decimals="2">290000</in-bse-fin:RevenueFromOperations>
+  <in-bse-fin:OtherIncome contextRef="FourD" unitRef="INR" decimals="2">5900</in-bse-fin:OtherIncome>
+  <in-bse-fin:Income contextRef="FourD" unitRef="INR" decimals="2">295900</in-bse-fin:Income>
+  <in-bse-fin:FinanceCosts contextRef="FourD" unitRef="INR" decimals="2">9200</in-bse-fin:FinanceCosts>
+  <in-bse-fin:DepreciationDepletionAndAmortisationExpense contextRef="FourD" unitRef="INR" decimals="2">14850</in-bse-fin:DepreciationDepletionAndAmortisationExpense>
+  <in-bse-fin:EmployeeBenefitExpense contextRef="FourD" unitRef="INR" decimals="2">48000</in-bse-fin:EmployeeBenefitExpense>
+  <in-bse-fin:OtherExpenses contextRef="FourD" unitRef="INR" decimals="2">180850</in-bse-fin:OtherExpenses>
+  <in-bse-fin:Expenses contextRef="FourD" unitRef="INR" decimals="2">252900</in-bse-fin:Expenses>
+  <in-bse-fin:ProfitBeforeExceptionalItemsAndTax contextRef="FourD" unitRef="INR" decimals="2">43000</in-bse-fin:ProfitBeforeExceptionalItemsAndTax>
+  <in-bse-fin:ExceptionalItemsBeforeTax contextRef="FourD" unitRef="INR" decimals="2">0</in-bse-fin:ExceptionalItemsBeforeTax>
+  <in-bse-fin:ProfitBeforeTax contextRef="FourD" unitRef="INR" decimals="2">43000</in-bse-fin:ProfitBeforeTax>
+  <in-bse-fin:TaxExpense contextRef="FourD" unitRef="INR" decimals="2">10750</in-bse-fin:TaxExpense>
+  <in-bse-fin:ProfitLossForPeriod contextRef="FourD" unitRef="INR" decimals="2">32250</in-bse-fin:ProfitLossForPeriod>
+  <in-bse-fin:BasicEarningsLossPerShareFromContinuingOperations contextRef="FourD" unitRef="INRPerShare" decimals="2">32.25</in-bse-fin:BasicEarningsLossPerShareFromContinuingOperations>
+  <in-bse-fin:DilutedEarningsLossPerShareFromContinuingOperations contextRef="FourD" unitRef="INRPerShare" decimals="2">32.10</in-bse-fin:DilutedEarningsLossPerShareFromContinuingOperations>
+  <in-bse-fin:RevenueFromOperations contextRef="FiveD" unitRef="INR" decimals="2">265000</in-bse-fin:RevenueFromOperations>
+  <in-bse-fin:OtherIncome contextRef="FiveD" unitRef="INR" decimals="2">5300</in-bse-fin:OtherIncome>
+  <in-bse-fin:Income contextRef="FiveD" unitRef="INR" decimals="2">270300</in-bse-fin:Income>
+  <in-bse-fin:FinanceCosts contextRef="FiveD" unitRef="INR" decimals="2">9500</in-bse-fin:FinanceCosts>
+  <in-bse-fin:DepreciationDepletionAndAmortisationExpense contextRef="FiveD" unitRef="INR" decimals="2">14200</in-bse-fin:DepreciationDepletionAndAmortisationExpense>
+  <in-bse-fin:EmployeeBenefitExpense contextRef="FiveD" unitRef="INR" decimals="2">44000</in-bse-fin:EmployeeBenefitExpense>
+  <in-bse-fin:OtherExpenses contextRef="FiveD" unitRef="INR" decimals="2">164600</in-bse-fin:OtherExpenses>
+  <in-bse-fin:Expenses contextRef="FiveD" unitRef="INR" decimals="2">232300</in-bse-fin:Expenses>
+  <in-bse-fin:ProfitBeforeExceptionalItemsAndTax contextRef="FiveD" unitRef="INR" decimals="2">38000</in-bse-fin:ProfitBeforeExceptionalItemsAndTax>
+  <in-bse-fin:ExceptionalItemsBeforeTax contextRef="FiveD" unitRef="INR" decimals="2">0</in-bse-fin:ExceptionalItemsBeforeTax>
+  <in-bse-fin:ProfitBeforeTax contextRef="FiveD" unitRef="INR" decimals="2">38000</in-bse-fin:ProfitBeforeTax>
+  <in-bse-fin:TaxExpense contextRef="FiveD" unitRef="INR" decimals="2">9500</in-bse-fin:TaxExpense>
+  <in-bse-fin:ProfitLossForPeriod contextRef="FiveD" unitRef="INR" decimals="2">28500</in-bse-fin:ProfitLossForPeriod>
+  <in-bse-fin:BasicEarningsLossPerShareFromContinuingOperations contextRef="FiveD" unitRef="INRPerShare" decimals="2">28.50</in-bse-fin:BasicEarningsLossPerShareFromContinuingOperations>
+  <in-bse-fin:DilutedEarningsLossPerShareFromContinuingOperations contextRef="FiveD" unitRef="INRPerShare" decimals="2">28.40</in-bse-fin:DilutedEarningsLossPerShareFromContinuingOperations>
+  <in-bse-fin:RevenueFromOperations contextRef="SixD" unitRef="INR" decimals="2">360000</in-bse-fin:RevenueFromOperations>
+  <in-bse-fin:OtherIncome contextRef="SixD" unitRef="INR" decimals="2">7200</in-bse-fin:OtherIncome>
+  <in-bse-fin:Income contextRef="SixD" unitRef="INR" decimals="2">367200</in-bse-fin:Income>
+  <in-bse-fin:FinanceCosts contextRef="SixD" unitRef="INR" decimals="2">12800</in-bse-fin:FinanceCosts>
+  <in-bse-fin:DepreciationDepletionAndAmortisationExpense contextRef="SixD" unitRef="INR" decimals="2">19200</in-bse-fin:DepreciationDepletionAndAmortisationExpense>
+  <in-bse-fin:EmployeeBenefitExpense contextRef="SixD" unitRef="INR" decimals="2">60000</in-bse-fin:EmployeeBenefitExpense>
+  <in-bse-fin:OtherExpenses contextRef="SixD" unitRef="INR" decimals="2">223200</in-bse-fin:OtherExpenses>
+  <in-bse-fin:Expenses contextRef="SixD" unitRef="INR" decimals="2">315200</in-bse-fin:Expenses>
+  <in-bse-fin:ProfitBeforeExceptionalItemsAndTax contextRef="SixD" unitRef="INR" decimals="2">52000</in-bse-fin:ProfitBeforeExceptionalItemsAndTax>
+  <in-bse-fin:ExceptionalItemsBeforeTax contextRef="SixD" unitRef="INR" decimals="2">0</in-bse-fin:ExceptionalItemsBeforeTax>
+  <in-bse-fin:ProfitBeforeTax contextRef="SixD" unitRef="INR" decimals="2">52000</in-bse-fin:ProfitBeforeTax>
+  <in-bse-fin:TaxExpense contextRef="SixD" unitRef="INR" decimals="2">13000</in-bse-fin:TaxExpense>
+  <in-bse-fin:ProfitLossForPeriod contextRef="SixD" unitRef="INR" decimals="2">39000</in-bse-fin:ProfitLossForPeriod>
+  <in-bse-fin:BasicEarningsLossPerShareFromContinuingOperations contextRef="SixD" unitRef="INRPerShare" decimals="2">39.00</in-bse-fin:BasicEarningsLossPerShareFromContinuingOperations>
+  <in-bse-fin:DilutedEarningsLossPerShareFromContinuingOperations contextRef="SixD" unitRef="INRPerShare" decimals="2">38.80</in-bse-fin:DilutedEarningsLossPerShareFromContinuingOperations>
+</xbrli:xbrl>

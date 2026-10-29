@@ -1,0 +1,257 @@
+{
+ "status": "success",
+ "data": {
+  "NSE:INFY": {
+   "instrument_token": 408065,
+   "timestamp": "2026-10-29 17:27:30",
+   "last_trade_time": "2026-10-29 15:59:53",
+   "last_price": 1146.5,
+   "last_quantity": 25,
+   "buy_quantity": 557,
+   "sell_quantity": 0,
+   "volume": 14048472,
+   "average_price": 1136.85,
+   "oi": 0,
+   "oi_day_high": 0,
+   "oi_day_low": 0,
+   "net_change": 0,
+   "lower_circuit_limit": 1031.85,
+   "upper_circuit_limit": 1261.15,
+   "low_limit_price_protection": 0,
+   "high_limit_price_protection": 0,
+   "reference_limit_price": 1143.3,
+   "indicative_close_price": 1146.5,
+   "total_imbalance_qty": 0,
+   "ohlc": {
+    "open": 1130,
+    "high": 1146.5,
+    "low": 1125.2,
+    "close": 1123.15
+   },
+   "depth": {
+    "buy": [
+     {
+      "price": 1146.5,
+      "quantity": 557,
+      "orders": 4
+     },
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     },
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     },
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     },
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     }
+    ],
+    "sell": [
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     },
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     },
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     },
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     },
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     }
+    ]
+   }
+  },
+  "NSE:RELIANCE": {
+   "instrument_token": 738561,
+   "timestamp": "2026-10-29 17:27:30",
+   "last_trade_time": "2026-10-29 15:59:57",
+   "last_price": 1167.4,
+   "last_quantity": 1,
+   "buy_quantity": 32293,
+   "sell_quantity": 0,
+   "volume": 20939623,
+   "average_price": 1170.4,
+   "oi": 0,
+   "oi_day_high": 0,
+   "oi_day_low": 0,
+   "net_change": 0,
+   "lower_circuit_limit": 1050.7,
+   "upper_circuit_limit": 1284.1,
+   "low_limit_price_protection": 0,
+   "high_limit_price_protection": 0,
+   "reference_limit_price": 1168,
+   "indicative_close_price": 1167.4,
+   "total_imbalance_qty": 0,
+   "ohlc": {
+    "open": 1159,
+    "high": 1182.1,
+    "low": 1155.6,
+    "close": 1158
+   },
+   "depth": {
+    "buy": [
+     {
+      "price": 1167.4,
+      "quantity": 32293,
+      "orders": 35
+     },
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     },
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     },
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     },
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     }
+    ],
+    "sell": [
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     },
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     },
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     },
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     },
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     }
+    ]
+   }
+  },
+  "NSE:TCS": {
+   "instrument_token": 2953217,
+   "timestamp": "2026-10-29 17:27:30",
+   "last_trade_time": "2026-10-29 15:58:52",
+   "last_price": 2478,
+   "last_quantity": 1,
+   "buy_quantity": 0,
+   "sell_quantity": 407,
+   "volume": 3427569,
+   "average_price": 2479.72,
+   "oi": 0,
+   "oi_day_high": 0,
+   "oi_day_low": 0,
+   "net_change": 0,
+   "lower_circuit_limit": 2230.2,
+   "upper_circuit_limit": 2725.8,
+   "low_limit_price_protection": 0,
+   "high_limit_price_protection": 0,
+   "reference_limit_price": 2481.9,
+   "indicative_close_price": 2478,
+   "total_imbalance_qty": 0,
+   "ohlc": {
+    "open": 2490,
+    "high": 2509.5,
+    "low": 2464,
+    "close": 2460
+   },
+   "depth": {
+    "buy": [
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     },
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     },
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     },
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     },
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     }
+    ],
+    "sell": [
+     {
+      "price": 2478,
+      "quantity": 407,
+      "orders": 3
+     },
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     },
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     },
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     },
+     {
+      "price": 0,
+      "quantity": 0,
+      "orders": 0
+     }
+    ]
+   }
+  }
+ }
+}
