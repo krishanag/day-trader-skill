@@ -1,0 +1,48 @@
+{
+  "symbol": "RELIANCE",
+  "name": "RELIANCE INDUSTRIES",
+  "setup": "orb",
+  "side": "buy",
+  "date": "2026-10-29",
+  "interval": "5minute",
+  "or_minutes": 15,
+  "now": "2026-10-29 09:41:00",
+  "status": "triggered",
+  "phase": "open",
+  "reason": "the 09:35 bar closed above the range high",
+  "opening_range": {
+    "high": 1170.5,
+    "low": 1155.6,
+    "minutes": 15,
+    "bars": 3,
+    "of": 3,
+    "complete": true,
+    "avg_volume": 912345
+  },
+  "level": 1170.5,
+  "trigger": {
+    "time": "09:40",
+    "bar_start": "09:35",
+    "bar": 5,
+    "price": 1174.4,
+    "volume": 611234,
+    "volume_x": 0.67,
+    "pct_over": 0.33
+  },
+  "last": {
+    "bar_start": "09:35",
+    "close": 1174.4,
+    "vs_level_pct": 0.33
+  },
+  "forming": null,
+  "min_volume_x": null,
+  "cas": true,
+  "tick_size": 0.1,
+  "opens": "09:15",
+  "closes": "15:15",
+  "calendar_note": "",
+  "bars_closed": 5,
+  "no_entries_before": "09:30",
+  "no_entries_after": "14:30",
+  "minutes_since": 1
+}

@@ -12,7 +12,10 @@ you hold and what you watch.
     python3 insiders.py alert --file insider.csv --file bulk.csv --file block.csv
     python3 insiders.py news RELIANCE                  # bulk deal / block deal / promoter stake headlines
     python3 insiders.py today                          # today's insider / SAST / pledge filings on BSE, PDF links
+    python3 insiders.py today --parse                  # and read each PDF: the rows (needs pdftotext from poppler)
     python3 insiders.py today --symbol RELIANCE,INFY   # only your companies (needs the Kite session for the names)
+    python3 insiders.py pdf https://www.bseindia.com/xml-data/corpfiling/AttachLive/<guid>.pdf   # read one filing
+    python3 insiders.py pdf ~/Downloads/disclosure.pdf --symbol RELIANCE
 
 Where the data comes from, and why you download it:
   - NSE's pages (Corporates > Insider Trading, Bulk Deals, Block Deals) carry
@@ -24,8 +27,16 @@ Where the data comes from, and why you download it:
   - BSE's corporate announcements RSS (the current day's filings from every
     listed company, a public feed) tells you that an insider-trading, SAST or
     pledge disclosure was filed today for a company, with the PDF link to
-    open; the parsed rows still come from the NSE CSV. Fetched once and
-    reused for 10 minutes from trader/cache/bse-announcements-<date>-<HHMM>.xml.
+    open. Fetched once and reused for 10 minutes from
+    trader/cache/bse-announcements-<date>-<HHMM>.xml.
+  - `today --parse` and `pdf PATH` read the PDF itself (bsepdf.py): fetched
+    with the same identified client, kept under trader/cache/bse-pdf/, turned
+    into text by poppler's pdftotext (brew install poppler) and read for the
+    SEBI SAST Regulation 29 table, the Regulation 31 encumbrance table or the
+    PIT Regulation 7(2) Form C table, into the same rows the NSE CSV gives,
+    with source "bse-pdf" and the link. A scanned PDF with no text layer, or
+    a table the reader does not know, is reported in one line with the link.
+    The complete official table is still the NSE CSV.
   - Headlines come from Google News RSS, read by a plainly identified client
     (the User-Agent names this tool, no cookies, no retry past a 403). The
     company name for the query comes from Kite's instrument list, so `news`
@@ -67,8 +78,10 @@ import urllib.request
 import xml.etree.ElementTree as ET
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "trader-kite"))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import kite   # noqa: E402
 import nse    # noqa: E402
+import bsepdf   # noqa: E402
 
 GOOGLE = "https://news.google.com/rss/search?q=%s&hl=en-IN&gl=IN&ceid=IN:en"
 DEAL_QUERY = '"%s" (bulk deal OR block deal OR insider OR promoter stake)'
@@ -141,6 +154,7 @@ DEAL_FIELDS = [
 DEAL_REQUIRED = ["date", "symbol", "client", "side", "qty", "price"]
 
 CATEGORIES = [   # (what the header value contains, the clean label); first match wins
+    ("relative", "Immediate Relative"),
     ("promoter group", "Promoter Group"),
     ("promoter", "Promoter"),
     ("key managerial", "Key Managerial Personnel"),
@@ -148,13 +162,14 @@ CATEGORIES = [   # (what the header value contains, the clean label); first matc
     ("director", "Director"),
     ("employee", "Employee"),
     ("designated", "Designated Person"),
-    ("relative", "Immediate Relative"),
 ]
 SIDES = [
     ("pledge creat", "pledge"),
     ("pledge invo", "pledge invoked"),
     ("invocation", "pledge invoked"),
+    ("invok", "pledge invoked"),
     ("revo", "pledge released"),
+    ("releas", "pledge released"),
     ("pledge", "pledge"),
     ("buy", "buy"), ("acqui", "buy"), ("purchase", "buy"), ("allot", "buy"),
     ("sell", "sell"), ("sale", "sell"), ("dispos", "sell"),
@@ -372,7 +387,7 @@ def insider_row(raw, m, path):
         "exchange": g("exchange") or None,
         "remark": None if blank(g("remark")) else " ".join(g("remark").split()),
         "xbrl": None if blank(g("xbrl")) else g("xbrl"),
-        "file": os.path.basename(path),
+        "file": os.path.basename(path), "source": "nse-csv", "link": None, "posted_on": "NSE",
     }
     row["late"] = row["late_to_company"] or row["late_to_exchange"]
     row["id"] = row_id("insider", symbol, row["person"], row["side_raw"], row["qty"], row["value_inr"],
@@ -486,31 +501,38 @@ def your_lists(portfolio="trader/portfolio.json", watchlist="trader/watchlist.js
 
 # ---------------------------------------------------------------- output
 
+def describe_derivative(d):
+    what = "%s %s" % (d.get("type") or "derivative", d.get("contract") or "")
+    if d.get("notional_buy_inr") is not None:
+        what += ", %s notional bought" % inr(d["notional_buy_inr"])
+    if d.get("notional_sell_inr") is not None:
+        what += ", %s notional sold" % inr(d["notional_sell_inr"])
+    return what.strip()
+
+
 def describe_insider(r):
     what = "%s shares" % "{:,}".format(r["qty"]) if r["qty"] is not None else "shares"
-    if r.get("derivative"):
-        d = r["derivative"]
-        what = "%s %s" % (d.get("type") or "derivative", d.get("contract") or "")
-        if d.get("notional_buy_inr") is not None:
-            what += ", %s notional bought" % inr(d["notional_buy_inr"])
-        if d.get("notional_sell_inr") is not None:
-            what += ", %s notional sold" % inr(d["notional_sell_inr"])
+    if r.get("derivative") and r["qty"] is None:          # a derivative row (the NSE CSV has those)
+        what = describe_derivative(r["derivative"])
     else:
         what += ", " + inr(r["value_inr"])
+        if r.get("derivative"):                           # a Form C's derivatives block beside the share row
+            what += ", plus derivatives: " + describe_derivative(r["derivative"])
     when = r["trade_from"] or "?"
     if r["trade_to"] and r["trade_to"] != r["trade_from"]:
         when += " to " + r["trade_to"]
+    day = (r.get("broadcast") or "")[:10] or r.get("intimated") or r.get("trade_to") or "?"
+    who = r["symbol"] or r.get("code") or (r.get("company") or "?")[:10]
     head = "%s  %-10s %-5s %s, %s, %s (%s)" % (
-        (r.get("broadcast") or "")[:10] or "?", r["symbol"], (r["side"] or "?"), what, r["mode"] or "?",
-        r["person"], r["category"] or "?")
+        day, who, (r["side"] or "?"), what, r["mode"] or "?", r["person"], r["category"] or "?")
     bits = ["traded %s" % when]
     if r["days_to_company"] is not None:
         bits.append("told the company %d trading day%s later%s" % (
             r["days_to_company"], "" if r["days_to_company"] == 1 else "s",
             " (LATE: over %d)" % DAYS_TO_COMPANY if r["late_to_company"] else ""))
     if r["days_to_exchange"] is not None:
-        bits.append("on NSE %d trading day%s after that%s" % (
-            r["days_to_exchange"], "" if r["days_to_exchange"] == 1 else "s",
+        bits.append("on %s %d trading day%s after that%s" % (
+            r.get("posted_on") or "NSE", r["days_to_exchange"], "" if r["days_to_exchange"] == 1 else "s",
             " (LATE: over %d)" % DAYS_TO_EXCHANGE if r["late_to_exchange"] else ""))
     if r.get("pct_post") is not None:
         bits.append("holds %.2f %% after" % r["pct_post"])
@@ -678,7 +700,7 @@ def insider_filings(entries, names=None):
     return out
 
 
-def render_filings(rows, new=False):
+def render_filings(rows, new=False, lists=None):
     out = []
     for r in rows:
         when = "%s %s IST" % (r["date"] or "?", r["time"] or "")
@@ -686,7 +708,118 @@ def render_filings(rows, new=False):
         out.append("%s%s  %s" % ("NEW " if new else "", when, who))
         out.append("      %s" % r["title"][:200])
         out.append("      %s" % r["link"])
+        if r.get("parse"):
+            out += ["      " + line for line in render_parsed(r, lists)]
     return out
+
+
+def render_parsed(filing, lists=None):
+    """The rows read from a filing's PDF, or the one line that says why there are none."""
+    p = filing["parse"]
+    if p["status"] != "ok":
+        return ["PDF not read (%s): open the link" % p["note"]]
+    return render_rows(filing["rows"], lists) + ["read from the PDF (%s); the NSE CSV is the complete record" % p["form"]]
+
+
+# ---------------------------------------------------------------- the PDF behind a filing
+
+PDF_CATEGORY = [   # the SAST forms ask "does the acquirer belong to the promoter / promoter group": the answer
+    ("promoter group", "Promoter Group"),
+    ("yes", "Promoter"),
+    ("promoter", "Promoter"),
+    ("no", "Non-promoter"),
+]
+NOT_READ = "(not read from the PDF)"
+
+
+def pdf_category(facts):
+    raw = facts.get("category_raw") or ""
+    if facts.get("form") == "pit-7":
+        return label(raw, CATEGORIES)
+    if facts.get("form") == "sast-31":
+        return "Promoter"
+    low = raw.lower()
+    for key, clean in PDF_CATEGORY:
+        if re.search(r"\b%s\b" % re.escape(key), low):
+            return clean
+    return " ".join(raw.split()) or None
+
+
+def pdf_row(f, filing):
+    """A bsepdf facts dict -> the row shape insider_row() makes from the NSE CSV, source "bse-pdf".
+    The BSE posting time is the broadcast; the letter's date is the intimation."""
+    bday, btime = filing.get("date"), filing.get("time")
+    trade_from = f.get("trade_from") or f.get("trade_to")
+    trade_to = f.get("trade_to") or trade_from
+    intimated = f.get("intimated")
+    to_company = trading_days_between(trade_to, intimated)
+    to_exchange = trading_days_between(intimated, bday)
+    remark = f.get("remark")
+    if f.get("unread"):
+        remark = ", ".join(x for x in [remark, "not read from the PDF: " + ", ".join(f["unread"])] if x)
+    symbol = kite.normalize_symbol(filing["symbol"]) if filing.get("symbol") else ""
+    link = filing.get("link") or ""
+    row = {
+        "kind": "insider", "symbol": symbol, "code": filing.get("code"),
+        "company": f.get("company") or filing.get("company"),
+        "regulation": f.get("regulation"), "form": f.get("form"),
+        "person": f.get("person") or NOT_READ, "category": pdf_category(f), "category_raw": f.get("category_raw"),
+        "side": label(f.get("side_raw"), SIDES) if f.get("side_raw") else None, "side_raw": f.get("side_raw"),
+        "security": f.get("security"),
+        "qty": int(f["qty"]) if f.get("qty") is not None else None, "value_inr": f.get("value"),
+        "qty_prior": int(f["qty_prior"]) if f.get("qty_prior") is not None else None, "pct_prior": f.get("pct_prior"),
+        "qty_post": int(f["qty_post"]) if f.get("qty_post") is not None else None, "pct_post": f.get("pct_post"),
+        "mode": label(f.get("mode_raw"), MODES) if f.get("mode_raw") else None, "mode_raw": f.get("mode_raw"),
+        "trade_from": trade_from, "trade_to": trade_to, "intimated": intimated,
+        "broadcast": iso_stamp(bday, btime),
+        "days_to_company": to_company, "days_to_exchange": to_exchange,
+        "late_to_company": to_company is not None and to_company > DAYS_TO_COMPANY,
+        "late_to_exchange": to_exchange is not None and to_exchange > DAYS_TO_EXCHANGE,
+        "derivative": f.get("derivative"),
+        "exchange": f.get("exchange"), "remark": remark, "xbrl": None,
+        "file": bsepdf.guid(link) + ".pdf" if link.startswith("http") else os.path.basename(link),
+        "source": "bse-pdf", "link": link, "posted_on": "BSE",
+    }
+    row["late"] = row["late_to_company"] or row["late_to_exchange"]
+    row["id"] = row_id("bse-pdf", link, row["person"], row["side_raw"], row["qty"], row["value_inr"],
+                       trade_from, trade_to, row["remark"])
+    return row
+
+
+def read_filing(filing, cache_dir=CACHE_DIR, text=None):
+    """Fetch (once), convert and read one filing's PDF.
+    {"status": ok | no-pdftotext | fetch-failed | no-text | unreadable, "note", "form", "rows", "path"}."""
+    out = {"status": "ok", "note": None, "form": None, "rows": [], "path": None}
+    if text is None:
+        try:
+            out["path"] = bsepdf.cached_pdf(filing["link"], fetch, cache_dir)
+            text = bsepdf.pdf_text(out["path"])
+        except bsepdf.NoPdftotext as exc:
+            return dict(out, status="no-pdftotext", note=str(exc))
+        except bsepdf.NoTextLayer as exc:
+            return dict(out, status="no-text", note=str(exc))
+        except (InsidersError, OSError) as exc:
+            return dict(out, status="fetch-failed", note="could not fetch the PDF: %s" % exc)
+        except bsepdf.PdfError as exc:
+            return dict(out, status="unreadable", note=str(exc))
+    result = bsepdf.read_disclosure(text, bsepdf.hint_from(filing.get("title")))
+    out["form"] = result["form"]
+    if result["problem"]:
+        return dict(out, status="unreadable", note=result["problem"])
+    out["rows"] = [pdf_row(f, filing) for f in result["rows"]]
+    return out
+
+
+def parse_filings(filings, cache_dir=CACHE_DIR):
+    """Each filing gets "parse" and "rows". Without pdftotext nothing is fetched: one note for all."""
+    if not bsepdf.pdftotext_path():
+        note = "pdftotext is not installed: brew install poppler, or open the PDF links"
+        return [dict(f, parse={"status": "no-pdftotext", "note": note, "form": None}, rows=[]) for f in filings], note
+    out = []
+    for f in filings:
+        got = read_filing(f, cache_dir)
+        out.append(dict(f, parse={"status": got["status"], "note": got["note"], "form": got["form"]}, rows=got["rows"]))
+    return out, None
 
 
 def clean_name(raw):
@@ -783,9 +916,19 @@ def _parser():
 
     p = sub.add_parser("today", help="insider / SAST / pledge filings on BSE's announcements feed today")
     p.add_argument("--symbol", help="only these symbols, comma separated (needs the Kite session for the names)")
+    p.add_argument("--parse", action="store_true",
+                   help="fetch each new filing's PDF and read its table (needs pdftotext: brew install poppler)")
     p.add_argument("--state", default="trader/insiders.json")
+    p.add_argument("--portfolio", default="trader/portfolio.json")
+    p.add_argument("--watchlist", default="trader/watchlist.json")
     p.add_argument("--now", help="'2026-10-29 10:15' (IST), for reproducible runs")
     p.add_argument("--dry-run", action="store_true", help="do not update the state file")
+    p.add_argument("--json", action="store_true")
+
+    p = sub.add_parser("pdf", help="read one disclosure PDF: a BSE AttachLive link, a saved PDF, or its pdftotext text")
+    p.add_argument("source", help="https://www.bseindia.com/xml-data/corpfiling/AttachLive/<guid>.pdf, or a local .pdf / .txt")
+    p.add_argument("--symbol", help="the Kite symbol to tag the rows with")
+    p.add_argument("--company", help="the company name, when the PDF does not say")
     p.add_argument("--json", action="store_true")
 
     p = sub.add_parser("news", help="bulk deal / block deal / insider / promoter stake headlines for a symbol")
@@ -829,16 +972,23 @@ def _today(args):
     rows = insider_filings(parse_bse(bse_feed(now)), names)
     state = load_state(args.state)
     fresh = new_since(rows, state)
+    note = None
+    if args.parse and fresh:
+        fresh, note = parse_filings(fresh)
+    lists = your_lists(args.portfolio, args.watchlist)
     if args.json:
-        print(json.dumps({"new": fresh, "checked": now.isoformat()}, indent=2))
+        print(json.dumps({"new": fresh, "checked": now.isoformat(), "note": note}, indent=2))
     else:
         if not fresh:
             print("No new insider, SAST or pledge filing on BSE's feed since %s."
                   % (state.get("last_check") or "the last check"))
         else:
-            print("\n".join(render_filings(fresh, new=True)))
-        print("BSE's announcements feed, today only; open the PDF for the rows. Not inside information, "
-              "not financial advice.")
+            print("\n".join(render_filings(fresh, new=True, lists=lists)))
+        if note:
+            print("note: %s" % note)
+        print("BSE's announcements feed, today only; %s. Not inside information, not financial advice."
+              % ("rows read from the PDFs where the text allows; the NSE CSV is the complete record" if args.parse
+                 else "open the PDF for the rows, or run with --parse"))
     if not args.dry_run:
         seen = set(state.get("seen", []))
         seen.update(r["id"] for r in rows)
@@ -846,6 +996,37 @@ def _today(args):
         state["last_check"] = now.replace(microsecond=0).isoformat()
         save_state(args.state, state)
     return 0 if fresh else 1
+
+
+def _pdf(args):
+    """`pdf SOURCE`: one disclosure read on its own; a .txt is pdftotext's output (no poppler needed)."""
+    src = args.source
+    filing = {"company": args.company, "code": None, "title": "", "link": src if src.startswith("http") else "",
+              "date": None, "time": None, "symbol": args.symbol}
+    text = None
+    if not src.startswith("http"):
+        if not os.path.isfile(src):
+            raise InsidersError("%s is not a file" % src)
+        if src.lower().endswith(".txt"):
+            with open(src, encoding="utf-8", errors="replace") as fh:
+                text = fh.read()
+        else:
+            try:
+                text = bsepdf.pdf_text(src)
+            except bsepdf.PdfError as exc:
+                raise InsidersError(str(exc))
+        filing["link"] = src
+    got = read_filing(filing, text=text)
+    if args.json:
+        print(json.dumps({"source": src, "status": got["status"], "note": got["note"], "form": got["form"],
+                          "rows": got["rows"]}, indent=2))
+    elif got["status"] != "ok":
+        print("insiders: %s (%s)" % (got["note"], src), file=sys.stderr)
+    else:
+        print("\n".join(render_rows(got["rows"], your_lists())))
+        print("Read from the PDF (%s); the NSE CSV is the complete record. Not inside information, "
+              "not financial advice." % got["form"])
+    return 0 if got["rows"] else 1
 
 
 def _json_items(items):
@@ -868,6 +1049,9 @@ def _run(args):
 
     if args.cmd == "today":
         return _today(args)
+
+    if args.cmd == "pdf":
+        return _pdf(args)
 
     rows = select(load_files(args.file, args.kind), _symbols(args.symbol), args.since)
     lists = your_lists(args.portfolio, args.watchlist)

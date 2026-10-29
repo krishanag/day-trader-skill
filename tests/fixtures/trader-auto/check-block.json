@@ -1,0 +1,22 @@
+{
+  "results": [
+    {
+      "index": 1,
+      "symbol": "RELIANCE",
+      "side": "buy",
+      "qty": 17,
+      "kind": "entry",
+      "amount": "17 shares",
+      "verdict": "BLOCK",
+      "reasons": [
+        "window: no new entries after 14:30 (config)"
+      ],
+      "warnings": []
+    }
+  ],
+  "pass": 0,
+  "block": 1,
+  "warnings": [],
+  "now_ist": "2026-10-29 14:31 IST",
+  "cash_after": 10000.0
+}

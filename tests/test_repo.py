@@ -5,15 +5,17 @@ import unittest
 
 from _load import ROOT
 
-# v3, the India edition: the twelve folders
+# v3, the India edition: the thirteen folders
 SKILLS = ["trader-kite", "trader-scanner", "trader-news", "trader-entry", "trader-exit",
           "trader-timemachine", "trader-risk", "trader-budget", "trader-broker", "trader-alerts",
-          "trader-insiders", "trader-results"]
-ABOUT = ("12 Claude skills for day trading NSE stocks through Zerodha: scan every chart, track the news, "
-         "time every entry and exit, and replay every outcome before you risk a rupee.")
+          "trader-insiders", "trader-results", "trader-auto"]
+ABOUT = ("13 Claude skills for day trading NSE stocks through Zerodha: scan every chart, track the news, "
+         "time every entry and exit, replay every outcome before you risk a rupee, and run the whole loop "
+         "unattended inside hard limits.")
 # skills on the way to an order carry the safety block
 ORDER_PATH = ["trader-kite", "trader-scanner", "trader-entry", "trader-exit", "trader-timemachine",
-              "trader-budget", "trader-insiders", "trader-risk", "trader-broker", "trader-alerts"]
+              "trader-budget", "trader-insiders", "trader-risk", "trader-broker", "trader-alerts",
+              "trader-auto"]
 V1_ONLY = ["trader-copycat", "trader-screener", "trader-tax", "trader-rebalance"]
 # the US edition's sources and words: none may survive outside the tests and the README's history note
 US_ONLY = ["finance.yahoo.com", "sec.gov", "nasdaqtrader", "alpaca", "disclosures-clerk.house.gov",
@@ -37,7 +39,7 @@ def every_text_file():
 
 
 class Repo(unittest.TestCase):
-    def test_twelve_skill_folders_at_the_root(self):
+    def test_thirteen_skill_folders_at_the_root(self):
         found = sorted(d for d in os.listdir(ROOT)
                        if os.path.isfile(os.path.join(ROOT, d, "SKILL.md")))
         self.assertEqual(found, sorted(SKILLS))

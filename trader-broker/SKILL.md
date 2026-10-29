@@ -177,14 +177,17 @@ quotes, and one app can do both.
   `trader/orders.json` is exactly these parameters.
 - `modify_order(variety, order_id, order_type, quantity?, price?,
   trigger_price?, validity?, disclosed_quantity?)`.
-- `cancel_order(variety, order_id)`. **It takes no `parent_order_id`**: the
-  handler calls Kite's cancel with a nil parent. Kite's own cover-order exit
-  (`DELETE /orders/co/:order_id` with `parent_order_id`) is therefore not
-  exposed as such; the exit ticket's Kite body keeps both ids per the pack's
+- `cancel_order(variety, order_id, parent_order_id?)`. The stock server
+  drops `parent_order_id` (its Kite library never sends it, and stdio mode
+  could not open a session at all), so the pack runs the patched build in
+  `../kite-mcp-server` (its `PATCH.md` has the build and the `claude mcp add`
+  command). The exit ticket's Kite body keeps both ids per the pack's
   contract, and the MCP call Claude makes is `cancel_order` with
-  `variety: "co"` and the **stop leg's** order id. If Zerodha rejects that
-  without the parent id, the user exits the position in the Kite app or
-  web (Positions > Exit), and Claude records the fill with `ticket.py fill`.
+  `variety: "co"`, the **stop leg's** order id and `parent_order_id` set to
+  the entry's order id. If Zerodha rejects it, the user exits the position
+  in the Kite app or web (Positions > Exit), and Claude records the fill
+  with `ticket.py fill`. The patched server also reads the pack's session
+  file (`KITE_SESSION_FILE`), so one morning login serves both.
 - `get_orders(from?, limit?)`, `get_order_history(order_id)`,
   `get_positions(from?, limit?)`, `get_margins()`, `login()`.
 

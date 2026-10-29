@@ -1,0 +1,31 @@
+{
+  "created_by": "trader-exit",
+  "symbol": "RELIANCE",
+  "side": "buy",
+  "date": "2026-10-29",
+  "setup": "orb",
+  "entry": 1174.4,
+  "entry_time": "09:40",
+  "entry_bar": 5,
+  "interval": "5minute",
+  "opening_range": {
+    "high": 1170.5,
+    "low": 1155.6,
+    "minutes": 15
+  },
+  "stop": 1163.0,
+  "stop_rule": "or_mid",
+  "stop_label": "opening-range midpoint",
+  "target": 1185.8,
+  "target_r": 1.0,
+  "target_label": "1R (one times the risk)",
+  "risk_per_share": 11.4,
+  "reward_risk": 1.0,
+  "flat_by": "15:05",
+  "cas": true,
+  "tick_size": 0.1,
+  "stop_detail": "(Rs 1,170.50 + Rs 1,155.60) / 2 = 1163.05, rounded down to the Rs 0.10 tick",
+  "created_at": "2026-10-29T09:41:00+05:30",
+  "note": "A stop is a plan, not a guarantee: a gap or a fast market can fill past it.",
+  "warnings": []
+}

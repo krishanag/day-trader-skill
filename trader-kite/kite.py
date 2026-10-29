@@ -2,9 +2,12 @@
 """Zerodha Kite Connect v3 client for the pack (standard library only).
 
 Every data tool in the pack reads Zerodha through this file: the session,
-the instrument list, historical candles and quotes. It never places,
-modifies or cancels an order; orders go through Zerodha's Kite MCP server
-after you say yes (see trader-broker).
+the instrument list, historical candles and quotes. It also carries the
+order calls (place, modify, cancel, the order book, positions), but only
+two callers may use them: trader-auto, the unattended runner, and the
+explicit one-share probe command. Every other skill still never places,
+modifies or cancels an order; their orders go through Zerodha's Kite MCP
+server after you say yes (see trader-broker and FILES.md).
 
 Credentials (never in chat, never committed):
   KITE_API_KEY, KITE_API_SECRET, KITE_REDIRECT_URL from the environment, or
@@ -19,7 +22,11 @@ Endpoints (https://kite.trade/docs/connect/v3/):
   GET  /instruments/<exchange>                           CSV instrument dump
   GET  /instruments/historical/<token>/<interval>        candles, IST timestamps
   GET  /quote?i=NSE:INFY&i=...                           full quotes, 500 per call
-Rate limits: quote 1/s, historical 3/s, everything else 10/s.
+  POST /orders/<variety>                                 place; PUT .../<order_id> modify;
+  DELETE /orders/<variety>/<order_id>[?parent_order_id=] cancel (the CO second leg exits the position)
+  GET  /orders, /orders/<id>, /orders/<id>/trades, /trades, /portfolio/positions
+Rate limits: quote 1/s, historical 3/s, everything else 10/s (orders also 400/min, 5000/day,
+25 modifications per order).
 """
 
 import csv
@@ -47,6 +54,14 @@ MIN_GAP = {"quote": 1.05, "historical": 0.35, "other": 0.11}
 # longest span Kite returns in one historical call, by interval
 MAX_DAYS = {"minute": 60, "3minute": 100, "5minute": 100, "10minute": 100, "15minute": 200,
             "30minute": 200, "60minute": 400, "day": 2000}
+
+# order vocabulary, from https://kite.trade/docs/connect/v3/orders/
+VARIETIES = ("regular", "co", "amo", "iceberg", "auction")
+TRANSACTION_TYPES = ("BUY", "SELL")
+PRODUCTS = ("MIS", "CNC", "NRML", "MTF")
+ORDER_TYPES = ("MARKET", "LIMIT", "SL", "SL-M")
+# an order in one of these states is done; anything else is still open or in flight
+FINAL_STATUSES = ("COMPLETE", "REJECTED", "CANCELLED")
 
 
 class KiteError(Exception):
@@ -221,6 +236,15 @@ class Kite:
     def get(self, path, params=None, kind="other"):
         return http("GET", path, self.api_key, self.access_token, params, kind=kind)
 
+    def post(self, path, data, kind="other"):
+        return http("POST", path, self.api_key, self.access_token, data=data, kind=kind)
+
+    def put(self, path, data, kind="other"):
+        return http("PUT", path, self.api_key, self.access_token, data=data, kind=kind)
+
+    def delete(self, path, params=None, kind="other"):
+        return http("DELETE", path, self.api_key, self.access_token, params, kind=kind)
+
     def profile(self):
         return self.get("/user/profile")
 
@@ -290,6 +314,209 @@ class Kite:
             data = self.get("/quote", {"i": keys[i:i + QUOTE_BATCH]}, kind="quote") or {}
             out.update({k.split(":", 1)[1]: v for k, v in data.items()})
         return out
+
+    # -- orders (trader-auto and the one-share probe only; see FILES.md)
+
+    def place_order(self, body):
+        """POST /orders/<variety> with the FILES.md `kite` dict -> Kite's order_id.
+
+        The body is checked first (order_form); a bad one never reaches Kite.
+        A placed order is not a filled one: follow with wait_for_status().
+        """
+        variety, fields = order_form(body)
+        return str(self.post("/orders/%s" % variety, fields)["order_id"])
+
+    def modify_order(self, variety, order_id, body, parent_order_id=None):
+        """PUT /orders/<variety>/<order_id> with the changed fields -> order_id.
+
+        For a cover order's second leg pass parent_order_id (Kite needs it).
+        """
+        check_variety(variety)
+        fields = drop_none(body)
+        if parent_order_id is not None:
+            fields["parent_order_id"] = parent_order_id
+        return str(self.put("/orders/%s/%s" % (variety, order_id), fields)["order_id"])
+
+    def cancel_order(self, variety, order_id, parent_order_id=None):
+        """DELETE /orders/<variety>/<order_id> -> order_id.
+
+        Cancelling a cover order's second leg (variety co, with parent_order_id)
+        exits the position at market: that is Kite's exit-cover-order call.
+        """
+        check_variety(variety)
+        params = {"parent_order_id": parent_order_id} if parent_order_id is not None else None
+        return str(self.delete("/orders/%s/%s" % (variety, order_id), params)["order_id"])
+
+    def orders(self):
+        """Today's order book, every order in every state (a list)."""
+        return self.get("/orders") or []
+
+    def order_history(self, order_id):
+        """The states one order went through, oldest first (a list)."""
+        return self.get("/orders/%s" % order_id) or []
+
+    def order_trades(self, order_id):
+        return self.get("/orders/%s/trades" % order_id) or []
+
+    def trades(self):
+        """Every executed trade today (a list)."""
+        return self.get("/trades") or []
+
+    def positions(self):
+        """{"net": [...], "day": [...]} from GET /portfolio/positions."""
+        data = self.get("/portfolio/positions") or {}
+        return {"net": data.get("net") or [], "day": data.get("day") or []}
+
+    def cover_order_legs(self, parent_order_id):
+        """{"parent": order or None, "second_leg": the OPEN second leg or None} from the order book."""
+        parent, open_leg, _ = cover_legs(self.orders(), parent_order_id)
+        return {"parent": parent, "second_leg": open_leg}
+
+    def exit_cover_order(self, parent_order_id):
+        """Exit a cover order position at market by cancelling its open second leg -> leg order_id.
+
+        Kite: "The position is exited when the second-leg order is executed or
+        cancelled." With no open second leg there is nothing to exit here and a
+        KiteError says so (the position may already be flat).
+        """
+        _, open_leg, legs = cover_legs(self.orders(), parent_order_id)
+        if open_leg is None:
+            seen = ", ".join("%s %s" % (l.get("order_id"), l.get("status")) for l in legs) or "none found"
+            raise KiteError("no open second leg for cover order %s (legs: %s); check positions() "
+                            "before placing any exit" % (parent_order_id, seen))
+        return self.cancel_order("co", open_leg["order_id"], parent_order_id=parent_order_id)
+
+    def wait_for_status(self, order_id, wanted=FINAL_STATUSES, timeout=30, every=1.0):
+        """Poll order_history until the latest state is one of `wanted` -> that order dict.
+
+        Raises KiteError after `timeout` seconds with the last status seen.
+        """
+        deadline = _clock() + timeout
+        while True:
+            history = self.order_history(order_id)
+            last = history[-1] if history else {}
+            status = str(last.get("status", "")).upper()
+            if status in wanted:
+                return last
+            if _clock() >= deadline:
+                raise KiteError("order %s is still %s after %s s" % (order_id, status or "unknown", timeout))
+            _sleep(every)
+
+
+# ---------------------------------------------------------------- orders: pure helpers
+
+def drop_none(body):
+    """A new dict without the None values (Kite rejects empty form fields)."""
+    return {k: v for k, v in body.items() if v is not None}
+
+
+def check_variety(variety):
+    if variety not in VARIETIES:
+        raise KiteError("order variety must be one of %s, not %r" % (", ".join(VARIETIES), variety))
+
+
+def order_form(body):
+    """Validate a FILES.md `kite` body -> (variety, form fields without variety or Nones).
+
+    Raises KiteError with a plain message for anything Kite would reject anyway,
+    so nothing malformed is ever sent.
+    """
+    if not isinstance(body, dict):
+        raise KiteError("order body must be a dict (the orders.json `kite` object)")
+    fields = drop_none(body)
+    variety = fields.pop("variety", None)
+    check_variety(variety)
+    choices = (("transaction_type", TRANSACTION_TYPES), ("product", PRODUCTS), ("order_type", ORDER_TYPES))
+    for key, allowed in choices:
+        if fields.get(key) not in allowed:
+            raise KiteError("order %s must be one of %s, not %r" % (key, ", ".join(allowed), fields.get(key)))
+    qty = fields.get("quantity")
+    if isinstance(qty, bool) or not isinstance(qty, int) or qty <= 0:
+        raise KiteError("order quantity must be a positive whole number, not %r" % (qty,))
+    order_type = fields["order_type"]
+    if (variety == "co" or order_type in ("SL", "SL-M")) and not _positive(fields.get("trigger_price")):
+        raise KiteError("a %s %s order needs a trigger_price" % (variety, order_type))
+    if order_type in ("LIMIT", "SL") and not _positive(fields.get("price")):
+        raise KiteError("a %s order needs a price" % order_type)
+    return variety, fields
+
+
+def _positive(value):
+    try:
+        return float(value) > 0
+    except (TypeError, ValueError):
+        return False
+
+
+def is_open_order(order):
+    return str(order.get("status", "")).upper() not in FINAL_STATUSES
+
+
+def cover_legs(orders, parent_order_id):
+    """(parent order or None, the open second leg or None, every second leg) for one cover order."""
+    pid = str(parent_order_id)
+    parent = next((o for o in orders if str(o.get("order_id")) == pid), None)
+    legs = [o for o in orders if str(o.get("parent_order_id")) == pid]
+    open_leg = next((o for o in legs if is_open_order(o)), None)
+    return parent, open_leg, legs
+
+
+# ---------------------------------------------------------------- charges
+
+# Zerodha's published equity rates, read from https://zerodha.com/charges/ on 2026-10-29.
+# Fractions of the traded value; the broker's own contract note is the only exact figure.
+CHARGE_RATES = {
+    "MIS": {"brokerage_pct": 0.03, "brokerage_cap_inr": 20.0,     # per executed order, whichever is lower
+            "stt_buy_pct": 0.0, "stt_sell_pct": 0.025,            # STT on the sell side only (intraday)
+            "exchange_pct": 0.00307,                               # NSE transaction charge, both sides
+            "sebi_pct": 0.0001,                                    # Rs 10 per crore, both sides
+            "stamp_buy_pct": 0.003},                               # stamp duty on the buy side
+    "CNC": {"brokerage_pct": 0.0, "brokerage_cap_inr": 0.0,       # zero brokerage on delivery
+            "stt_buy_pct": 0.1, "stt_sell_pct": 0.1,              # STT on both sides (delivery)
+            "exchange_pct": 0.00307, "sebi_pct": 0.0001,
+            "stamp_buy_pct": 0.015},
+}
+GST_PCT = 18.0   # on brokerage + exchange transaction charge + SEBI charge
+
+
+def estimate_charges(buy_value, sell_value, product="MIS"):
+    """ESTIMATE of Zerodha's charges on one NSE equity round trip, in rupees.
+
+    buy_value and sell_value are the traded values (quantity x price) of each
+    leg; pass 0 for a leg that has not happened. Returns {"brokerage", "stt",
+    "exchange", "sebi", "stamp", "gst", "total"}, each rounded to the paisa.
+
+    Rates are the ones https://zerodha.com/charges/ listed on 2026-10-29 for
+    equity intraday (MIS): brokerage 0.03 % or Rs 20 per executed order,
+    whichever is lower; STT 0.025 % on the sell side; NSE transaction charge
+    0.00307 % of turnover; SEBI charge Rs 10 per crore (0.0001 %); stamp duty
+    0.003 % on the buy side; GST 18 % on brokerage + transaction + SEBI
+    charges. CNC (delivery) uses that page's delivery rates (zero brokerage,
+    STT 0.1 % both sides, stamp 0.015 % on the buy side); its Rs 15.34 DP
+    charge per scrip sold is not included. This is an estimate: the exact
+    figure is the contract note, and the rates change when the exchanges or
+    the government change them.
+    """
+    rates = CHARGE_RATES.get(str(product).upper())
+    if rates is None:
+        raise KiteError("estimate_charges knows the product rates for %s only, not %r"
+                        % (", ".join(sorted(CHARGE_RATES)), product))
+    buy, sell = float(buy_value), float(sell_value)
+    if buy < 0 or sell < 0:
+        raise KiteError("traded values cannot be negative")
+    pct = lambda value, rate: value * rate / 100.0
+    brokerage = sum(min(rates["brokerage_cap_inr"], pct(leg, rates["brokerage_pct"]))
+                    for leg in (buy, sell) if leg > 0)
+    stt = pct(buy, rates["stt_buy_pct"]) + pct(sell, rates["stt_sell_pct"])
+    exchange = pct(buy + sell, rates["exchange_pct"])
+    sebi = pct(buy + sell, rates["sebi_pct"])
+    stamp = pct(buy, rates["stamp_buy_pct"])
+    gst = pct(brokerage + exchange + sebi, GST_PCT)
+    parts = {"brokerage": brokerage, "stt": stt, "exchange": exchange, "sebi": sebi,
+             "stamp": stamp, "gst": gst}
+    out = {k: round(v, 2) for k, v in parts.items()}
+    out["total"] = round(sum(parts.values()), 2)
+    return out
 
 
 # ---------------------------------------------------------------- pure helpers

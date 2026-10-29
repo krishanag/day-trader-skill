@@ -1,6 +1,6 @@
 # The Day Trader skill, India edition
 
-12 Claude skills for day trading NSE stocks through Zerodha: scan every chart, track the news, time every entry and exit, and replay every outcome before you risk a rupee.
+13 Claude skills for day trading NSE stocks through Zerodha: scan every chart, track the news, time every entry and exit, replay every outcome before you risk a rupee, and run the whole loop unattended inside hard limits.
 
 Everything reads Zerodha Kite Connect: the candles, the quotes, the
 instrument list, your balance. Nothing else is scraped. The tools are plain
@@ -52,7 +52,7 @@ git clone https://github.com/krishanag/day-trader-skill.git
 cp -r day-trader-skill/trader-* ~/.claude/skills/
 ```
 
-Copy all twelve: the eleven tools import the Kite client and the NSE clock
+Copy all thirteen: the twelve tools import the Kite client and the NSE clock
 from `trader-kite/`, which must sit beside them. Project-local instead of
 global: copy the same folders into your repo's `.claude/skills/`.
 
@@ -78,7 +78,7 @@ global: copy the same folders into your repo's `.claude/skills/`.
 Kite sessions die at 06:00 IST, so the first thing each trading day is
 `/trader-kite` (or `python3 trader-kite/login.py` again).
 
-## The twelve
+## The thirteen
 
 | command | job | what it does |
 | --- | --- | --- |
@@ -94,6 +94,7 @@ Kite sessions die at 06:00 IST, so the first thing each trading day is
 | `/trader-alerts` | Price Alerts | Rings once at the stop, the target, the flat-by, the bell, a price or a time; knows the NSE clock and holidays. |
 | `/trader-insiders` | Insider Tracker | Reads NSE's insider-trading, bulk-deal and block-deal CSVs you download, and today's SAST and pledge filings on BSE. |
 | `/trader-results` | Results Analyst | Reads the Ind AS XBRL results you download and sums up what changed; finds the next results date in the news. |
+| `/trader-auto` | Auto Trader | Runs the whole chain unattended every minute of the session inside hard limits (max loss a trade, daily cap, one position, flat by 15:05, a kill switch), places the cover orders itself, and writes the day's report for review. The one skill that trades without a per-order yes, and only when you turn it on. |
 
 ## How to use it
 
@@ -176,6 +177,12 @@ python3 trader-insiders/insiders.py today                               # today'
 python3 trader-insiders/insiders.py index --file insider-trading.csv    # NSE's CSV, downloaded by you
 python3 trader-results/results.py facts RELIANCE --file results.xml     # the XBRL, downloaded by you
 python3 trader-results/results.py calendar RELIANCE                     # does it report this week
+python3 trader-auto/auto.py probe SBIN --qty 1 --dry-run                # the one-share live test, bodies only
+python3 trader-auto/auto.py tick --dry-run                              # one pass of the unattended loop, nothing sent
+bash trader-auto/run-day.sh                                             # the loop, every 60 s until 15:20
+python3 trader-auto/auto.py status                                      # phase, position, P&L so far
+python3 trader-auto/auto.py report                                      # the day's trades, charges, slippage, skips
+python3 trader-auto/auto.py stop                                        # kill switch: no entries, exit what is open
 ```
 
 ```bash
@@ -188,7 +195,21 @@ HINDUNILVR's breakout the same morning, real quotes, real instrument rows,
 real RSS and BSE feeds. They reproduce every number in the example above.
 446 tests.
 
-## Zerodha's MCP server, for live orders
+## The unattended loop, for real money
+
+`/trader-auto` is the one skill that places orders without a per-order
+yes. It runs the same chain every minute of the session (scanner, results
+and news checks, entry, exit plan, Time Machine gate, budget, risk) and
+places the cover order itself through Kite, inside limits you set once in
+`config.auto.example.json`: max loss a trade, a daily cap that counts
+charges, one open position, trades a day, flat by 15:05, and a kill-switch
+file (`auto.py stop`). It runs only when you have set `auto.enabled` and
+`paper` yourself. Every decision, refusal and skip is written with its
+numbers, and `auto.py report` is the day's record to review. Run
+`auto.py probe SYM --qty 1` once, in market hours, before the first loop:
+it places and exits one share so the real path is proven on your account.
+
+## Zerodha's MCP server, for the manual flow
 
 `/trader-broker` never places an order itself. When `paper` is false, Claude
 calls Zerodha's official
@@ -199,13 +220,14 @@ operations. The broker skill's SKILL.md walks through the setup for Claude
 Desktop and Claude Code and the example config ships with placeholders. Set
 the order tools to "Needs approval", never "Always allow".
 
-One step is not yet proven against a real account: exiting a cover order
-through the MCP server. Its `cancel_order` tool does not take Kite's
-`parent_order_id`, so the pack cancels the stop leg by its own order id,
-which Kite documents as exiting the position at market. If Zerodha rejects
-that call, exit from the Kite app's order book and record the fill with
-`ticket.py result`. Paper mode is the default until you have tried this
-with one share.
+Zerodha's stock server has two gaps the pack needed closed: it cannot open
+a session in stdio mode, and its `cancel_order` drops `parent_order_id`,
+which the cover-order exit requires. A patched build lives beside the repo
+(`../kite-mcp-server`, see its `PATCH.md`): it fixes both and reads the
+pack's own session file, so one morning login serves the tools and the MCP.
+Exiting a cover order is proven on a real account by `auto.py probe`, not
+by the MCP; if the MCP call is ever rejected, exit from the Kite app's
+order book and record the fill with `ticket.py result`.
 
 ## Fine print
 
@@ -278,6 +300,7 @@ trader-broker/      SKILL.md, ticket.py, claude_desktop_config.example.json
 trader-alerts/      SKILL.md, alerts.py, alerts.example.json
 trader-insiders/    SKILL.md, insiders.py
 trader-results/     SKILL.md, results.py, metrics.example.json
+trader-auto/        SKILL.md, auto.py, config.auto.example.json, run-day.sh, com.day-trader.auto.plist.example
 tests/              unittest suite + offline fixtures cut from real Kite data
 ```
 

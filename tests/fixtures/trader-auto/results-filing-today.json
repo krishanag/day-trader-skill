@@ -1,0 +1,37 @@
+{
+  "symbol": "HUDCO",
+  "name": "HOUSING & URBAN DEVELOPMENT CORPORATION",
+  "query_name": "HUDCO",
+  "as_of": "2026-10-29T09:46:00+05:30",
+  "news": {
+    "queries": [],
+    "headlines": []
+  },
+  "bse": {
+    "items": [
+      {
+        "company": "Housing & Urban Development Corporation Ltd (540530)",
+        "scrip": "540530",
+        "text": "Board Meeting Intimation for Unaudited Financial Results for the quarter ended September 30, 2026",
+        "link": "https://example.invalid/y",
+        "published": "2026-10-29T08:30:00+05:30",
+        "dates": [
+          "2026-10-29"
+        ],
+        "kind": "out"
+      }
+    ]
+  },
+  "problems": [],
+  "dates": {
+    "2026-10-29": 3
+  },
+  "likely": {
+    "date": "2026-10-29",
+    "mentions": 3,
+    "horizon": "today",
+    "trading_days": 0,
+    "answer": "The result is TODAY."
+  },
+  "caveat": "No official results calendar may be read by a script."
+}

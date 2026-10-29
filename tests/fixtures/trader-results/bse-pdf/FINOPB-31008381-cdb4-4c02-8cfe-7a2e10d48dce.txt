@@ -1,0 +1,604 @@
+          October 29, 2026
+
+           BSE Limited                                          National Stock Exchange of India Limited
+           P.J. Towers,                                         Exchange Plaza, 5th Floor, Plot No. C/1, G
+           Dalal Street,                                        Block, Bandra - Kurla Complex, Bandra (E),
+           Mumbai- 400 001                                      Mumbai - 400 051
+
+           (Scrip Code: 543386)                                 (Symbol: FINOPB)
+
+          Dear Sir/ Madam,
+
+          Sub: Outcome of the Board Meeting held today, i.e. Thursday, October 29, 2026
+
+          Pursuant to Regulations 30, 33 and other applicable provisions of the Securities and Exchange
+          Board of India (Listing Obligations and Disclosure Requirements) Regulations, 2015, as
+          amended (“SEBI Listing Regulations”), we would like to inform that the Board of Directors of
+          Fino Payments Bank Limited (“Bank”) at its meeting held today i.e. Thursday, October 29, 2026
+          has inter-alia considered and approved the Audited Financial Results for the half year ended
+          September 30, 2026 and Unaudited Financial Results for the quarter ended September 30,
+          2026 (“Financial Results”) along with Auditors’ Report and Limited Review Report issued by
+          the Statutory Auditors of the Bank, based on recommendation of Audit Committee. Accordingly,
+          the said Financial Results along with Auditors’ Report and Limited Review Report issued by the
+          Statutory Auditors of the Bank are enclosed herewith as Annexure-A.
+
+
+          The Board meeting commenced at 02:00 p.m. (IST) and concluded at 06:15 p.m. (IST).
+
+          This information will also be available on the Bank’s website i.e. www.fino.bank.in
+
+          Kindly take the same on record.
+
+          Thanking you
+
+          Yours faithfully,
+
+          For Fino Payments Bank Limited
+                               Digitally signed by
+          Basavraj       Basavraj Shivanand Loni
+          Shivanand Loni Date: 2026.10.29
+                         19:20:57 +05'30'
+
+          Basavraj Loni
+          Company Secretary & Compliance Officer
+
+          Place: Navi Mumbai
+          Encl.: a/a
+
+
+
+
+Fino Payments Bank Limited
+Registered Office: Mindspace Juinagar, Plot No Gen 2/1/F, Tower 1, 8th Floor, TTC Industrial Area, MIDC Shirwane, Juinagar, Navi Mumbai
+- 400 706 | CIN: L65100MH2007PLC171959 | Tel: (+91 22) 7104 7000 | Website: www.fino.bank.in | Email: cs@fino.bank.in
+Annexure-A                                                                       FINO PAYMENTS BANK LIMJTED                                                                       AFino ·
+                                                                                   CIN: L65J00Mll2007PLCl71959
+                                                                                                                                                                                  i,l f tno P,iym,,ntc. 8.1nk
+                                    Registered Office: Mindspace Juinagar, Plot i\"o Gen 2/ 1/ F,TO\ver I. 8th Floor, TTC Industrial Area.MID(' Shirwanc. Nav i Mumbai -400706
+
+                                                                      Website: https://www.finobank.com. Tel.: 022- 7104 7000
+                                         FINANCIAL RESULTS FOR THE QUARTER AND HALF YEAR ENDED SEPTEMBE R 30. 2026
+
+
+                                                                                                                                                                                                     ( ~ in lakhs)
+                                                                                                         Quarter ended                                          Half Year ended                   Year ended
+ Sr No                               Particulars                                    30.09.2026             30.06.2026              30.09.2025            30.09.2026              30.09.2025       31.03.2026
+
+                                                                                 (Refer note 2)            Unaudited             (Refer note 2)            Audited               Audited           Audited
+    I     Interest earned(a)+(b)+(c)+(d)                                                      7,446                   7,223                   6,011              14,668               12,111             24,8 18
+   (a)    Interest/ discount on advances/ bills                                                     0                        0                       0                    0                   I                  2
+  (b)     Income 011 investments                                                              5,631                   5,443                   4,381              11,073                8,869             18, 136
+           interest on balances with Reserve Bank of India
+  (c)                                                                                         1,814                   1,780                   1,630               3,593
+          and other inter-bank funds                                                                                                                                                   3,186              6,624
+  (d)     Others                                                                                    I                        0                       0                   2                   55                 56
+   2      Other Income                                                                      25,916                  23,464                  33,994               49,380               73,241          1,33,975
+   3      Total lncome(1+2)                                                                 33,362                  30,687                  40,005               64,048               85,352          1,58,793
+   4      Interest Expended                                                                  3,546                   3,533                   2,762                7,078                5,599            11,428
+   s      Operating Expenses (i)+(ii)                                                       31,906                  28,526                  35,121               60,432               75,168          1,40,185
+   (i)    Employees cost                                                                     5,883                   5,784                    5,649              I 1,666              11 ,481           22,229
+  (ii)    Other operating expenses                                                          26,023                  22,742                  29,472              48,766                63.687          1, 17,956
+         Total Expenditure (4+5) excluding provisions and
+   6                                                                                        35,452                  32,059                  37,883              67,510
+         contingencies                                                                                                                                                                80,767          1,51,613
+
+   7      Operating Profit before provisions and contingencies (3-6)                        (2,090)                  (1,372)                 2,122               (3,462)               4,585             7,180
+
+   8      Provisions (other than tax) and Contingencies                                        -                                                -                                        -                  -
+   9      Exceptional Items                                                                                                                     -                                        -                 439
+          Profit(+)/ Loss(-) from Ordinary Activities before tax (7-8-
+  10                                                                                        (2,090)                 (1,372)                  2,122               (3,462)
+         9)                                                                                                                                                                            4,585             6,741
+  II      Tax expense                                                                                                                          587                                     l ,274             1,495
+         Net Profit(+)/ Loss(-) from Ordinary Activities after tax (10-
+  12                                                                                        (2,090)                 (1,372)                  1,535               (3,462)              3,31 I
+         11)                                                                                                                                                                                             5,246
+
+  13      Extraordinary items (net of tax expense)                                                                     -                        -                   -                    -                  -
+  14      Net Profil(+)/ Loss(-) for the 1>eriod (12-13)                                    (2,090)                 (1,372)                   1,535              (3,462)              3,311              5,246
+          Paid-up equity share capital
+  15                                                                                         8,322                   8,322                   8,322               8,322
+         (Face Value off IO/- each)                                                                                                                                                   8,322              8,322
+  16      Reserves excluding Revaluation Reserves                                                                      -                       -                                                       68,704
+  17     Analytical Ratios and Other Disclosures
+  (i)     Percentage of shares held by Government of India                                                             -                                            -                                      -
+ (ii)    Capital Adequacy Ratio(%)                                                         79.89%                  82.58%                   77.19%              79.89%               77.19%            83.95%
+ (iii)   Earning per share (EPS) - ( in ~)
+          Basic EPS before and after extraordinary items, net of tax
+ (a)                                                                                         (2.5 I)                 ( 1.65)                   1.84               (4. 16)               3.98
+         expense (not annualised)                                                                                                                                                                          6.30
+
+          Diluted EPS before and after extraordinary items, net of tax
+ (b)                                                                                         (2.51)                  (1.65)                    1.84              (4 .16)
+         expense (not annualised)                                                                                                                                                       3.97               6.29
+(iv)     NPA Ratios                                                                           NA                       NA                      NA                  NA                   NA                 NA
+ (v)     Return on Assets% (Average) (Not annualised)                                      -0.36%                   -0.25%                   0.35%              -0 62%                0.78%              1.10%
+(vi)     Net Worth                                                                         57,136                  58,006                  56,335               57, 136              56,335            60,391
+(vii)    Outstanding redeemable preference shares
+(viii)   Capital Rede1nptio11 Reserve
+(ix)     Debt· equity ratio                                                                  2.89                     2.56                    1.10                2.89                 LIO                1.91
+ (x)     Total debts to Total Assets•                                                      37.75%                  35. 75%                 20.01%              37.75%                2001 %            28.90%
+         • Debt represents the total borrowings
+                                                                                           AFino
+                                                                                            ¥ Fino Payment:. Bank
+SUMMARISED STATEMENT OF ASSETS AND LIABILITIES
+
+                                                                                                              (~ in lakhs)
+
+                                                               As at                   As at                Asat
+                             Particulars
+                                                         30 September 2026       30 September 2025      31 March 2026
+
+                                                             Audited                 Audited               Audited
+CAPITAL AND LIABILITIES
+Capital                                                                 8,322                   8,322                8,322
+Employees Stock Options outstanding                                     3,590                   3,327                3,495
+Reserves and Surplus                                                   65,156                  66,977            68,704
+Deposits                                                            2,29,940               2,09,066            2,37,949
+Borrowings                                                          2,22,464                   86,537           1,53,530
+Other liabilities and provisions                                       59,915                  58,162            59,190
+Total                                                              5,89,387                4,32,391            5,31,190
+
+
+ASSETS
+Cash and balances with Reserve Bank of India                            9,297                   9,646            15,429
+Balances with banks and money at call and short notice              1,16,850                1,10,120            1,19,631
+Investments                                                        3,92,481                2,37,368            3,25,445
+Advances                                                                     4                     13                   9·
+Fixed assets                                                           35,131                  33,203            36,414
+Other Assets                                                           35,624                  42,041            34,262
+Total                                                              5,89,387                4,32,391            5,31,190
+                                                                                                                                          AFino
+                                                                                                                                          1,1' F,noP.,ynwnt~ R.1nk
+SEGMENT REPORTING FOR THE OllARTER AI\D HALF YEAR ENDED SEPTEMBER 30, 2026
+                                                                                                                                                        (? in lakhs)
+
+                                                                                      Quarter Ended                            llalfYear ended           Year ended
+
+      Sr No                                  Pa1·ticulars           30.09.2026          30.06.2026        30.09.2025        30.09.2026    30.09.2025      31.03.2026
+
+                                                                   (Refer note 2)       Unaudited        (Refer note 2)     Audited        Audited         Audited
+        I        Segment Reve11ue
+       (a)       Corporate/ Wholesale Banking                                                        -
+       (b)       Retail Banking                                            13,777             12.994              12,618        26.770        24,669           49.350
+       (c)       Treasury                                                   7.472              7.287              6.030         14.759         12.073          24.819
+       (d)       Other Banking Operations                                  12,111             10,404             21.356         22,5 15       48.553           84.562
+       (e)       Unallocated                                                    2                    2                I               4           57               62
+                 Total IItems (a) to (c)]                                  33,362             30,687             40,005         64,048        85,352         1,58,793
+                 Less. Inter Segment Revenue                                                                         -
+                 Total Income                                              33,362             30,687             40,005         64,048        85,352         1,58,793
+        2        Segment Results(Profit(+)/ Loss(-) before tax)
+       (a)       Corporate/ Wholesale Banking
+       (b)       Retai l Banking                                            7,423              7.166              6,156         14.589         11,056          23,459
+       (c)       Treasury                                                    4,849             4,740              4,333          9.589          8.699          17.646
+       (d)       Other Banking Operations                                   (2,950)           (2,482)              1.036        (5,432)         3,250           3,406
+                 Totnl IItems (a) to (d)l                                    9,322             9,424              11,525        18,746        23,005           44,511
+                 Less: (i) Interest
+                     (1i) Other Un-allocable Expenditure net off           11.412             10.796              9,403         22,208         18,420          37.770
+                     (iii) Un-allocable income                                                       -
+                 Total Profit Before Tax                                    (2,090)           (1,372)             2,122         (3,462)         4,585           6,741
+        3        Segment Assets
+       (a)       Corporate/Wholesale Banking                                                                                                      -
+       (b)       Retail Banking                                             7,344              8,248              8.906          7.344          8,906           7.114
+       (c)       Treasury                                                5,05.152           4,8 1,844           3.39.225      5.05.152       3,39.225        4.39.147
+       (d)       Other Banking Operations                                  30.239             33.278             37.643         30.239        37.643           38,780
+       (e)       Unallocated                                               46,652             46.292             46.617         46.652        46.6 17          46. 149
+                 Total                                                   5,89,387           5,69,662           4,32,391       5,89,387       4,32,391        5,31,190
+        4        Segment Liabilities
+       (a)       C'orporate/Wholes.ile Banking                                                                                                                         -
+       (b)       Retail Banking                                          2,34.604           2,30,945            2, 13,645     2.34,604       2.13,645        2.43.538
+       (c)       Treasury                                                 1.98,002          1.80,020             69.279        1.98.002       69,279         1.33.994
+       (d)       Other 13anking Operations                                 65,569             68.5 11            61,932         65,569        61.932           64.67 1
+       (e)       Una llocated                                              14,142             10.707              8,909         14,142         8,909            8,466
+                 Total                                                   5,12,317           4,90,183           3,53,765       5,12,317       3,53,765        4,50,669
+        5        Total Capital & Rescn·es                                  77,070             79,479             78,626         77,070        78,626           80,521
+        6        Total ( 4)+(5)                                          5,89,387           5,69,662           4,32,391       5,89,387       4,32,391        5,31,190
+CASH FLOW STATEMENT
+                                                                                                                                                                          (~ in lakhs)
+                                                                                                                             Half Year          Half Year
+                                                                                                                              Ended              Ended              Year Ended
+Sr.No                                                 Particulars
+                                                                                                                             30.09.2026         30.09.2025           31.03.2026
+
+                                                                                                                             (Audited)          (Audited)            (Audited)
+  I     Cash Flow from/ (used in) operating activities
+        Net Profit/(Loss) before tax                                                                                               (3,462)            4,585                     6,741
+        Adjustments for:-
+        Loss/ (Profit) on Sale of Fixed Assets (Net)                                                                                      (0)               (0)                     -
+        L-0ss / (Profit) on Exchange Transactions (Net)                                                                                    -                    0                   0
+        Loss/ (Profit) on Sale ofTnvestment (Net)                                                                                        93                (19)                    59
+        Add : Non-Cash Expenditure
+
+        Depreciation on Fixed Assets                                                                                                4,500             3,521                     7,615
+        Employee stock option expense                                                                                                    95             570                      737
+        Amortisation of Premium on HTM Investments                                                                                         I                    I                   2
+        Amortisation of Premium on AFS Investments                                                                                  1,546               861                     2,262
+        Gratuity                                                                                                                       (32)             122                      732
+        Compensated absences                                                                                                             53                67                    172
+
+
+        Cash Flow before working capital changes                                                                                    2,794             9,708                  18,320
+        Adjustments for working capital changes:-
+        Increase/(decrease) in deposits                                                                                            (8,009)           15,123                  44,005
+        (Tncrease)/decrease in advances                                                                                                   5                     4                   8
+        Tncrease/(decrease) in other liabilities and provisions                                                                       703           (10,043)                  (9,729)
+        (lncrease)/decrease in investments                                                                                        (68,761)              659                 (89,106)
+        (lncrease)/decrease in other assets                                                                                        (1,041)           (1,016)                    7,340
+        Cash Generated from operations                                                                                            (74,309)           14,435                 (29,162)
+
+
+        Direct tax( paid)/received (net of refunds)                                                                                  (322)             (713)                  (1,509)
+
+
+        Net Cash Flow from/ (used in) operating activities (A)                                                                    (74,631)           13,722                 (30,671)
+
+
+  II    Cash Flow from / (used in ) investing activities
+
+
+        Purchase ofFixed Asset (including capital work in progress)                                                                (3,2 I 7)         (6,967)                (14,272)
+        Proceeds from sale of Fixed assets                                                                                                0                     0                   -
+        Net Cash flow from/ (used in) Investing activities (B)                                                                     (3,217)           (6,967)                (14,272)
+
+
+ III    Cash Flow from/ (used in) financing activities
+
+
+        Net Proceeds from issue of equity shares                                                                                          -                     -                   -
+        Net Proceeds/ (repayments) from borrowings                                                                                68,935              2,592                  69,584
+
+
+        Net cash from/ (used in) financing activities (C)                                                                         68,935              2,592                  69,584
+
+
+                                                                                                                                   (8,913)            9,347                  U,641
+ IV     Net (decrease)/increase in cash and cash equivalents during the Period/ Year (A+ B + C)
+
+
+  V     Cash and cash equivalents at the beginning of the Period/ Year                                                           1,35,060          1,10,419                1,10,419
+                                                                                     ,,. •   ~--:·~... ~.......
+                                                                                       •.J ~<1t; , -~-
+ VI     Cash and cash equivalents at the end of the Period / Year          /,
+                                                                                ,, . -' \
+                                                                                - ·- ...-----. ,,_ ·\                            1,26,147          l,19~            ME~       S,060
+                                                                      I /·-¾
+                                                                       f
+                                                                      fttt
+                                                                           ''(
+                                                                                 ~ : .• . ····:
+                                                                                                  -·      ' '-.,~· \    )I                           16,..,
+                                                                                                                                                       ~\J
+                                                                                                                                                                  'b        cf~
+                                                                      I r:)_'               .i I                                                      ri5 FRN:     ·*
+                                                                       ' \.
+                                                                      ~ oV •,,.,
+                                                                                  • ' ·•;:;.1;
+                                                                                          ro'/2'
+                                                                                     ., "~·
+                                                                       ~'\\·°';y ____.,,
+                                                                                                                                                    I~':s:- 10,90W /:! i     ~
+                                                                                                                  "'l
+                                                                                                                                                      .,,1>;:               ~
+                                                                            ~-                             /'"
+Notes:
+
+    1.   The above financial results have been reviewed by the Audit Committee and approved by the Board of
+         Directors of Fino Payments Bank Limited (the "Bank") at its meeting held on Oct 29, 2026. The financial
+         results for the half year ended September 30, 2026 have been subjected to audit by Bilimoria Mehta &
+         Co, Chartered Accountants, the statutory auditors of the Bank.
+
+    2.   The figures for the quarter ended September 30, 2026 and September 30, 2025 are balancing figures
+         between audited figures in respect of half year ended September 30, 2026 and September 30, 2025 and
+         the published year to date figures of three months ended up to June 30, 2026 and June 30, 2025 which
+         were subject to limited review.
+
+    3.   These financial results have been prepared in accordance with the recognition and measurement
+         principles laid down in Accounting Standards prescribed under Section 133 of the Act read with relevant
+         rules issued thereunder, in so far as they apply to Banks the relevant provisions of the Banking Regulation
+         Act, 1949, the circulars, guidelines and directions issued by the Reserve Bank of India ("the RBI") from
+         time to time ('RBI Guidelines') and other accounting principles generally accepted in India, and is in
+         compliance with the presentation and disclosure requirements of the Regulation 33 of the Securities
+         Exchange Board of India (Listing Obligations and Disclosure Requirements) Regulations, 2015, as
+         amended including relevant circulars issued by the SEBI from time to time.
+
+    4.   The Capital adequacy ratio ("CRAR") has been computed as per the Reserve Bank of India (Payments
+         Banks - Prudential Nonns on Capital Adequacy) Directions, 2025 (updated as on May 08, 2026)
+         RBI/DOR/2025-26/211 DOR.CAP.REC.130/21-01-002/2025-26, no separate charge is prescribed for
+         market risk and operational risk. However, Bank, as a conservative approach, has provided Market Risk
+         Capital (MRC) Charge on its overall investment portfolio and foreign currency assets. The Bank has
+         followed Basel II standardized approach for credit risk in accordance with the operating guidelines issued
+         by the RBI for Payments Banks.
+
+    5.   In accordance with Reserve Bank of India (Payments Banks - Prudential Norms on Capital Adequacy)
+         Second      Amendment         Directions,    2026      (May      08,       2026)     RBI/2026-27/81
+         DOR.CAP.REC.No.70/21.01.002/2026-27, the Pillar 3 disclosure (Unaudited) at Sep 30, 2026 have
+         since been made available at https:ljwww.fino.bank.in/company/pillar-iii-disclosure.
+
+    6.   The disclosure relating to segment information is in accordance with Accounting Standard 17 Segment
+         Reporting (AS-17) and as per guidelines issued by RBI in this regard.
+    7.   The Bank has applied its significant accounting policies in the preparation of these financial results that
+         are consistent with those followed in the annual financial statements for the year ended March 31, 2026.
+         Any circular/ direction issued by RBI is implemented prospectively when it becomes applicable, unless
+         specifically required under that circular/ direction.
+
+    8.   The Bank measures compensation cost relating to the employee stock options using the fair value
+         method. The fair value of stock options is estimated on the date of grant using the Black- Scholes model.
+
+    9.   Potential equity shares are not considered for the calculation of Dilutive EPS since the fair market value
+         is less than the exercise price of the options.
+
+    10. Other income relates to fees and commission earned from Current Account & Savings Account (CASA),
+        micro-ATMs and Aadhaar Enabled Payment System (AePS) transactions, domestic remittances, issuing
+        of debit cards, third party products including insurance and gold loans, Business Correspondent Banking,
+        Digital Payment Services and Cash Management Services.
+
+    11. Other operating expenses includes commission paid to Business Correspondents, Interchange expenses
+        & NPCI switching fees among others.
+
+    12. The Bank does not have any subsidiary/associate/joint venture company(ies) as on September 30, 2026.
+13. The Board, at its meeting dated May 21, 2026, considered Legal opinions & report received from legal
+    finns/ lawyer, consultants in relation to the investigation initiated by the DGGI, Hyderabad and based on
+    the consideration of the legal opinions, documents available and the facts emanated therefrom, the Board
+    was of a view that no prima facie case could be made out against Mr. Rishi Gupta. Accordingly, the
+    Board of the Bank was of the view that Mr. Rishi Gupta is 'fit and proper' to continue as MD & CEO of
+    the Bank. However, Mr. Rishi Gupta, tendered his request for voluntary early retirement from the
+    position of MD & CEO of the Bank, effective May 21, 2026 which was accepted by the Board.
+    Accordingly, Mr. Rishi Gupta ceased to be the MD&CEO (Key Managerial Personnel and Senior
+    Managerial Personnel) of the Bank as of end of day on May 21, 2026.
+
+    In the same meeting, the Board approved extension of tenure of Mr. Anup Agarwal as Interim CFO for
+    a period not exceeding 3 months w.e.f. July 06, 2026 and approved the extension of tenure of Mr. Ketan
+    Merchant as Interim CEO for a period not exceeding 3 months effective May 27, 2026, subject to
+    approval of RBI, which was duly approved by the RBI vide its letter dated May 25, 2026.
+
+    Subsequently, basis the approval of the Board, the RBI vide its letter dated August 25, 2026, has approved
+    the extension of tenure of Mr. Ketan Merchant as Interim CEO of the Bank, for a further period of three
+    months w.e.f. August 27, 2026 or till the date of taking charge of regular MD & CEO, whichever is
+    earlier. Thereafter, the Board at its meeting held on October 01, 2026 has approved the extension of
+    tenure of Mr. Anup Agarwal as Interim CFO for a period not exceeding three months effective October
+    06, 2026.
+
+14. Bank received in principle approval on 5th December 2025 from Reserve Bank of India for transition into
+    Small Finance Bank and pursuant to the same Bank has appointed external consultant to support the
+    transition within the stipulated timeline. Bank remains committed on this key strategic priority.
+
+15. Figures of the previous periods have been regrouped/ reclassified wherever necessary to confinn to
+    current period's classification.
+
+
+
+
+                                                           For Fino Payments Bank Limited
+
+
+
+
+Place: Navi Mumbai
+Date: Oct 29, 2026                                         Part-Time Chairman & Independent Director
+                                                          DIN - 00046053
+   •
+BILIMORIA MEHTA & CO.
+CHARTERED ACCOUNTANTS
+
+
+    INDEPENDENT AUDITORS' REPORT ON AUDIT OF HALF YEARLY FINANCIAL RESULTS AND REVIEW OF
+    QUARTERLY FINANCIAL RESULTS OF FINO PAYMENTS BANK LIMITED PURSUANT TO REGULATION 33 OF
+    THE SECURITIES AND EXCHANGE BOARD OF INDIA (LISTING OBLIGATION AND DISCLOSURE
+    REQUIREMENTS) REGULATIONS, 2015
+
+
+
+
+    To
+    The Board of Directors
+    Fino Payments Bank Limited
+
+
+
+    Opinion and Conclusion
+
+
+    We have (a) audited the Financial Results for the half year ended September 30, 2026 and (b) reviewed
+    the Financial Results for the quarter ended September 30, 2026, (refer "Other Matter" section below),
+    both included in the accompanying "Statement of Financial Results for the Quarter and Half year
+    ended September 30, 2026" ("the Statement") of Fino Payments Bank Limited {the "Bank") being
+    submitted by the Bank pursuant to the requirements of Regulation 33 of the Securities and Exchange
+    Board of India (Listing Obligations and Disclosure Requirements) Regulations, 2015, as amended
+    {'Listing Regulations'}.
+
+    Opinion on Financial Results for the half year ended September 30, 2026
+
+    In our opinion and to the best of our information and according to the explanations given to us, the
+    Financial Results for the half year ended September 30, 2026:
+
+       i.   is presented in accordance with the requirements of Regulation 33 of the Listing
+            Regulations in this regard except for the disclosures relating to Pillar 3 disclosure as at
+            September 30, 2026, under Basel II Capital Regulations as have been disclosed on the
+            Bank's website and in respect of which a link has been provided in the Statement and
+            have not been audited by us and;
+
+       ii. Give a true and fair view in conformity with the recognition and measurement
+           principles laid down in the Accounting Standard 25 for" Interim Financial Reporting"
+           prescribed under Section 133 of the Companies Act, 2013 (the "Act"} read with
+           relevant rules issued thereunder, the relevant provisions of the Banking Regulation
+           Act, 1949, the circulars, guidelines and directions issued by the Reserve Bank of India
+           ("RBI"} from time to time ("RBI Guidelines"} and other accounting principles generally
+           accepted in India of the net loss and other financial information of the Bank for the
+           half year then ended.
+
+    Conclusion on Unaudited Financial Results for the quarter ended September 30, 2026
+
+    With respect to the Financial Results for the quarter ended September 30, 2026, based on
+    our review conducted as stated in paragraph (b} of Auditor's Responsibilities section below,
+    nothing has come to our attention that causes us to believe that the Financial Results for
+    the quarter ended September 30, 2026, prepared in accordance with the recognition and
+BILiMORIA MEHTA & CO.
+CHARTERED ACCOUNTANTS
+
+
+
+
+     measurement principles laid down in the aforesaid Accounting Standards, in so far as they
+     apply to banks, the relevant provisions of the Banking Regulation Act, 1949, the circulars,
+     guidelines and directions issued by the RBI from time to time and other accounting
+     principles generally accepted in India, has not disclosed the information required to be
+     disclosed in terms of Regulation 33 of the Listing Regulations, including the manner in which
+     it is to be disclosed, or that it contains any material misstatement.
+
+     Basis for Opinion on the audited Financial Results for the quarter ended September 30,2026
+
+     We conducted our audit in accordance with the Standards on Auditing ('SAs') specified
+     under section 143(10) of the Act. Our responsibilities under those SAs are further described
+     in paragraph of Auditor's Responsibilities section of our report. We are independent of the
+     Bank in accordance with the Code of Ethics issued by the Institute of Chartered Accountants
+     of India (' the ICAI') together with the ethical requirements that are relevant to our audit of
+     the Financial Results for the half year ended September 30, 2026 under the provision of the
+     Act and Rules made thereunder and we have fulfilled our other ethical responsibilities in
+     accordance with these requirements and the Code of Ethics. We believe that the audit
+     evidence we have obtained is sufficient and appropriate to provide a basis for our opinion.
+
+
+     Management Responsibilities
+
+     This Statement which includes the Financial Results is the responsibility of the Bank's
+     Management and have been approved by them for the issuance. This responsibility includes
+     the preparation and presentation of the Financial Results for the quarter and half year
+     ended September 30, 2026, that give a true and fair view of the net loss and other financial
+     information with the recognition and measurement principles laid down in Accounting
+     Standards prescribed under Section 133 of the Act read with relevant rules issued
+     thereunder, in so far as they apply to Banks, the relevant provisions of the Banking
+     Regulation Act, 1949, the circulars, guidelines and directions issued by the RBI from time to
+     time and other accounting principles generally accepted in India and in compliance with
+     Regulation 33 of Listing Regulations. This responsibility also includes maintenance of
+     adequate accounting records in accordance with the provisions of the Act for safeguarding
+     of the assets of the Bank and for preventing and detecting frauds and other irregularities;
+     selection and application of appropriate accounting policies; making judgments and
+     estimates that are reasonable and prudent; and design, implementation and maintenance
+     of adequate internal financial controls that were operating effectively for ensuring the
+     accuracy and completeness of the accounting records, relevant to the preparation and
+     presentation of the Financial Results that give a true and fair view and are free from
+     material misstatement, whether due to fraud or error.
+
+     In preparing the Financial Results, the Management are responsible for assessing the Bank's
+     ability to continue as a going concern, disclosing, as applicable, matters related to going
+     concern and using the going concern basis of accounting unless the Management either
+     intend to liquidate the Bank or to cease operations, or has no realistic alternative but to do
+     so.
+
+     The Management are also responsible for overseeing the Bank's financial reporting pro
+
+
+
+
+                                                                                                       I
+BILiMORIA MEHTA & CO.
+CHARTERED ACCOUNTANTS
+
+
+
+
+      Auditor's Responsibilities
+
+
+
+      Audit of the Financial Results for the half year ended September 30, 2026
+
+          Our objectives are to obtain reasonable assurance about whether the Financial Results for
+          the half year ended September 30, 2026 as a whole is free from material misstatement,
+          whether due to fraud or error, and to issue an auditor's report that includes our opinion.
+          Reasonable assurance is a high level of assurance, but is not a guarantee that an audit
+          conducted in accordance with SAs will always detect a material misstatement when it exists.
+          Misstatements can arise from fraud or error and are considered material if, individually or in
+          the aggregate, they could reasonably be expected to influence the economic decisions of
+          users taken on the basis of this Half Year Financial Results.
+
+          As part of an audit in accordance with $As, we exercise professional judgment and maintain
+          professional skepticism throughout the audit. We also:
+
+     i.      Identify and assess the risks of material misstatement of the Statement, whether due to
+             fraud or error, design and perform audit procedures responsive to those risks, and
+             obtain audit evidence that is sufficient and appropriate to provide a basis for our
+             opinion. The risk of not detecting a material misstatement resulting from fraud is higher
+             than for one resulting from error, as fraud may involve collusion, forgery, intentional
+             omissions, misrepresentations, or the override of internal control.
+    ii.      Obtain an understanding of internal control relevant to the audit in order to design audit
+             procedures that are appropriate in the circumstances, but not for the purpose of
+             expressing an opinion on the effectiveness of such controls.
+   iii.      Evaluate the appropriateness of accounting policies used and the reasonableness of
+             accounting estimates and related disclosures made by the Management
+   iv.       Conclude on the appropriateness of the Management use of the going concern basis of
+             accounting and, based on the audit evidence obtained, whether a material uncertainty
+             exists related to events or conditions that may cast significant doubt on the Bank's ability
+             to continue as a going concern. If we conclude that a material uncertainty exists, we are
+             required to draw attention in our auditor's report to the related disclosures in the
+             Statement or if such disclosures are inadequate, to modify our opinion. Our conclusions
+             are based on the audit evidence obtained up to the date of our auditor's report.
+             However, future events or conditions may cause the Bank to cease to continue as a
+             going concern.
+    v.       Evaluate the overall presentation, structure and content of the Half Year Financial
+             Results, including the disclosures, and whether the Half Year Financial Results represents
+             the underlying transactions and events in a manner that achieves fair presentation.
+   vi.       Obtain sufficient appropriate audit evidence regarding the Half Year Financial Results of
+             the Bank to express an opinion on the Half Year Financial Results.
+
+
+
+                                                                                                            ·,
+   .
+BILIMORIA MEHTA & CO.
+CHARTERED ACCOUNTANTS
+
+
+
+
+       Materiality is the magnitude of misstatements in the Statement that, individually or in
+       aggregate, makes it probable that the economic decisions of a reasonably knowledgeable
+       user of the Statement may be influenced. We consider quantitative materiality and
+       qualitative factors in (i) planning the scope of our audit work and in evaluating the results of
+       our work; and (ii) to evaluate the effect of any identified misstatements in the Statement.
+
+       We communicate with those charged with governance regarding, among other matters, the
+       planned scope and timing of the audit and significant audit findings, including any significant
+       deficiencies in internal control that we identify during our audit.
+
+       Review of the Financial Results for the quarter ended September 30, 2026
+
+       We conducted our review of the Financial Results for the quarter ended September 30, 2026
+       in accordance with the Standard on Review Engagements ("SRE") 2410 'Review of Interim
+       Financial Information Performed by the Independent Auditor of the Entity', issued by the
+       ICAI. A review of interim financial information consists of making inquiries, primarily of the
+       Bank's personnel responsible for financial and accounting matters, and applying analytical
+       and other review procedures. A review is substantially less in scope than an audit conducted
+       in accordance with SAs specified under Section 143(10) of the Act and consequently does
+       not enable us to obtain assurance that we would become aware of all significant matters
+       that might be identified in an audit. Accordingly, we do not express an audit opinion.
+
+
+       Other Matters
+
+
+       The statement includes the result for the quarter ended September 30, 2026 being the
+       balancing figure between audited figures in respect of half year ended September 30, 2026
+       and the published year to date figures of three months ended up to June 30, 2026 which
+       were subject to limited review. Our report on the statement is not modified in respect of
+       this matter.
+
+
+
+       For Bilimoria Mehta &
+       Co Chartered Accountants
+       FRN: 101490W
+
+
+
+
+       ~~ff
+       Partner
+       Membership No: 113784
+       UDIN: '2.. b I I ?i ~ 8 '1- ~ Cd~ ~ C G-\ ~ 1- £i :f--
+
+
+
+       Place: Navi Mumbai
+       Date: October 29, 2026
+

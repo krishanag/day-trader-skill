@@ -1,0 +1,597 @@
+Ref No: 16/SE/CS/OCT/2026-27
+
+Date: October 29, 2026
+
+To,
+ Listing Department                              Listing & Compliance Department
+ BSE Limited                                     National Stock Exchange of India Limited
+ Phiroze Jeejeebhoy Towers,                      Exchange Plaza, 5th Floor
+ Dalal Street, Mumbai – 400001                   Plot No. C/1, “G” Block
+                                                 Bandra- Kurla Complex
+                                                 Bandra(E), Mumbai- 400051
+     BSE Scrip Code: 544020                      NSE Symbol: ESAFSFB
+
+Dear Sir / Madam,
+
+Sub: Disclosure under Regulations 30, 33, 51 and 52 of Securities and Exchange Board
+of India (Listing Obligations and Disclosure Requirements) Regulations, 2015 -
+Outcome of Board Meeting held on Thursday, October 29, 2026
+
+In continuation to our intimation dated October 16, 2026 and pursuant to Regulation 30 and
+51 read with Schedule III of the Securities and Exchange Board of India (Listing Obligations
+and Disclosure Requirements) Regulations, 2015 (“SEBI Listing Regulations”), we hereby
+inform that, the Board of Directors of the Bank, in its meeting held on, Thursday, October 29,
+2026, has, inter alia, considered and approved the following:
+
+i.     Unaudited Standalone Financial Results of the Bank for the Quarter and Half Year ended
+       September 30, 2026, along with the Limited Review Report thereon issued by the Joint
+       Statutory Auditors of the Bank, M/s. Sundaram and Srinivasan, Chartered Accountants
+       and M/s. Rodi Dabir & Co, Chartered Accountants.
+
+       A copy of the Unaudited Standalone Financial Results of the Bank for the quarter and half
+       year ended September 30, 2026, along with the Limited Review Report thereon issued
+       by the Joint Statutory Auditors of the Bank is enclosed as Annexure - 1.
+
+       The Disclosure in accordance with Regulation 52(4) of SEBI Listing Regulations, for the
+       quarter and half year ended September 30, 2026 is enclosed as Annexure - 2.
+
+       We hereby confirm and declare that the Joint Statutory Auditors have issued the Limited
+       Review Report for the period ended September 30, 2026 with an unmodified opinion.
+
+ii.    Recommended the re-appointment of Shri. George Kalaparambil John (DIN: 00694646)
+       as Whole Time Director (Designated as Executive Director) of the Bank for a period of 3
+       (Three) years with effect from May 18, 2027 till May 17, 2030 to the Reserve Bank of India
+       for its approval.
+
+       It is confirmed that Shri. George Kalaparambil John is not debarred from holding the office
+       of Director by virtue of any SEBI order or any other such authority and he is not disqualified
+       from holding the office of director pursuant to provisions of Section 164 of the Companies
+       Act, 2013.
+    The disclosures as required under Regulation 30 of the SEBI Listing Regulations read
+    with SEBI Circular no. HO/49/14/14(7)2025-CFD-POD2/I/3762/2026 dated January 30,
+    2026 is given as Annexure - 3.
+
+
+The press release and the investor presentation on financial and business performance of the
+Bank will be submitted through a separate announcement.
+
+The Board Meeting commenced at 12:00 Noon and the results were approved at 01:00 P.M.
+
+The above announcements are also being made available on the website of the Bank at
+https://www.esaf.bank.in/investor-relation/?id=disclosure-to-stock-exchanges.
+
+Requesting you to take the same on records.
+
+Thanking you,
+
+Yours Faithfully
+
+For ESAF Small Finance Bank Limited
+                       Digitally signed by Ranjith Raj
+
+Ranjith Raj P          P
+                       Date: 2026.10.29 13:03:52
+                       +05'30'
+Ranjith Raj. P
+Company Secretary and Compliance Officer
+M/s. Sundaram & Srinivasan                                           M/s. Rodi Dabir & Co
+Chartered Accountants                                                Chartered Accountants
+23, CP Ramaswamy Road,                                               282, Kapish House 2nd Floor,
+Alwarpet, Chennai,                                                   Opp. Punit Super Bazar,
+Tamilnadu - 600 018                                                  Khare Town, Dharampeth, Nagpur,
+                                                                     Maharashtra - 440010
+
+
+Independent Auditor's Review Report on unaudited financial results for the quarter and
+half year ended September 30, 2026, of ESAF Small Finance Bank Limited pursuant to
+the Regulation 33 and 52 read with Regulation 63(2) of the SEBI (Listing Obligations
+and Disclosure Requirements) Regulations, 2015 as amended.
+
+
+To
+The Board of Directors
+ESAF Small Finance Bank Limited
+
+
+   1. We have reviewed the accompanying Statement of Unaudited Financial Results of ESAF
+      SMALL FINANCE BANK LIMITED (the "Bank") for the quarter and half year ended
+      September 30, 2026 (the "Statement"), being submitted by the Bank pursuant to the
+      requirement of Regulation 33 and Regulation 52 read with Regulation 63(2) of the SEBI
+      (Listing Obligations and Disclosure Requirements) Regulations, 2015, as amended (the
+      "Listing Regulations") except for the disclosures relating to Pillar 3 disclosures as at
+      September 30, 2026, including leverage ratio, liquidity coverage ratio and net stable
+      funding ratio under Basel II Capital Regulations and have not been reviewed by us.
+
+   2. The Bank's Management is responsible for the preparation of the Statement in accordance
+      with the recognition and measurement principles laid down in Accounting Standard 25 -
+      Interim Financial Reporting ('AS 25') prescribed under Section 133 of the Companies Act,
+      2013 as amended, read with relevant rules issued thereunder, the relevant provisions of
+      the Banking Regulation Act, 1949, the circulars, guidelines and directions issued by the
+      Reserve Bank of India ('RBI') from time to time (the 'RBI Guidelines') and other accounting
+      principles generally accepted in India and in compliance with Regulation 33 and 52 of the
+      Listing Regulations. The Statement has been approved by the Bank's Board of Directors.
+      Our responsibility is to express a conclusion on the Statement based on our review.
+
+   3. We conducted our review of the Statement in accordance with the Standard on Review
+      Engagements (SRE) 2410, "Review of Interim Financial Information Performed by the
+      Independent Auditor of the Entity" issued by the Institute of Chartered Accountants of
+      India. This standard requires that we plan and perform the review to obtain moderate
+      assurance as to whether the Statement is free of material misstatement. A review of
+      interim financial information consists of making inquiries, primarily of persons responsible
+      rur rittdttLidl dtlu dLLuu11Li11y rttdllt!r~, en ul diJiJlyi11y dltdlyliLdl dttu ull1e1 review procedures.
+      A review is substantially less in scope than an audit conducted in accordance with
+      Standards on Auditing specified under Section 143(10) of the Companies Act 2013 and
+      consequently does not enable us to obtain assurance that we would become aware of all
+      significant matters that might be identified in an audit. Accordingly, we do not express an
+      audit opinion.
+
+
+
+
+                                                                                                              1
+Sundaram & Srinivasan                                                  Rodi Dabir & Co.
+Chartered Accountants                                                  Chartered Accountants
+
+
+
+
+ 4.   Based on our review conducted as stated in paragraph 3 above, nothing has come to our
+      attention that causes us to believe that the accompanying Statement, prepared in
+      accordance with the recognition and measurement principles laid down in AS 25 prescribed
+      under Section 133 of the Companies Act, 2013, read with relevant rules issued thereunder,
+      in so far as they apply to Banks, the RBI Guidelines and other accounting principles
+      generally accepted in India, has not disclosed the information required to be disclosed in.
+      terms of the Listing Regulations, including the manner in which it is to be disclosed, or that
+      it contains any material misstatement or that it has not been prepared in accordance with
+      the relevant prudential norms issued by RBI in respect of income recognition, asset
+      classification, provisioning and other related matters.
+
+ 5. The review of the unaudited financial results for the quarter ended 30 June 2026, the
+    review of the unaudited financial results for the quarter and half year ended 30 September
+    2025, and the audit of the financial results for the year ended 31 March 2026, included in
+    the Statement, were carried out by M/s. Kirtane & Pandit LLP, Chartered Accountants,
+    jointly with M/s. Sundaram & Srinivasan, Chartered Accountants who have expressed
+    unmodified conclusions in their review reports dated 31 July 2026 and 11 November 2025,
+    respectively, and an unmodified opinion in their audit report dated 30 April 2026. The
+    aforesaid reports have been furnished to us and have been considered by us for the
+    purpose of our review of the Statement.
+
+      Accordingly, M/s. Rodi Dabir & Co., Chartered Accountants, does not express any separate
+      conclusion on the financial results for the quarter ended 30 June 2026 and the quarter and
+      half year ended 30 September 2025, or any separate opinion on the financial results for
+      the year ended 31 March 2026. Our conclusion is not modified in respect of this matter.
+
+
+
+
+  For Sundaram & Srinivasan                                 For Rodi Dabir & Co.
+  Chartered Accountants                                     Chartered Accountants
+  (Firm Registration No. 004207S)                           (Firm Registration No. 108846W)
+                    ~
+              ~~.://
+      ~~
+  S Ramkumar
+  Partner
+                                                                &7
+                                                            Vrunda Paunikar
+                                                            Partner
+  Membership No.: 238820                                    Membership No.: 137007
+
+  UDIN: 26238820AULCDD2865                                  UDIN: 26137007XWARYR1059
+
+  Place: Mannuthy                                           Place: Mannuthy
+  Date: October 29, 2026                                    Date: October 29, 2026
+
+
+
+
+                                                                                                  2
+                                                                               Building No.Vll/83/8, ESAF Bhavan, Thrissur - Palakkad National Highway, Mannuthy,
+                  WESAF
+                  ESAF SHALL FINANCE BANI<
+                                                                                                             Thrissur, Kerala - 680651
+                                                                                                          GIN : L65990KL2016PLC045669
+
+Statement of Unaudited Financial Results for the quarter and half year ended 30 September 2026
+                                                                                                                                                                    Rs. In Lakhs
+    SI                                  Particulars                                      Quarter ended                                 Half year ended             Year ended
+    No.                                                                     30 September 30 June 2026 30 September              30 September 30 September         31 March 2026
+                                                                                2026                      2025                      2026            2025
+
+                                                                             Unaudited       Unaudited        Unaudited          Unaudited       Unaudited          Audited
+
+
+
+1         Interest Earned (a)+(b)+(c)+(d)                                       1, 17,471        1,09,777          81,982           2,27,248        1,64,805           3,53,718
+          a) lnteresl/discount on advances/bills                                1,07,095           99,239          71,495           2,06,334        1,43,556           3,11,704
+          b) Income on investments                                                 10,085         10,366           10,448             20,451          20,500             41,060
+          c) Interest on balances with Reserve Bank of India
+              and other inter-bank funds                                             291             172                   39           463              749                954
+          d) others                                                                   -               -                -
+2         Other Income                                                            21,333          24,824           14,516             46,157          34,030             81,105
+3         Total Income (1)+(2)                                                  1,38,804        1,34,601           96,498           2,73,405        1,98,835           4,34,823
+4         Interest expended                                                       53,146          51,369           44,803           1,04,515          89,839           1,83,744
+5         Operating Expenses (i)+(ii)                                             49,419          48,334           42,370             97,753          87,179           1,79,882
+          i) Employees Cost                                                       18,005          17,979           15,823             35,984          34,879             69,202
+          ii) Other operating expenses                                            31,414          30,355           26,547             61,769          52,300           1,10,680
+6         Total Expenditure (4)+(5)                                             1,02,565          99,703           87,173           2,02,268        1,77,018           3,63,626
+          (excluding provisions & contingencies)
+7         Operating Profit before provisions and contingencies (3)-(6)            36,239          34,898             9,325            71,137          21,817             71,197
+8         Provisions (other than tax) and contingencies                           14,789          24,196           24,867             38,985          48,279             94,037
+9         Exceptional items                                                           -                                                  -                -                   -
+10        Profitl(Loss) from ordinary activities before tax (7)-(8)-(9)           21,450          10,702           (15,542)           32,152         (26,462)           (22,840)
+11        Tax expenses                                                             5,433           2,694             (3,961)           8,127           (6,759)            (6,200)
+12        Net profit /(Loss) from ordinary activities after tax (10)-(11)         16,017           8,008           (11,581)           24,025         (19,703)           (16,640)
+13        Extraordinary items (net of tax expense)                                    -                                                                                       -
+14        Net Profit I (Loss) for the Period/ year (12)-(13)                      16,017           8,008           (11,581)           24,025         (19,703)           (16,640)
+15        Paid up equity share capital (Face Value of Rs. 10/- each)              51,612          51,595           51,551             51,612          51,551             51,566
+16        Reserves excluding revaluation reserves                                                                                                                      1,26,438
+
+17        Analytical Ratios and other disclosures
+          (i) Percentage of shares held by Government of India                                            -                -
+          (ii) Capital Adequacy Ratio - Basel II (Refer Note 7)                   24.14%          23.86%           22.43%             24.14%          22.43%             22.22%
+          (iii) Earnings Per Share (EPS) [before and after extraordinary
+          items, net of expenses] (Face value of Rs.10/- each)*
+                    - Basic (Rs.)                                                    3.10            1.55             (2.25)            4.66            (3.82)            (3.23)
+                    - Diluted (Rs.)                                                  3.10            1.55             (2.24)            4.65            (3.81)            (3.22)
+          (iv) NPA Ratio
+                    (a) Gross NPA                                                 67,858        1,25,334          1,63,457            67,858        1,63,457           1,21,386
+                    (b) Net NPA                                                    7,988          18,412            69,640             7,988          69,640             38,244
+                    (c)% of Gross NPA to Gross Advances                            2.84%           5.40%              8.54%            2.84%            8.54%             5.41%
+                   (d) % of Net NPA to Net Advances                                0.34%           0.83%              3.83%            0.34%            3.83%              1.77%
+          (v) Return on Assets *                                                    0.51%           0.26%           (0.43)%             0.76%         (0.74)%            (0.60)%
+          (vi) Networth #                                                        2,02,324        1,86,382          1,74,850          2,02,324        1,74,850           1,78,004
+          (vii) Outstanding redeemable preference shares                                                                                     -                -
+          (viii) Capital Redemption Reserve/ Debenture Redemption                                                                            -
+          (ix) Debt - Equity Ratio **                                                0.83             0.96            0.66              0.83             0.66              0.98
+          (x) Total debts** to total assets                                         5.46%           6.72%            7.79%             5.46%            7.79%             8.92%
+* Quarterly/half year numbers are not annualised
+#Networth represents sum of Capital and Reserves & Surplus
+**Debt represents borrowings with residual maturity of more than one year. Total debt represents total borrowings. Equity represents sum of Capital and Reserves & Surplus
+As per regulation 33 and regulation 52(4) of SEBI (Listing obligations & Disclosure Requirements) regulations, 2015 the equity and debt listed entities are required to disclose
+certain ratios. The ratios which are relevant to the Banking sector are disclosed above.
+
+
+
+
+                                                                                                                       ~
+                                                                                                          Building No.Vll/83/8, ESAF Bhavan, Thrissur- Palakkad National Highway,MannuthY,
+
+                 ff2ESAF
+                 ESAF' SMALL FINANCE DANK
+                                                                                                          Thrissur, Kerala - 680651
+                                                                                                          CIN : L65990KL2016PLC045669
+
+
+
+Notes:
+1. Segment information in accordance with the RBI guidelines and Accounting Standard 17-"Segment Reporting"
+
+
+                                                                                                                                                                                          Rs. In Lakhs
+      SI   Particulars                                                                                     Quarter ended                                  Half Year ended              Year ended
+                                                                                        30 September       30 June 2026       30 September       30 September       30 September       31 March 2026
+                                                                                            2026                                  2025               2026               2025
+                                                                                          Unaudited          Unaudited         Unaudited          Unaudited           Unaudited            Audited
+
+1          Segment Revenue
+(a)        Retail                                                                              1.22,910           1,14,136             79,827           2.37.046            1.61,463          3.66,164
+(b)        Wholesale                                                                              1.793              2,221              2,539              4,014               5,557            10,330
+(c)        Treasury                                                                              10,046             15,430              9,540             25,476              23.294            40,485
+(d)        Other Banking Operations                                                               4.055              2,814              4,592              6,869               8,521            17,844
+(e)        Less: Inter Segment Revenue
+           Income from operations                                                              1,38,804           1,34,601             96,498           2,73,405            1,98,835           4,34,823
+2          Segment Results
+(a)        Retail                                                                               18.447              2,990             (21,424)            21,437            (39,524)           (42,585)
+(b)        Wholesale                                                                               319                623               2,089                942              2,876              3.569
+(c)        Treasury                                                                               (589)             5,051                (647)             4,462              2,030               (956)
+(d)        Other Banking Operations                                                              3,273              2,038               4,440              5,311              8.156             17,132
+           Total Profit /(Loss) Before Tax                                                      21,450             10,702             (15,542)            32,152            (26,462)           (22,840)
+3          Segment Assets
+(a)        Retail                                                                             23,77,800          22,37,431          18.09,697          23,77.800          18,09.697           21,78,449
+(b)        Wholesale                                                                             71,074             74,841             88.628             71,074             88,628              79,276
+(c)        Treasury                                                                            7,40.131           7,50,321           7,39,852           7,40, 131          7,39,852            7,54.346
+(d)        Unallocated                                                                           79,961             80,329             74,727             79,961             74,727              74,727
+           Total Assets                                                                       32,68,966          31,42,922          27,12,904          32,68,966          27,12,904           30,86,798
+4          Segment Liabilities
+(a)        Retail                                                                             23,60,450          22.67,208          18,16,229          23,60,450          18.16,229           22,07,619
+(b)        Wholesale                                                                             69,558             72,717             83,406             69,558             83,406              74,389
+(c)        Treasury                                                                            6,12,912           5,80,606           6,01,052           6,12,912           6,01 ,052           5.93,027
+(d)        Capital & Reserves                                                                  2,02,324           1,86,382           1,74,850           2,02,324           1,74,850            1,78,004
+(e)        Unallocated                                                                           23.722             36,009             37,157             23,722             37,157              33,759
+           Total Liabilities                                                                  32,68,966          31,42,922          27,12,694          32,68,966          27,12,694           30,86,798
+Notes:
+i) The business operation of Bank are in India and for the purpose of segment reporting as per accounting standard-17(Segment reporting) the bank is considered to operate only in domestic
+segment.
+ii) Income, expenses, assets and liabilities have been either specifically identified to individual segments or allocated to segments based on matching principle and the residual items are classified
+as unallocated.
+iii) Unallocated item includes capital expenditure, deferred income tax assets/ liabilities and advance tax etc.
+iv) In computing the above information, certain estimates and assumptions have been made by the management and have been relied upon by the auditors.
+v) The RBI vide its Circular dated April 7, 2022 on establishments of Digital Banking Units (DBUs) has prescribed reporting of Digital Banking Seg ~~ts as a sub segment of Retail Banking
+Seoment (RBS). The Bank has not set uo anv DBU so far and hence DBU has not been disclosed as a seoerate seornent as oer Accountina Stan·         1 a d 17 r: eament Reoortinal.
+
+
+
+
+                                                                                                                                                   ~          A
+              WESAF
+              ESA~ SMALL FINANCE BANK
+                                                         Building No.Vll/83/8, ESAF Bhavan, Thrissur - Palakkad National Highway, Mannuthy,
+                                                                                       Thrissur, Kerala - 680651
+                                                                                    GIN : L65990KL2016PLC045669
+
+Note
+2. Statement of Assets and Liabilities
+                                                                                                                                   Rs. In Lakhs
+Particulars
+                                                                                                                     As at
+                                                                                                                 30 September        As at
+                                                                                                                     2026        31 March 2026
+
+                                                                                                                  Unaudited        Audited
+CAPITAL AND LIABILITIES
+Capital                                                                                                                 51,612          51,566
+Employee Stock options Outstanding                                                                                         396             649
+Reserves and Surplus                                                                                                  1,50,712        1,26,438
+Deposits                                                                                                             28,46,563       25,85,016
+Borrowings                                                                                                            1,78,367        2,75,274
+Other Liabilities and Provisions                                                                                        41,316          47,855
+Total
+                                                                                                                     32,68,966       30,86,798
+ASSETS
+Cash and Balances with Reserve Bank of India                                                                            87,285        1,11,371
+Balances with Banks and Money at Call and Short Notice                                                                  18,613            6,082
+Investments                                                                                                           6,36,993        6,39,911
+Advances                                                                                                             23,33,494       21,59,422
+Fixed Assets                                                                                                            58,646           51,598
+Other Assets                                                                                                          1,33,935        1, 18,414
+Total
+                                                                                                             A
+                                                                                                                     32,68,966       30,86,798
+
+
+
+                                                                                                          h
+                                                     Building No.Vll/83/8, ESAF Bhavan, Thrissur - Palakkad National Highway,
+
+    WESAF
+    ESAF SMALL FINANCE BANK
+                                                                        Mannuthy, Thrissur, Kerala - 680651
+                                                                           CIN : L65990KL2016PLC045669
+
+3. Statement of Cash Flow is given below:
+                                                                                                                              Rs. In Lakhs
+Particulars                                                                                      Half Year ended 30       Year ended 31
+                                                                                                  September 2026           March 2026
+                                                                                                      unaudited               Audited
+Cash Flow from Operating Activities
+Net ProfiU(Loss) Before Tax                                                                                   32,152                 (22,840)
+Adjustments for:
+Depreciation on Bank's Property                                                                                3,341                    6,548
+Amortisation of Premium/ Discount on HTM Investments                                                             193                     321
+Profit on sale of investments (net)                                                                           (1,966)                 (8,276)
+(Profit )/Loss on sale of Fixed Assets                                                                             (1)                     86
+Provision for Non Performing Advances                                                                         39,303                  94,502
+Provision for Standard Advances                                                                                 884                   (1,329)
+Expense on Employee Stock Option                                                                                 103                    353
+Profit on revaluation of investments (Net)                                                                    (2,2q6)                 10,015
+Provision/(Reversal) for Other Contingencies                                                                     292                     528
+                                                                                                              72,035                  79,908
+
+
+(Increase)/ Decrease in Investments (other than HTM Investments)                                               27,074                (51,467)
+(Increase)/ Decrease in Advances                                                                           (2,13,375)              (4,51,138)
+(Increase)/ Decrease in Fixed Deposit with Bank
+(Original Maturity greater than 3 months)                                                                        254                       -
+(Increase)/ Decrease in Other Assets                                                                         (25,590)                (23,431)
+Increase/ (Decrease) in Deposits                                                                            2,61,547                2,57,372
+Increase/ (Decrease) in Other liabilities and provisions                                                      (7,715)                  (6,052)
+Direct taxes paid (net)                                                                                        1,943                   (1,221)
+Net Cash Flow from/(used in) Operating Activites (A)                                                        1,16,173               (1,96,029)
+
+Cash Flow from/(Used in) Investing Activities
+Purchase of Fixed Assets                                                                                     (10,428)                (28,318)
+Proceeds from Sale of Fixed Assets                                                                                41                     127
+(Increase)/ Decrease in Held to Maturity Investments                                                         (20,241)                  9,024
+Net Cash Used in Investing Activities (B)                                                                    (30,628)                (19,167)
+
+Cash Flow from/(Used in) Financing Activities
+Proceeds from Issue of Share Capital (including Share Premium)                                                     62                     36
+Dividend Paid                                                                                                      -                       -
+lncrease/(Decrease) in Borrowings                                                                            (96,907)               1,34,701
+Cash Flow from/(used in) Financing Activities (C )                                                           (96,845)               1,34,737
+Net Increase in Cash and Cash Equivalents (A+B+C)                                                                      (11,300)       (80,459)
+Cash and Cash Equivalents at the beginning of period/ year                                                           1,17,120        1,97,579
+Cash and Cash Equivalents at the end of period/year                                                                  1,05,820        1, 17,120
+The above Cash Flow Statement has been prepared under the indirect method as set out in Accounting Standard (AS) 3 - Cash Flow
+Statements sµ&ulfl&i.l u111.l111 S11<.:liu11 133 uf 1111::: Cu111µd11i1:1s Act, 2013 reed with the Componicn (/\ooount) Ruloo, 2011.
+                                                                                                               I
+                                                                                 Building No.Vll/83/8, ESAF Bhavan, Thrissur - Palakkad National Highway, Mannuthy,
+               WESAF
+               ESAF SMALL FINANCE BANK
+                                                                                                               Thrissur, Kerala - 680651
+                                                                                                            GIN: L65990KL2016PLC045669
+
+
+ 4 The above statement of unaudited financial results for the quarter and half year ended 30 September 2026 ("Statement" or "financial results") have been reviewed by the
+ Audit Committee and approved by the Board of Directors at their meetings held on 29 October 2026 in accordance with the requirement of Regulation 33 and Regulation 52 of
+ SEBI (Listing Obligations and Disclosure Requirements) Regulations, 2015, (the "Regulations"), as amended. The above financial results were subjected to a limited review
+ by the Joint Statutory Auditors who have issued an unmodified conclusion there on.
+ The financial results for the quarter and half year ended 30 September 2025, year ended March 2026 and quarter ended 30 June 2026 were reviewed/ audited by the Joint
+ Statutory Auditors, Mis. Sundaram & Srinivasan, Chartered Accountants and Mis. Kirtane & Pandit LLP Chartered Accountants.
+ 5. The above financial results have been prepared in accordance with the recognition and measurement principles laid down in the applicable Accounting Standard
+ ("Accounting standards") prescribed under Section 133 of the Companies Act, 2013 (the "Act"), in so far as they apply to the Banks, the relevant provisions of the Banking
+ Regulation Act, 1949 and the circulars, the guidelines and directions issued by the Reserve Bank of India ("RBI") from time to time (the "RBI Regulations") and other
+ accounting principles generally accepted in India and the requirements of Regulation 33 and Regulation 52 read with regulation 63 (2) of the SEBI (Listing Obligations and
+ Disclosure Requirements) Regulations, 2015, as amended.
+ 6. The Bank has applied its significant accounting policies in the preparation of these financial results consistent with those followed in the annual financial statement for the
+ year ended 31 March 2026. Any circulars/ directions issued by RBI is implemented prospectively when it becomes applicable, unless specifically required under those
+ circulars/ directions.
+ 7. The Capital Adequacy Ratio ("CAR") has been computed as per RBI Circular No.RBI/DOR/2025-26/182DOR.CAP.REC.101/21-01-002/2025-26 (Reserve Bank of India
+ (Small Finance Banks - Prudential Norms on Capital Adequacy) Directions, 2025) dated, 28 November 2025 as amended from time to time.
+8. Details of resolution plan implemented under the Resolution Framework for COVID-19-related Stress as per RBI-circular dated 6 August 2020 (Resolution Framework 1.0)
+and 5 May 2021 (Resolution framework 2.0) are given below:
+                                                                                                                                                                       Rs. In Lakhs
+Type of Borrower                                                                            Exposure to      of (A) aggregate of (A) amount      of (A) amount         Exposure to
+                                                                                            accounts         debt that        written off during paid by the           accounts
+                                                                                            classified as    slipped into     the half - year    borrowers             classified as
+                                                                                            standard         NPA during the                      during the half       standard
+                                                                                            consequent to half - year                            year#                 consequent to
+                                                                                            implementation                                                             implementation
+                                                                                            of resolution                                                              of resolution
+                                                                                            plan - position                                                            plan - position as
+                                                                                            as at the end of                                                           at the end of this
+                                                                                            the previous                                                               half year ended
+                                                                                            half year ended                                                            30 September
+                                                                                            31 March 2026                                                              2026
+                                                                                            (A)
+
+
+
+Personal Loans                                                                                          296                                                    47                     248
+Corporate Persons '
+Of Which MSMEs
+Others                                                                                                   10                                                        4                    5
+Total                                                                                                   306                 2                 0                51                    253
+'As defined in section 3(7) of Insolvency and Bankruptcy Code, 2016
+# Amount paid by borrower during the half year is net of addition in the borrower amount due to fresh disbursement made, if any.
+"oenotes figures below Rs. 1 Lakh
+9. Details of loans not in default and stressed loans (NPA and SMA accounts) acquired and transferred during the quarter ended 30 September 2026 as per 'Reserve Bank of
+India (Small Finance Banks-Financial statements: Presentation and disclousures) Directions, 2025' dated November 28, 2025 and as amended thereafter, are given below:
+   (i) During the half year ended 30 September 2026, the bank has not acquired / transferred any "loans not in default" through assignment of loans.
+   (ii) During the half year ended 30 September 2026, the Bank has not acquired I transferred any Stressed Loans (Non Performing Asset and
+          Special mention account).
+
+  (iii) Details of ratings of SRs outstanding as on 30 September 2026 are given below:
+                                                                                                                                                                           Rs.in Lakhs
+Ratings                                                                                                       Rating Agency       Current Recovery Rating              Gross Value of
+                                                                                                                                                                        Outstanding
+                                                                                                                                                                           SRs*
+RR4                                                                                                                     Crisil   More than 25% and upto 50%                    1,703.30
+RR2                                                                                                                     Crisil  More than 75% and upto 100%                        2.03
+RR1                                                                                                                     Crisil More than 100% and upto 150%                    2,435.09
+RR1                                                                                                                Brickwork More than 100% and upto 150%                        972.19
+RR1+                                                                                                               Brickwork More than 100% and upto 150%                      1,248.00
+• the same has been fully provided in the books
+10. The Bank is carrying an additional contingency provision on standard assets of Rs. 1,745 Lakh as on 30 September 2026 (Rs.3,105 Lakh as on 30 September 2025).
+11. Other income includes processing fee, profiU loss on sale of investments (net off provision for depreciation), Income from selling of third party products, recovery from
+loans written off, income from dealing in PSLC and Collection Agency Fees from Asset Reconstruction Companies (ARC).
+12. During the half year ended 30 September 2026, the Bank has allotted 4,57,688 equity shares (1,68,506 during the quarter ended 30 September 2026) pursuant to the
+exercise of options under the approved employee stock option scheme.
+13. The Bank has raised Tier II capital of Rs. 8,500 Lakh during half year ended 30 September 2026.
+
+
+
+
+                                                                                                                                                              ~
+Place · Mannuthy                                                                                                                                   Dr.Kada~
+Date · 29 October 2026                                                                                                                              Managing Director & CEO
+                                                                                                mESAF
+                                                                                                ESAF SMALL FINANCE BANK
+                                                                                                            Joy of Banking
+                                             Annexure-2
+        Disclosure in compliance with Regulation 52(4) of SEBI (LODR) Regulations, 2015 for
+                        the Quarter and Half Year ended September 30, 2026.
+
+                                                                     For the Quarter and Half Year ended
+                                                                     September 30, 2026
+        1          Debt Equity Ratio**                               0.83
+        2          Debt Service Coverage Ratio                       NA
+        3          Interest Service Coverage Ratio                   NA
+        4          Outstanding               Redeemable              NA
+                   Preference Shares (Quantity and
+                   Value)
+        5          Capital     Redemption        Reserve/             NA
+                   Debenture Redemption Reserve
+        6          Net worth# (Rs. In crore)                         2023.24
+        7          Net Profit/ (Loss) after Tax (Rs. In              240.25
+                   crore)
+        8          Earnings       Per Basic (Rs)                     4.66
+                   Share                Diluted (Rs)                 4.65
+        9          Current Ratio                                     NA
+        10         Long Term Debt to Working Capital                 NA
+        11         Bad Debts to Account Receivable                   NA
+                   Ratio
+        12         Current Liability Ratio                           NA
+        13         Total Debts to Total Assets                       5.46%
+        14         Debtors Turnover                                  NA
+        15         Inventory Turnover Ratio                          NA
+        16         Operating Margin percent                          NA
+        17         Net Profit Margin percent                         NA
+
+       Note:
+
+      ** Debt represents borrowings with residual maturity of more than one year. Total debt
+      represents total borrowings.
+
+     # Networth represents sum of Capital and Reserves & Surplus
+
+
+      For ESAF Small Finance Bank Limited
+
+
+
+.,{j / Gireesh CP
+      Executive Vice President- Finance and Chief Financial Officer
+�
+    ESAF SMALL FINANCE BANK LIMITED
+    RBI License No.: MUM 124, CIN: L65990KL2016PLC045669
+    Registered & Corporate Office: ESAF Small Finance Bank Limited, Building No. VII/83/8, ESAF Bhavan.
+    Mannuthy. Thrissur - Palakkad National Highway, Thrissur - 680 651, Kerala.
+    24x7 Toll Free: 1800-103-3723 Email: customercare@esafbank.com www.esaf.bank.in
+                                       Annexure - 3
+
+Disclosures required under Regulation 30 of the SEBI (Listing Obligations and
+Disclosure Requirements) Regulations, 2015 read along with SEBI Circular no.
+HO/49/14/14(7)2025-CFD-POD2/I/3762/2026 dated January 30, 2026
+
+Sl. No    Details of events that needs Information of such event(s)
+          to be provided
+    1.    Name of the Director         George Kalaparambil John
+
+    2.    DIN                                00694646
+
+    3.    Reason for change viz.            Recommended the Re-appointment as Whole
+          Appointment,      resignation,    time Director designated as Executive Director
+          removal, death or otherwise;      of the Bank, to the Reserve Bank of India for
+          Retirement                        approval.
+    4.    Date of Appointment and term      The effective date of appointment and the term
+          of appointment                    of appointment shall be subject to the approval
+                                            of the Reserve Bank of India and the
+                                            Shareholders of the Bank.
+    5.    Brief profile   (in   case     of Shri George Kalaparambil John was the
+          appointment)                      Executive Vice President (IT and Operations)
+                                            of ESAF Small Finance Bank Limited and
+                                            brings an overall experience of 30 years. He
+                                            has extensive experience in the field of Micro
+                                            Banking Business and has played a significant
+                                            role in building the microfinance business of
+                                            ESAF Small Finance Bank Limited. His varied
+                                            banking experience spans across business
+                                            and operational functions such as Micro
+                                            Banking, Liability, Assets, IT, Digital,
+                                            Operations, Finance, Treasury, MIS, HR,
+                                            Marketing, and Legal. He has led various
+                                            projects under his leadership. He possesses
+                                            specialised knowledge in the areas of
+                                            Banking, Finance, Agriculture and Rural
+                                            Economy,         Co-operation,      Information
+                                            Technology, Payment and Settlement
+                                            Systems, Human Resources, and Business
+                                            Management. He holds a Master’s Degree in
+                                            Business Administration (MBA) with a
+                                            specialisation in Fintech from Birla Institute of
+                                            Technology and Science, Pilani, Rajasthan,
+                                            and a Master’s Degree in Social Work (MSW)
+                                            with    a    specialisation    in   Community
+                                            Development from the University of Pune.
+6.   Disclosure of relationships Shri. George Kalaparambil John is not related
+     between directors             to any other Directors or Key Managerial
+                                   Personnel of the Bank.
+7.   Information as required under
+     BSE Circular Number LIST/ Shri. George Kalaparambil John is not
+     COM/ 14/ 2018- 19 dated June debarred from holding office of a director by
+     20, 2018 and NSE Circular No. virtue of any SEBI Order or any other such
+     NSE/ CML/ 2018/ 24 dated authority
+     June 20, 2018.
+

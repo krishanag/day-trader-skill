@@ -1,0 +1,26 @@
+{
+  "checked": "2026-10-29T09:41:00+05:30",
+  "moves": [],
+  "items": [
+    {
+      "id": "g2",
+      "feed": "google",
+      "source": "Mint",
+      "kind": "headline",
+      "symbol": "SJVN",
+      "title": "SJVN hits upper circuit after order win",
+      "summary": "",
+      "link": "https://example.invalid/b",
+      "time": "2026-10-29T09:20:00+05:30",
+      "touches": [
+        "SJVN"
+      ],
+      "tags": [
+        "halt"
+      ],
+      "important": true,
+      "new": true
+    }
+  ],
+  "notes": []
+}

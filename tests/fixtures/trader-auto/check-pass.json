@@ -1,0 +1,28 @@
+{
+  "results": [
+    {
+      "index": 1,
+      "symbol": "RELIANCE",
+      "side": "buy",
+      "qty": 17,
+      "kind": "entry",
+      "amount": "17 shares",
+      "entry": 1174.4,
+      "stop": 1163.0,
+      "target": 1185.8,
+      "max_loss_inr": 193.8,
+      "reward_risk": 1.0,
+      "order_hash": "placeholder",
+      "verdict": "PASS",
+      "reasons": [],
+      "warnings": [
+        "LIVE account, real money"
+      ]
+    }
+  ],
+  "pass": 1,
+  "block": 0,
+  "warnings": [],
+  "now_ist": "2026-10-29 09:41 IST",
+  "cash_after": 7036.2
+}

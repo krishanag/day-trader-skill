@@ -1,0 +1,17 @@
+{
+  "symbol": "RELIANCE",
+  "name": "RELIANCE INDUSTRIES",
+  "query_name": "Reliance Industries",
+  "as_of": "2026-10-29T09:41:00+05:30",
+  "news": {
+    "queries": [],
+    "headlines": []
+  },
+  "bse": {
+    "items": []
+  },
+  "problems": [],
+  "dates": {},
+  "likely": null,
+  "caveat": "No official results calendar may be read by a script."
+}

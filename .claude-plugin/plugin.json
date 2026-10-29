@@ -1,6 +1,6 @@
 {
   "name": "day-trader-skill",
-  "description": "12 Claude skills for day trading NSE stocks through Zerodha: scan every chart, track the news, time every entry and exit, and replay every outcome before you risk a rupee.",
+  "description": "13 Claude skills for day trading NSE stocks through Zerodha: scan every chart, track the news, time every entry and exit, replay every outcome before you risk a rupee, and run the whole loop unattended inside hard limits.",
   "version": "3.0.0",
   "author": {
     "name": "Krishan Agarwal",

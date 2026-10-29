@@ -459,5 +459,342 @@ class Today(WithKiteAndFeeds):
         self.assertTrue(any("/instruments/NSE" in u for u in self.net.urls))
 
 
+PDF_DIR = os.path.join(DIR, "bse-pdf")
+bsepdf = insiders.bsepdf
+ATTACH = "https://www.bseindia.com/xml-data/corpfiling/AttachLive/"
+# the feed items in bse-pdf/bse-announcements-filings.xml, by the GUID in the PDF link, and the fixture that answers for each
+PDF_FIXTURES = {
+    "927CA105_5AA5_4891_A738_5672CC73E835_091735": ("umiya-sast-29.pdf", "umiya-sast-29.txt"),
+    "0A674CA6_510D_40EE_91B9_CE94945FAC82_091032": ("mukta-sast-29.pdf", "mukta-sast-29.txt"),
+    "D082BFBD_C1EF_4384_9782_F15B70143ABF_091849": ("quint-sast-29.pdf", "quint-sast-29.txt"),
+    "c50b5b64-258e-4351-95a5-c5934ff3bd9a": ("skm-sast-29-ocr.pdf", "skm-sast-29-ocr.txt"),
+    "F39D0C42_B77A_4C21_A4D7_A0F2C2D55239_090824": (None, "jindal-sast-29.txt"),        # PDFs over 300 KB: text only
+    "BCDFD2D8_A53C_4D10_9566_224E80BC28D5_091138": (None, "bajaj-sast-29.txt"),
+    "573636BA_904A_4307_9C2D_B167816C4B46_091257": (None, "kkalpana-sast-29-ocr.txt"),
+    "C93E9E97_2105_46C2_A108_A40C5F17B56A_092013": ("callista-sast-29-scanned-p1.pdf", None),   # scanned: no text layer
+    "8E337091_AA69_447E_A348_2BF551613DFB_091505": (None, None),                              # scanned, not saved
+    "381CA894_8360_49FF_B8EF_F3748DAD8472_155003": "403",                                     # the fake server refuses this one
+}
+
+
+def pdf_text_fixture(name):
+    with open(os.path.join(PDF_DIR, name), encoding="utf-8") as fh:
+        return fh.read()
+
+
+def filing(code="532376", title="Disclosure under Regulation 29(2) of SEBI (SAST) Regulations, 2011",
+           guid="927CA105_5AA5_4891_A738_5672CC73E835_091735", symbol=None):
+    return {"kind": "filing", "symbol": symbol, "company": "Some Company Ltd", "code": code, "title": title,
+            "link": ATTACH + guid + ".pdf", "date": "2026-10-29", "time": "09:17", "id": "x"}
+
+
+def read_text(name, **kw):
+    return insiders.read_filing(filing(**kw), text=pdf_text_fixture(name))
+
+
+class ReadSast29Text(unittest.TestCase):
+    """The SAST Regulation 29(2) layouts, from the saved pdftotext -layout text of real BSE filings."""
+
+    def test_umiya_promoter_buy_in_the_market(self):
+        got = read_text("umiya-sast-29.txt")
+        self.assertEqual((got["status"], got["form"]), ("ok", "sast-29"))
+        r = got["rows"][0]
+        self.assertEqual(r["source"], "bse-pdf")
+        self.assertEqual(r["link"], ATTACH + "927CA105_5AA5_4891_A738_5672CC73E835_091735.pdf")
+        self.assertEqual(r["file"], "927CA105_5AA5_4891_A738_5672CC73E835_091735.pdf")
+        self.assertEqual((r["kind"], r["symbol"], r["code"], r["posted_on"]), ("insider", "", "532376", "BSE"))
+        self.assertEqual(r["company"], "MRO-TEK NETWORKS LIMITED")
+        self.assertEqual(r["person"], "UMIYA HOLDING PRIVATE LIMITED")
+        self.assertEqual((r["category"], r["category_raw"]), ("Promoter", "YES"))
+        self.assertEqual((r["side"], r["side_raw"], r["security"]), ("buy", "Acquisition", "Equity Shares"))
+        self.assertEqual((r["qty"], r["value_inr"]), (500, None))
+        self.assertEqual((r["qty_prior"], r["pct_prior"], r["qty_post"], r["pct_post"]), (7274917, 38.91, 7275417, 38.91))
+        self.assertEqual((r["mode"], r["mode_raw"]), ("market", "Open Market"))
+        self.assertEqual((r["trade_from"], r["trade_to"], r["intimated"]), ("2026-10-28", "2026-10-28", "2026-10-28"))
+        self.assertEqual(r["broadcast"], "2026-10-29T09:17:00+05:30")
+        self.assertEqual((r["days_to_company"], r["days_to_exchange"], r["late"]), (0, 1, False))
+        self.assertEqual(r["exchange"], "BSE, NSE")
+        self.assertEqual((r["regulation"], r["form"], r["remark"], r["derivative"], r["xbrl"]),
+                         ("SAST 29", "sast-29", None, None, None))
+        self.assertEqual(len(r["id"]), 16)
+        csv_keys = set(insiders.parse_file(INSIDER)[1][0])
+        self.assertEqual(csv_keys - set(r), set())          # every key of the CSV row shape is there
+
+    def test_mukta_promoter_sale(self):
+        r = read_text("mukta-sast-29.txt", code="535204", guid="0A674CA6_510D_40EE_91B9_CE94945FAC82_091032")["rows"][0]
+        self.assertEqual((r["person"], r["category"], r["category_raw"]), ("Krishan Khadaria", "Promoter", "Yes (Promoter)"))
+        self.assertEqual((r["side"], r["qty"], r["mode"], r["mode_raw"]), ("sell", 200000, "market", "Open Market Sale"))
+        self.assertEqual((r["qty_prior"], r["pct_prior"], r["qty_post"], r["pct_post"]), (314564, 1.45, 114564, 0.53))
+        self.assertEqual((r["trade_from"], r["intimated"], r["days_to_company"]), ("2026-10-27", "2026-10-28", 1))
+        self.assertEqual(r["exchange"], "BSE")
+
+    def test_quint_convertible_preference_shares(self):
+        r = read_text("quint-sast-29.txt", code="539515", guid="D082BFBD_C1EF_4384_9782_F15B70143ABF_091849")["rows"][0]
+        self.assertEqual(r["company"], "Quint Digital Limited")
+        self.assertEqual((r["side"], r["qty"], r["security"]), ("buy", 4484838, "Warrants / convertible securities"))
+        self.assertEqual((r["qty_prior"], r["pct_prior"], r["qty_post"], r["pct_post"]), (30951478, 65.56, 35436316, 65.56))
+        self.assertEqual((r["mode"], r["trade_from"], r["intimated"]), ("market", "2026-10-26", "2026-10-28"))
+        self.assertIn("attached herewith as Annexure 1", r["person"])   # what the cell says: the names are in an annexure
+
+    def test_skm_ocr_layer_keeps_only_clean_numbers(self):
+        r = read_text("skm-sast-29-ocr.txt", code="532143", guid="c50b5b64-258e-4351-95a5-c5934ff3bd9a")["rows"][0]
+        self.assertEqual((r["person"], r["category"]), ("SKM Shree Shivkumar", "Promoter"))
+        self.assertEqual((r["side"], r["qty"], r["mode"]), ("buy", 10000, "market"))
+        self.assertEqual((r["qty_prior"], r["pct_prior"]), (23992278, None))      # 45.5( is OCR junk: left out
+        self.assertEqual((r["qty_post"], r["pct_post"]), (24002278, 45.58))
+        self.assertEqual((r["trade_from"], r["intimated"]), ("2026-10-27", "2026-10-29"))
+        self.assertIsNone(r["remark"])
+
+    def test_jindal_bajaj_and_kkalpana(self):
+        j = read_text("jindal-sast-29.txt", code="532286", guid="F39D0C42_B77A_4C21_A4D7_A0F2C2D55239_090824")["rows"][0]
+        self.assertTrue(j["person"].startswith("Jindal Power Limited"))
+        self.assertEqual((j["category"], j["side"], j["qty"], j["mode"]), ("Promoter Group", "buy", 349076, "market"))
+        self.assertEqual((j["qty_prior"], j["pct_prior"], j["qty_post"], j["pct_post"]), (12051383, 1.181, 12400459, 1.215))
+        self.assertEqual((j["trade_from"], j["intimated"], j["days_to_company"]), ("2026-10-26", "2026-10-28", 2))
+        b = read_text("bajaj-sast-29.txt", code="500031", guid="BCDFD2D8_A53C_4D10_9566_224E80BC28D5_091138")["rows"][0]
+        self.assertTrue(b["person"].startswith("HDFC Mutual Fund"))
+        self.assertEqual((b["category"], b["category_raw"], b["side"], b["qty"]), ("Non-promoter", "NO", "sell", 2325060))
+        self.assertEqual((b["pct_prior"], b["pct_post"], b["trade_from"]), (9.27, 7.25, "2026-10-26"))
+        k = read_text("kkalpana-sast-29-ocr.txt", code="523652", guid="573636BA_904A_4307_9C2D_B167816C4B46_091257")["rows"][0]
+        self.assertEqual(k["person"], "Bbigplas Poly Private Limited; Mrs. Sarla Surana")
+        self.assertEqual((k["side"], k["qty"], k["mode"], k["qty_post"]), ("sell", 4012335, "off-market", 0))
+        self.assertEqual((k["pct_prior"], k["trade_from"], k["intimated"]), (72.58, "2026-10-27", "2026-10-28"))
+        self.assertTrue(k["mode_raw"].startswith("Off-Market sale of Equity Shares pursuant to the Share Purchase Agreement"))
+        self.assertEqual(k["exchange"], "BSE, CSE")
+
+    def test_rows_render_like_csv_rows(self):
+        rows = read_text("mukta-sast-29.txt", code="535204", guid="0A674CA6_510D_40EE_91B9_CE94945FAC82_091032",
+                         symbol="MUKTAAGRI")["rows"]
+        lines = insiders.render_rows(rows, {"MUKTAAGRI": "watchlist"})
+        self.assertEqual(lines[0], "2026-10-29  MUKTAAGRI  sell  200,000 shares, value not given, market, Krishan Khadaria "
+                                   "(Promoter)  <- MUKTAAGRI is in your watchlist")
+        self.assertEqual(lines[1], "      traded 2026-10-27, told the company 1 trading day later, on BSE 1 trading day "
+                                   "after that, holds 0.53 % after")
+
+    def test_text_that_is_no_disclosure(self):
+        got = insiders.read_filing(filing(title=""), text="Dear Sir,\nPlease find enclosed the press release.\nThanks.\n")
+        self.assertEqual(got["status"], "unreadable")
+        self.assertIn("not a Regulation 29 / 31 / 7(2) disclosure", got["note"])
+        self.assertEqual(got["rows"], [])
+
+
+class ReadSast31Text(unittest.TestCase):
+    """Regulation 31 (Annexure I, two pledge events), transcribed from the scanned Camlin filing."""
+
+    def test_two_pledge_creations(self):
+        got = read_text("camlin-sast-31-transcribed.txt", code="532834", guid="381CA894_8360_49FF_B8EF_F3748DAD8472_155003",
+                        title="Disclosure under Regulation 31(1) and 31(2) of SEBI (SAST) Regulations, 2011")
+        self.assertEqual((got["status"], got["form"], len(got["rows"])), ("ok", "sast-31", 2))
+        a, b = got["rows"]
+        self.assertEqual((a["company"], a["person"]), ("Camlin Fine Sciences Limited", "Mr. Ashish Subhash Dandekar"))
+        self.assertEqual((a["category"], a["side"], a["side_raw"], a["mode"]), ("Promoter", "pledge", "Pledge creation", "pledge"))
+        self.assertEqual((a["qty"], a["value_inr"], a["qty_prior"], a["pct_prior"], a["qty_post"], a["pct_post"]),
+                         (810000, None, 19778510, 10.3, 19778510, 10.3))
+        self.assertEqual((a["trade_from"], a["intimated"], a["days_to_company"]), ("2026-10-27", "2026-10-29", 2))
+        self.assertEqual(a["remark"], "pledged with Aditya Birla Capital Limited; 15,760,000 (8.20 %) of the holding "
+                                      "encumbered after the event; Additional margin pledge for covering shortfall in "
+                                      "security cover w.r.t financial assistance obtained")
+        self.assertEqual((b["qty"], b["trade_from"]), (550000, "2026-10-27"))   # its date comes from Annexure II
+        self.assertEqual(b["remark"], "pledged with SKS Fincap Private Limited; 16,310,000 (8.49 %) of the holding "
+                                      "encumbered after the event")
+        self.assertEqual((a["regulation"], a["exchange"], a["source"]), ("SAST 31", "BSE, NSE", "bse-pdf"))
+        self.assertNotEqual(a["id"], b["id"])
+        head, _ = insiders.describe_insider(a)
+        self.assertTrue(head.startswith("2026-10-29  532834     pledge 810,000 shares, value not given, pledge, "
+                                        "Mr. Ashish Subhash Dandekar (Promoter)"), head)
+
+
+class ReadFormCText(unittest.TestCase):
+    """PIT Regulation 7(2) Form C: SEBI's column layout as pdftotext renders it (sample texts, see README.txt)."""
+
+    def test_numbered_columns_one_promoter_buy(self):
+        got = read_text("formc-pit-7-sample-1.txt", title="Disclosure under Regulation 7(2) of SEBI (PIT) Regulations, 2015")
+        self.assertEqual((got["status"], got["form"], len(got["rows"])), ("ok", "pit-7", 1))
+        r = got["rows"][0]
+        self.assertEqual((r["company"], r["person"], r["category"]), ("Sample Fine Chemicals Limited", "Ramesh Kumar Sharma", "Promoter"))
+        self.assertEqual((r["side"], r["side_raw"], r["security"], r["qty"], r["value_inr"]), ("buy", "Buy", "Equity Shares", 25000, 3750000.0))
+        self.assertEqual((r["qty_prior"], r["pct_prior"], r["qty_post"], r["pct_post"]), (1250000, 4.17, 1275000, 4.25))
+        self.assertEqual((r["trade_from"], r["trade_to"], r["intimated"]), ("2026-10-27", "2026-10-27", "2026-10-28"))
+        self.assertEqual((r["mode"], r["mode_raw"], r["exchange"]), ("market", "Market Purchase", "NSE"))
+        self.assertEqual((r["days_to_company"], r["days_to_exchange"], r["late"]), (1, 1, False))
+        self.assertIsNone(r["derivative"])                 # the Nil derivatives block
+        self.assertEqual((r["regulation"], r["form"]), ("7(2)", "pit-7"))
+        self.assertNotIn("AAAPS1234A", json.dumps(r))      # no PAN in the row
+
+    def test_split_columns_two_persons_and_a_futures_row(self):
+        got = read_text("formc-pit-7-sample-2.txt", title="Disclosure under Regulation 7(2)")
+        self.assertEqual((got["status"], len(got["rows"])), ("ok", 2))
+        a, b = got["rows"]
+        self.assertEqual((a["person"], a["category"], a["side"], a["qty"], a["value_inr"]),
+                         ("Anita Sample", "Immediate Relative", "sell", 15000, 2025000.0))
+        self.assertEqual((a["qty_prior"], a["pct_prior"], a["qty_post"], a["pct_post"]), (40000, 0.013, 25000, 0.008))
+        self.assertEqual((a["trade_from"], a["trade_to"], a["intimated"]), ("2026-10-22", "2026-10-23", "2026-10-28"))
+        self.assertEqual((a["days_to_company"], a["late_to_company"]), (3, True))
+        self.assertEqual((a["mode"], a["exchange"]), ("market", "NSE"))
+        self.assertEqual((b["person"], b["category"], b["side"], b["qty"], b["value_inr"], b["mode"], b["exchange"]),
+                         ("Vikram Sample", "Designated Person", "buy", 1500, None, "ESOP", "NA"))
+        self.assertEqual(a["derivative"], {"type": "Stock Futures", "contract": "SAMPLEMOT 24-Nov-2026 FUT",
+                                           "notional_buy_inr": None, "units_buy": None,
+                                           "notional_sell_inr": 1245000.0, "units_sell": 500})
+        head, _ = insiders.describe_insider(a)
+        self.assertIn("15,000 shares, Rs 20.25 lakh, plus derivatives: Stock Futures SAMPLEMOT 24-Nov-2026 FUT, "
+                      "Rs 12.45 lakh notional sold, market, Anita Sample (Immediate Relative)", head)
+
+    def test_classification_and_helpers(self):
+        self.assertEqual(bsepdf.classify("Form C ... Regulation 7 (2) read with 6(2)"), "pit-7")
+        self.assertEqual(bsepdf.classify("in terms of Regulation 31(1) and 31(2) of SEBI (SAST)"), "sast-31")
+        self.assertEqual(bsepdf.classify("Disclosure under Regulation 29(2) ... Name of the Target Company"), "sast-29")
+        self.assertIsNone(bsepdf.classify("a press release", None))
+        self.assertEqual(bsepdf.hint_from("Disclosure under Regulation 31(1) ... for X"), "sast-31")
+        self.assertEqual(bsepdf.hint_from("Disclosure under Regulation 29 (2) of SEBI (SAST) Regulations, 2011"), "sast-29")
+        self.assertEqual(bsepdf.find_dates("Acquired till October 26, 2026. Dated 28th October, 2026 and 27/10/2026 28.10.2026"),
+                         ["2026-10-26", "2026-10-28", "2026-10-27", "2026-10-28"])
+        self.assertEqual(bsepdf.number_tokens("2,39,92,27~  45.5(  10,00(  44,84,838****  6.99%  Nil"),
+                         [(4484838.0, False), (6.99, True)])
+        self.assertEqual(bsepdf.number_tokens("Nil"), [(0.0, False)])
+        self.assertEqual(bsepdf.count_and_pct(bsepdf.number_tokens("6.99%  44,84,838  -")), (4484838.0, 6.99))
+        self.assertEqual(bsepdf.count_and_pct(bsepdf.number_tokens("500  0.002  0.002")), (500.0, 0.002))
+        self.assertEqual(bsepdf.exchanges("BSE LIMITED AND NATIONAL STOCK EXCHANGE OF INDIA LIMITED"), "BSE, NSE")
+        self.assertEqual(bsepdf.guid(ATTACH + "ab-12_X.pdf"), "ab-12_X")
+        self.assertEqual(insiders.label("Immediate Relative of Designated Person", insiders.CATEGORIES), "Immediate Relative")
+        self.assertEqual(insiders.label("Invoke", insiders.SIDES), "pledge invoked")
+        self.assertEqual(insiders.label("Pledge release", insiders.SIDES), "pledge released")
+
+
+@unittest.skipUnless(bsepdf.pdftotext_path(), "pdftotext (poppler) is not installed")
+class WithPdftotext(unittest.TestCase):
+    """The saved text is exactly what pdftotext -layout gives for the saved PDF; a scanned PDF has no text layer."""
+
+    def test_pdftotext_matches_the_saved_text(self):
+        self.assertEqual(bsepdf.pdf_text(os.path.join(PDF_DIR, "umiya-sast-29.pdf")), pdf_text_fixture("umiya-sast-29.txt"))
+        self.assertEqual(bsepdf.pdf_text(os.path.join(PDF_DIR, "skm-sast-29-ocr.pdf")), pdf_text_fixture("skm-sast-29-ocr.txt"))
+
+    def test_scanned_pdf_and_the_pdf_command(self):
+        with self.assertRaisesRegex(bsepdf.NoTextLayer, "no text layer"):
+            bsepdf.pdf_text(os.path.join(PDF_DIR, "callista-sast-29-scanned-p1.pdf"))
+        code, out, err = run(["pdf", os.path.join(PDF_DIR, "mukta-sast-29.pdf"), "--symbol", "MUKTAAGRI"])
+        self.assertEqual(code, 0, err)
+        self.assertIn("MUKTAAGRI  sell  200,000 shares, value not given, market, Krishan Khadaria (Promoter)", out)
+        self.assertIn("Read from the PDF (sast-29)", out)
+        code, _, err = run(["pdf", os.path.join(PDF_DIR, "callista-sast-29-scanned-p1.pdf")])
+        self.assertEqual(code, 2)
+        self.assertIn("no text layer", err)
+
+
+class PdfNet(FakeNet):
+    """BSE's feed from the bse-pdf fixture; AttachLive PDFs from the fixtures (a 403 for one), the identified client only."""
+
+    def __call__(self, req, timeout=None):
+        url = req.full_url
+        if "AttachLive" in url:
+            self.urls.append(url)
+            assert req.get_header("User-agent") == insiders.UA
+            assert req.get_header("Cookie") is None
+            guid = url.rsplit("/", 1)[-1][:-4]
+            spec = PDF_FIXTURES.get(guid)
+            if spec is None or spec == "403":
+                raise urllib.error.HTTPError(url, 403, "Forbidden", {}, io.BytesIO(b""))
+            pdf, _ = spec
+            body = raw(PDF_DIR, pdf) if pdf else b"%PDF-1.4 fixture stand-in for " + guid.encode()
+            return FakeResponse(body, "application/pdf")
+        if "announcements.xml" in url:
+            self.urls.append(url)
+            assert req.get_header("User-agent") == insiders.UA
+            return FakeResponse(raw(PDF_DIR, "bse-announcements-filings.xml"))
+        return super().__call__(req, timeout)
+
+
+def fake_pdf_text(path, exe=None):
+    """What pdftotext would say for a cached fixture PDF, without poppler: the saved text, or no text layer."""
+    guid = os.path.basename(path)[:-4]
+    spec = PDF_FIXTURES.get(guid)
+    if spec and spec != "403" and spec[1]:
+        return pdf_text_fixture(spec[1])
+    raise bsepdf.NoTextLayer("no text layer (a scanned image): open the PDF to read it")
+
+
+class TodayParse(WithKiteAndFeeds):
+    """`today --parse`: the identified client, the cache under trader/cache/bse-pdf/, a 403, a scan, no poppler."""
+
+    def setUp(self):
+        super().setUp()
+        self.net = PdfNet()
+        insiders._urlopen = self.net
+        kite._urlopen = self.net
+        self.saved_pdf = (bsepdf.pdf_text, bsepdf.pdftotext_path)
+        bsepdf.pdf_text = fake_pdf_text
+        bsepdf.pdftotext_path = lambda: "/fake/pdftotext"
+        self.state = os.path.join(self.tmp.name, "insiders.json")
+
+    def tearDown(self):
+        bsepdf.pdf_text, bsepdf.pdftotext_path = self.saved_pdf
+        super().tearDown()
+
+    def test_parse_reads_caches_and_reports(self):
+        code, out, err = run(["today", "--parse", "--now", NOW, "--state", self.state, "--dry-run"])
+        self.assertEqual(code, 0, err)
+        pdf_urls = [u for u in self.net.urls if "AttachLive" in u]
+        self.assertEqual(len(pdf_urls), 10)                       # one request per filing, none repeated
+        self.assertEqual(len(set(pdf_urls)), 10)
+        for guid, spec in PDF_FIXTURES.items():
+            path = os.path.join("trader", "cache", "bse-pdf", guid + ".pdf")
+            self.assertEqual(os.path.isfile(path), spec != "403", guid)
+        # the rows, under their filings, in the CSV route's words
+        self.assertIn("NEW 2026-10-29 09:17 IST  Umiya Buildcon Ltd (532376)", out)
+        self.assertIn("      2026-10-29  532376     buy   500 shares, value not given, market, UMIYA HOLDING PRIVATE LIMITED (Promoter)", out)
+        self.assertIn("            traded 2026-10-28, told the company 0 trading days later, on BSE 1 trading day after that, holds 38.91 % after", out)
+        self.assertIn("      2026-10-29  523652     sell  4,012,335 shares, value not given, off-market, Bbigplas Poly Private Limited; Mrs. Sarla Surana (Promoter)", out)
+        self.assertIn("      read from the PDF (sast-29); the NSE CSV is the complete record", out)
+        # a 403 is one line and no second try; a scan is one line
+        self.assertIn("      PDF not read (could not fetch the PDF: HTTP 403 for https://www.bseindia.com/xml-data/corpfiling/AttachLive/381CA894_8360_49FF_B8EF_F3748DAD8472_155003.pdf): open the link", out)
+        self.assertEqual(sum(1 for u in pdf_urls if "381CA894" in u), 1)
+        self.assertIn("      PDF not read (no text layer (a scanned image): open the PDF to read it): open the link", out)
+        self.assertEqual(out.count("PDF not read"), 3)            # Camlin (403), Callista and Raj TV (scans)
+        self.assertEqual(out.count("read from the PDF (sast-29)"), 7)
+        self.assertIn("rows read from the PDFs where the text allows; the NSE CSV is the complete record. Not inside information, not financial advice.", out)
+        self.assertNotIn(chr(0x2014), out)
+        # the second run answers from the cache: only the link that answered 403 (nothing cached) is tried again
+        before = len(self.net.urls)
+        code, out, _ = run(["today", "--parse", "--now", NOW, "--state", self.state, "--dry-run", "--json"])
+        self.assertEqual(code, 0)
+        self.assertEqual([u.rsplit("/", 1)[-1] for u in self.net.urls[before:] if "AttachLive" in u],
+                         ["381CA894_8360_49FF_B8EF_F3748DAD8472_155003.pdf"])
+        data = json.loads(out)
+        self.assertIsNone(data["note"])
+        by = {f["code"]: f for f in data["new"]}
+        self.assertEqual(by["532376"]["parse"], {"status": "ok", "note": None, "form": "sast-29"})
+        self.assertEqual(by["532376"]["rows"][0]["source"], "bse-pdf")
+        self.assertEqual(by["532376"]["rows"][0]["qty"], 500)
+        self.assertEqual(by["532834"]["parse"]["status"], "fetch-failed")
+        self.assertEqual(by["539335"]["parse"]["status"], "no-text")
+        self.assertEqual(by["539335"]["rows"], [])
+
+    def test_without_pdftotext_one_line_and_no_fetch(self):
+        bsepdf.pdftotext_path = lambda: None
+        code, out, err = run(["today", "--parse", "--now", NOW, "--state", self.state, "--dry-run"])
+        self.assertEqual(code, 0, err)
+        self.assertEqual([u for u in self.net.urls if "AttachLive" in u], [])
+        self.assertIn("note: pdftotext is not installed: brew install poppler, or open the PDF links", out)
+        self.assertEqual(out.count("PDF not read (pdftotext is not installed"), 10)
+        self.assertFalse(os.path.isdir(os.path.join("trader", "cache", "bse-pdf")))
+        # without --parse nothing about PDFs is said and nothing is fetched
+        code, out, _ = run(["today", "--now", NOW, "--state", self.state, "--dry-run"])
+        self.assertEqual(code, 0)
+        self.assertNotIn("PDF not read", out)
+        self.assertIn("open the PDF for the rows, or run with --parse", out)
+
+    def test_pdf_command_with_a_link(self):
+        code, out, err = run(["pdf", ATTACH + "0A674CA6_510D_40EE_91B9_CE94945FAC82_091032.pdf", "--symbol", "MUKTAAGRI"])
+        self.assertEqual(code, 0, err)
+        self.assertIn("MUKTAAGRI  sell  200,000 shares, value not given, market, Krishan Khadaria (Promoter)", out)
+        self.assertTrue(os.path.isfile(os.path.join("trader", "cache", "bse-pdf", "0A674CA6_510D_40EE_91B9_CE94945FAC82_091032.pdf")))
+        code, _, err = run(["pdf", ATTACH + "381CA894_8360_49FF_B8EF_F3748DAD8472_155003.pdf"])
+        self.assertEqual(code, 1)
+        self.assertIn("HTTP 403", err)
+        code, out, _ = run(["pdf", os.path.join(PDF_DIR, "formc-pit-7-sample-1.txt"), "--json"])
+        self.assertEqual(code, 0)
+        self.assertEqual(json.loads(out)["rows"][0]["person"], "Ramesh Kumar Sharma")
+
+
 if __name__ == "__main__":
     unittest.main()

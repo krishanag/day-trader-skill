@@ -13,6 +13,9 @@ trade's horizon.
     python3 results.py facts RELIANCE --file results.xml
     python3 results.py facts RELIANCE --file q2.xml --file q1.xml --quarters 8 --json
     python3 results.py facts RELIANCE --file results.xml --standalone --write
+    python3 results.py facts RELIANCE --today                 # today's results PDF from BSE's feed
+    python3 results.py facts RELIANCE --pdf https://www.bseindia.com/xml-data/corpfiling/AttachLive/<guid>.pdf
+    python3 results.py facts RELIANCE --pdf ~/Downloads/results.pdf --standalone
     python3 results.py summary --paste < transcript.txt
     python3 results.py calendar RELIANCE
     python3 results.py calendar RELIANCE --date 2026-10-30
@@ -23,6 +26,24 @@ Corporates, Financial Results, the row for the company, the XBRL link. On
 BSE: the result announcement, its XBRL attachment. Save it and pass the path
 with --file (repeat --file for several quarters; later filings restate
 earlier ones).
+
+The PDF route: BSE's public announcements feed links every company's results
+PDF the moment it is filed, and that PDF carries the SEBI LODR Regulation 33
+"Statement of (un)audited financial results" table. --today finds today's
+filing for the company in the feed (matched by Kite's instrument name, or
+--bse-code), --pdf takes the link or a saved file; the PDF is cached under
+trader/cache/bse-pdf/, turned into text with pdftotext -layout (poppler) and
+the statement's table is read: the column dates (quarter ended, preceding
+quarter, year-earlier quarter, year to date, year ended), the rows for
+revenue, other income, total income, total expenses, finance costs,
+depreciation, profit before exceptional items, exceptional items, PBT, tax,
+PAT and EPS, and the unit line (Rs in lakhs / crore / million). Consolidated
+is preferred when the PDF carries both statements (--standalone to switch).
+The numbers then go through the same quarters table, growth, margins and
+"what changed" as the XBRL route, marked source "bse-pdf". Layouts vary; the
+tool says which rows and columns it could not read, and a scanned PDF (no
+text layer) is reported as such with the link. Without poppler it says so in
+one line (brew install poppler) and suggests the XBRL.
 
 How the quarters are built:
   - Every filing carries the quarter, the previous quarter, the same quarter
@@ -53,12 +74,18 @@ Numbers only: this tool never says whether a stock is a buy.
 """
 
 import argparse
+import calendar as calendar_module
 import datetime
 import email.utils
+import glob
+import hashlib
 import json
 import os
 import re
+import shutil
+import subprocess
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -418,6 +445,11 @@ def ttm_of(quarters_by_key, periods_by_key, fy_start_month):
         if not years:
             continue
         year = years[-1]
+        latest = max(quarters_by_key.get(key) or {"": None})
+        if latest and latest == year[1]:          # a fourth-quarter filing: the year column is the TTM
+            out[key] = periods[year]
+            method = method or "the full year FY%02d, from the year column" % fy_of(year[1], fy_start_month)
+            continue
         next_start = (_date(year[1]) + datetime.timedelta(days=1)).isoformat()
         ytd = [s for s in periods if s[0] == next_start]
         if not ytd:
@@ -433,12 +465,8 @@ def ttm_of(quarters_by_key, periods_by_key, fy_start_month):
     return out, method
 
 
-def analyse(instances, basis=None, scale=None, quarters=6, name=None):
-    """Every number in the report, as a dict (rupees in crore, EPS in rupees)."""
-    if not instances:
-        raise ResultsError("no file could be read")
-    chosen = choose_basis(instances, basis)
-    periods_by_key, concepts, labels = merge_files(instances, chosen, scale)
+def analyse_periods(periods_by_key, quarters=6, bank=False):
+    """The quarters table and the trailing twelve months from {key: {(start, end): rupees}} (EPS in rupees)."""
     fy_month = fiscal_year_start_month(periods_by_key)
     q = {key: quarterly(periods) for key, periods in periods_by_key.items()}
     rev, pat = q.get("revenue", {}), q.get("pat", {})
@@ -447,7 +475,6 @@ def analyse(instances, basis=None, scale=None, quarters=6, name=None):
         spans = periods_by_key.get("revenue") or periods_by_key.get("pat") or {}
         raise ResultsError("no three-month periods in the file(s): the contexts run %s"
                            % ", ".join(sorted("%s to %s" % s for s in spans)))
-    bank = concepts.get("revenue") == [BANK_REVENUE]
 
     def val(key, end):
         return (q.get(key) or {}).get(end, {}).get("value")
@@ -489,15 +516,28 @@ def analyse(instances, basis=None, scale=None, quarters=6, name=None):
         ttm[key] = round(value, 2) if key in PER_SHARE else crore(value)
     if ttm:
         ttm["method"] = method
+    return {"rows": rows, "ttm": ttm}
+
+
+def analyse(instances, basis=None, scale=None, quarters=6, name=None):
+    """Every number in the report, as a dict (rupees in crore, EPS in rupees), from XBRL files."""
+    if not instances:
+        raise ResultsError("no file could be read")
+    chosen = choose_basis(instances, basis)
+    periods_by_key, concepts, labels = merge_files(instances, chosen, scale)
+    bank = concepts.get("revenue") == [BANK_REVENUE]
+    core = analyse_periods(periods_by_key, quarters, bank)
     info = {}
     for inst in instances:
         for k, v in inst["info"].items():
             info.setdefault(k, v)
-    return {"entity": name or info.get("name"), "filed_symbol": info.get("symbol"),
-            "scrip_code": info.get("scrip"), "basis": chosen or "not stated in the file",
-            "scale": sorted(set(labels)), "audited": info.get("audited"), "bank": bank,
-            "files": [os.path.basename(i["path"] or "") for i in instances],
-            "rows": rows, "ttm": ttm, "concepts": concepts, "source": SOURCE}
+    result = {"entity": name or info.get("name"), "filed_symbol": info.get("symbol"),
+              "scrip_code": info.get("scrip"), "basis": chosen or "not stated in the file",
+              "scale": sorted(set(labels)), "audited": info.get("audited"), "bank": bank,
+              "files": [os.path.basename(i["path"] or "") for i in instances],
+              "concepts": concepts, "source": SOURCE}
+    result.update(core)
+    return result
 
 
 def _cr(v):
@@ -557,6 +597,11 @@ def changes(result):
                    "carries the festive season, the March quarter the year-end push).")
     if result["basis"] == "standalone":
         out.append("Standalone figures: subsidiaries are not in them. Pass --consolidated when the file has it.")
+    if result.get("source") == PDF_SOURCE:
+        pdf = result["pdf"]
+        out.append("Read from the exchange PDF's text layer with pdftotext, not from XBRL: check any figure that "
+                   "looks off against the PDF itself%s." % (" (%d row/column gaps are listed above)" % len(pdf["unread"])
+                                                           if pdf["unread"] else ""))
     return out
 
 
@@ -578,11 +623,43 @@ def _eps(v):
     return "-" if v is None else "%.2f" % v
 
 
+def source_line(result):
+    if result.get("source") == PDF_SOURCE:
+        pdf = result["pdf"]
+        return "BSE results PDF, page %d (%s): %s" % (pdf["page"], pdf["title"] or "statement of financial results",
+                                                      pdf["url"] or pdf["path"] or "text passed in")
+    return "%s: %s" % (SOURCE, ", ".join(result["files"]))
+
+
+def render_pdf_notes(result):
+    """What was read from the PDF and what was not."""
+    pdf = result["pdf"]
+    out = ["From the PDF: columns read: %s; unit line: %s." % (
+        ", ".join(span_label(c) for c in pdf["columns"]), pdf["unit_line"] or "none (--scale used)")]
+    if pdf.get("filing"):
+        out.append("  BSE feed item: %s, %s: %s" % (pdf["filing"]["company"], (pdf["filing"]["published"] or "")[:16].replace("T", " "),
+                                                   pdf["filing"]["description"][:120]))
+    others = [s for s in pdf["statements"] if s["page"] != pdf["page"]]
+    if others:
+        out.append("  other statements in the PDF: %s." % "; ".join(
+            "page %d (%s%s)" % (s["page"], s["basis"], ", not read: " + s["problem"] if s["problem"] else "") for s in others))
+    for n in pdf["notes"]:
+        out.append("  note: %s." % n)
+    if pdf["unread"]:
+        out.append("  Not read from the PDF (a cell listed here can still show in the table when the year-to-date "
+                   "columns let the tool derive it, as the XBRL route does):")
+        for u in pdf["unread"]:
+            out.append("    - " + u)
+    else:
+        out.append("  Every row and column the tool looks for was read.")
+    return out
+
+
 def render(symbol, result):
     scale = " / ".join(result["scale"]) or "unknown"
-    out = ["%s (%s), %s. Rs crore except EPS (filed in %s%s). Source: %s: %s." % (
+    out = ["%s (%s), %s. Rs crore except EPS (filed in %s%s). Source: %s." % (
         result["entity"] or symbol, symbol, result["basis"], scale,
-        "" if scale in ("crore", "crores") else ", converted", SOURCE, ", ".join(result["files"])), ""]
+        "" if scale in ("crore", "crores") else ", converted", source_line(result)), ""]
     if result.get("filed_symbol") and result["filed_symbol"].upper() != symbol.upper():
         out.append("NOTE: the file names %s, not %s. Check you opened the right company's filing."
                    % (result["filed_symbol"], symbol))
@@ -611,6 +688,9 @@ def render(symbol, result):
     else:
         out.append("Trailing twelve months: not enough in these files (four quarters, or a full year "
                    "with both year-to-date columns). Pass more filings with --file.")
+    if result.get("source") == PDF_SOURCE:
+        out.append("")
+        out.extend(render_pdf_notes(result))
     out.append("")
     out.append("What changed:")
     for line in changes(result):
@@ -632,7 +712,8 @@ def metrics_row(symbol, result, as_of):
             "revenue_ttm_cr": t.get("revenue"), "pat_ttm_cr": t.get("pat"), "eps_ttm": t.get("eps_diluted"),
             "revenue_growth_yoy": cur.get("revenue_yoy"), "pat_growth_yoy": cur.get("pat_yoy"),
             "eps_growth_yoy": cur.get("eps_yoy"), "ebitda_margin": cur.get("ebitda_margin"),
-            "pat_margin": cur.get("pat_margin"), "as_of": as_of, "source": SOURCE}
+            "pat_margin": cur.get("pat_margin"), "as_of": as_of,
+            "source": result.get("source") if result.get("source") == PDF_SOURCE else SOURCE}
 
 
 def write_metrics(path, rows, as_of):
@@ -1039,6 +1120,817 @@ def render_calendar(cal, pinned=None):
     return "\n".join(out) + "\n"
 
 
+# ---------------------------------------------------------------- the BSE results PDF (SEBI LODR Regulation 33 statement)
+
+BSE_PDF_CACHE = os.path.join("trader", "cache", "bse-pdf")
+FEED_CACHE = os.path.join("trader", "cache")
+BSE_CACHE_MINUTES = 10         # the announcements feed is reused this long (news.py keeps the same cache)
+PDFTOTEXT_TIMEOUT = 60
+PDF_SOURCE = "bse-pdf"
+PDF_MAX_TRIES = 3              # results filings tried from the feed before giving up
+SPARSE_LINES_PER_PAGE = 8      # fewer text lines per page than this: a scanned PDF
+PLAUSIBLE_RATIO = 25.0         # a revenue or expense figure this far from its row-mates is an OCR slip
+PLAUSIBLE_KEYS = ("revenue", "total_income", "expenses")
+YEAR_PAIR_CHARS = 10           # a bare year this close (columns) under a day-month belongs to it
+YEAR_PAIR_LINES = 3
+MAX_BLOCK_PAGES = 2            # a statement may run over the page
+CUMULATIVE_DAYS = (150, 380)   # a half-year, nine-month or full-year column
+TITLE_RX = re.compile(r"statement\s+of|financial\s+results|results\s+for\s+the|(?:un)?audited\s+results", re.I)
+GROUP_LABEL_RX = re.compile(r"(?:quarter|half|nine|months?|year)[\s\w/]*ended", re.I)
+RESULTS_FILING_RX = re.compile(r"financial\s+results?|un-?\s?audited|audited\s+results|results\s+for\s+the", re.I)
+NOT_RESULTS_RX = re.compile(r"presentation|conference|earnings\s+call|transcript|recording|newspaper|advertisement|"
+                            r"publication|scheduled|to\s+consider|corrigendum|record\s+date|press\s+release|"
+                            r"clarification|trading\s+window|credit\s+rating|investor\s+meet|analyst", re.I)
+CONSOLIDATED_HINT_RX = re.compile(r"non-?\s?controlling\s+interest|minority\s+interest|"
+                                  r"share\s+(?:of|in)\s+(?:net\s+)?profit.{0,40}(?:joint\s+venture|associate)", re.I)
+PDF_KEYS = ("revenue", "other_income", "total_income", "expenses", "finance_costs", "depreciation",
+            "pbt_before_exceptional", "exceptional", "pbt", "tax", "pat", "eps_basic", "eps_diluted")
+PDF_ROW_NAMES = {"revenue": "revenue from operations", "other_income": "other income", "total_income": "total income",
+                 "expenses": "total expenses", "finance_costs": "finance costs", "depreciation": "depreciation",
+                 "pbt_before_exceptional": "profit before exceptional items and tax", "exceptional": "exceptional items",
+                 "pbt": "profit before tax", "tax": "tax expense", "pat": "net profit for the period",
+                 "eps_basic": "basic EPS", "eps_diluted": "diluted EPS"}
+PDF_SCALES = dict(SCALES, lacs=1e5, lac=1e5, cr=1e7, crs=1e7, mn=1e6, mio=1e6)
+UNIT_WORDS = {"lac": "lakhs", "lacs": "lakhs", "lakh": "lakhs", "crore": "crores", "cr": "crores", "crs": "crores",
+              "million": "millions", "mn": "millions", "mio": "millions", "thousand": "thousands",
+              "'000": "thousands", "000s": "thousands"}
+UNIT_RX = re.compile(r"\b(lakhs?|lacs?|crores?|crs?|millions?|mn|mio|thousands?)[a-z]?\b|('000|000s)", re.I)
+RUPEE_RX = re.compile("\\brs\\b|rupees|\\binr\\b|\\bre\\b|\\u20b9|~|amount|\\bin\\b", re.I)
+RUPEES_ONLY_RX = re.compile(r"(?:amounts?\s+)?in\s+(?:rs\.?|rupees|inr|₹)\s*\)?\s*$", re.I)
+DMY_RX = re.compile(r"(?<![\d.])(\d{1,2})[./-](\d{1,2})[./-](\d{4}|\d{2})(?![\d.])")
+DMON_RX = re.compile(r"(?<![\w])(\d{1,2})(?:st|nd|rd|th)?[\s.,-]*" + MONTH_RX +
+                     r"(?:[\s.,-]*(\d{4})(?!\d)|[-.](\d{2})(?!\d))?", re.I)
+MOND_RX = re.compile(r"(?<![\w])" + MONTH_RX + r"[\s.,-]*(\d{1,2})(?:st|nd|rd|th)?(?:[\s.,-]*(\d{4})(?!\d))?(?!\d)", re.I)
+MONTH_ONLY_RX = re.compile(r"(?<![\w])" + MONTH_RX + r"(?![\w\d])", re.I)
+BARE_YEAR_RX = re.compile(r"(?<![\d.,/-])(20\d{2})(?![\d.,/-])")
+DAY_YEAR_RX = re.compile(r"(?<![\d.,/-])(\d{1,2})\s*,\s*(20\d{2})(?![\d])")
+NUM_RX = re.compile(r"^\(?-?(?:\d{1,3}(?:,\d{2,3})*|\d+)(?:\.\d+)?\)?$")
+NIL_RX = re.compile("^[-\\u2013\\u2014.]{1,3}$|^nil$", re.I)
+REF_RX = re.compile(r"^\(?[\divxl]{1,4}\)?(?:\s*[-+]\s*\(?[\divxl]{1,4}\)?)+$", re.I)
+SERIAL_RX = re.compile("^\\s*(?:(?:[-\u2022\u2013*]|\\(?(?:\\d{1,2}|[ivxl]{1,4}|[a-z])[.):]?\\)?)(?:\\s+|$))+", re.I)
+CELL_RX = re.compile(r"\S+(?: \S+)*")
+EPS_CONTEXT_RX = re.compile(r"earning|\beps\b|per\s+(?:equity\s+)?share")
+PROFIT = r"^(?:net )?profit\w*(?: [a-z]{1,2})?(?: loss)?"   # 'Profit / (Loss)', OCR'd 'Profitl(Loss)', 'Profit I (Loss)'
+ROW_RX = [   # (key, regex on the normalised label); the first key that matches wins, so the order matters
+    ("revenue", re.compile(r"^(?:[a-z]{1,3} )?(?:total |net )?(?:revenue|income|sales|turnover)\w*(?: turnover)? from oper|"
+                           r"^interest earned")),
+    ("other_income", re.compile(r"^other income")),
+    ("total_income", re.compile(r"^total (?:income|revenue)(?! from)")),
+    ("expenses", re.compile(r"^total expen")),
+    ("finance_costs", re.compile(r"^finance costs?")),
+    ("depreciation", re.compile(r"^depreciation")),
+    ("pbt_before_exceptional", re.compile(PROFIT + r"(?: from ordinary activities)? before (?:exceptional|extraordinary)|" +
+                                          PROFIT + r" before tax and (?:exceptional|extraordinary)")),
+    ("exceptional", re.compile(r"^(?:add |less |add less )?exceptional items?")),
+    ("pbt", re.compile(PROFIT + r"(?: from (?:ordinary activities|continuing operations))? before tax")),
+    ("tax", re.compile(r"^(?:less )?(?:total |net )?(?:income )?tax expenses?|^total tax|^tax expenses? credit")),
+    ("pat", re.compile(PROFIT + r"(?: from (?:ordinary activities|continuing operations))? "
+                       r"(?:for the (?:period|quarter|year)|after tax)")),
+]
+EPS_BASIC_RX = re.compile(r"^basic\b|(?:eps|earnings? per (?:equity )?share)\b[^a-z]*(?:\w+ )?basic\b")
+EPS_DILUTED_RX = re.compile(r"^diluted\b|(?:eps|earnings? per (?:equity )?share)\b[^a-z]*(?:\w+ )?diluted\b")
+
+
+def pdftotext_exe():
+    return shutil.which("pdftotext")
+
+
+def _pdf_to_text(path):
+    """pdftotext -layout on a PDF -> text. Tests swap this."""
+    exe = pdftotext_exe()
+    if not exe:
+        raise ResultsError("pdftotext is not installed: brew install poppler (Debian: apt install poppler-utils), "
+                           "or download the XBRL from the exchange and pass --file")
+    try:
+        done = subprocess.run([exe, "-layout", path, "-"], capture_output=True, timeout=PDFTOTEXT_TIMEOUT)
+    except (OSError, subprocess.SubprocessError) as exc:
+        raise ResultsError("pdftotext failed on %s: %s" % (path, exc))
+    if done.returncode != 0:
+        raise ResultsError("pdftotext could not read %s: %s" % (
+            path, done.stderr.decode("utf-8", "replace").strip()[:200] or "exit %d" % done.returncode))
+    return done.stdout.decode("utf-8", "replace")
+
+
+def fetch_bytes(url):
+    """GET url as bytes with the plainly identified client: no cookies, no retry, nseindia.com refused."""
+    host = urllib.parse.urlsplit(url).hostname or ""
+    if host == "nseindia.com" or host.endswith(".nseindia.com"):
+        raise ResultsError("nseindia.com is out: NSE's terms forbid scripted access. Download the file in your "
+                           "browser and pass --pdf PATH or --file PATH")
+    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept": "*/*"})
+    try:
+        with _urlopen(req, timeout=TIMEOUT) as resp:
+            return resp.read()
+    except urllib.error.HTTPError as exc:
+        hint = " (not retried; open the link in your browser and pass the saved file with --pdf PATH)" \
+            if exc.code in (401, 403, 406, 429) else ""
+        raise ResultsError("HTTP %d for %s%s" % (exc.code, url, hint))
+    except urllib.error.URLError as exc:
+        raise ResultsError("could not reach %s: %s" % (url, exc.reason))
+    except OSError as exc:
+        raise ResultsError("could not read %s: %s" % (url, exc))
+
+
+def pdf_guid(url):
+    """The filing's id from BSE's link (.../AttachLive/<guid>.pdf), or a hash of any other URL."""
+    name = os.path.basename(urllib.parse.urlsplit(url).path)
+    if name.lower().endswith(".pdf"):
+        name = name[:-4]
+    if re.fullmatch(r"[A-Za-z0-9._-]{8,120}", name or ""):
+        return name
+    return hashlib.sha256(url.encode("utf-8")).hexdigest()[:16]
+
+
+def cached_pdf(url, cache_dir=BSE_PDF_CACHE):
+    """trader/cache/bse-pdf/<guid>.pdf: fetched once, then read from disk. -> (path, fetched now?)"""
+    path = os.path.join(cache_dir, pdf_guid(url) + ".pdf")
+    if os.path.isfile(path) and os.path.getsize(path) > 0:
+        return path, False
+    data = fetch_bytes(url)
+    if not data.startswith(b"%PDF"):
+        raise ResultsError("%s is not a PDF (it starts with %r)" % (url, data[:12]))
+    os.makedirs(cache_dir, exist_ok=True)
+    with open(path, "wb") as fh:
+        fh.write(data)
+    return path, True
+
+
+def bse_feed_cached(now, offline=None, cache_dir=FEED_CACHE):
+    """The day's BSE announcements XML: --offline DIR/bse-announcements.xml, else the file every tool in the
+    pack shares (trader/cache/bse-announcements-<date>-<HHMM>.xml, fresh for BSE_CACHE_MINUTES), else fetched."""
+    if offline:
+        return fetch(None, offline, "bse-announcements.xml")
+    fresh = sorted(p for p in glob.glob(os.path.join(cache_dir, "bse-announcements-*.xml"))
+                   if time.time() - os.path.getmtime(p) < BSE_CACHE_MINUTES * 60)
+    if fresh:
+        with open(fresh[-1], encoding="utf-8", errors="replace") as fh:
+            return fh.read()
+    text = fetch(BSE_ANNOUNCEMENTS)
+    os.makedirs(cache_dir, exist_ok=True)
+    path = os.path.join(cache_dir, "bse-announcements-%s.xml" % now.strftime("%Y-%m-%d-%H%M"))
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write(text)
+    return text
+
+
+def results_filings(items, kite_name, code=None):
+    """Today's filings by this company (by scrip code when given, else by Kite's name, as the news tool matches)
+    -> (the ones that look like a results PDF, best first; every filing of the company)."""
+    mine, seen = [], set()
+    for it in items:
+        hit = (it["scrip"] == str(code)) if code else name_matches(kite_name, it["title"])
+        if not hit or not it["link"] or it["link"] in seen:
+            continue
+        seen.add(it["link"])
+        mine.append(it)
+    scored = []
+    for it in mine:
+        text = it["description"]
+        score = 0
+        if RESULTS_FILING_RX.search(text):
+            score += 3
+        if re.search(r"statement|regulation 33|reg\.? 33", text, re.I):
+            score += 1
+        if re.search(r"outcome", text, re.I):
+            score -= 1
+        if NOT_RESULTS_RX.search(text):
+            score -= 5
+        if it["link"].lower().endswith(".pdf"):
+            score += 1
+        scored.append((score, it))
+    floor = datetime.datetime.min.replace(tzinfo=nse.IST)
+    scored.sort(key=lambda s: (-s[0], -(s[1]["published"] or floor).timestamp()))
+    return [it for score, it in scored if score > 2], mine
+
+
+# ---- reading the statement out of pdftotext -layout text
+
+def _cells(line):
+    """[(start, end, text)] for the runs of text separated by two or more spaces (pdftotext -layout columns)."""
+    return [(m.start(), m.end(), m.group(0)) for m in CELL_RX.finditer(line)]
+
+
+def _valid_grouping(digits):
+    groups = digits.split(",")
+    if len(groups) == 1:
+        return True
+    if len(groups[-1]) != 3 or not 1 <= len(groups[0]) <= 3:
+        return False
+    return all(len(g) in (2, 3) for g in groups[1:-1])
+
+
+def classify_cell(text):
+    """('num', value) | ('nil', 0.0) | ('bad', None) for an unreadable number | ('text', None)."""
+    s = text.strip()
+    if NIL_RX.match(s):
+        return "nil", 0.0
+    if REF_RX.match(s) or s.endswith("%"):
+        return "text", None
+    compact = s.replace(" ", "")
+    if NUM_RX.match(compact) and ("." in compact or "," in compact or " " not in s):
+        body = compact.strip("()")
+        if _valid_grouping(body.lstrip("-").split(".")[0]):
+            value = float(body.replace(",", "").lstrip("-") or 0)
+            if compact.startswith("(") or body.startswith("-"):
+                value = -value
+            return "num", value
+    digits, letters = len(re.findall(r"\d", s)), len(re.findall(r"[A-Za-z]", s))
+    if digits and len(compact) <= 16:
+        junk = len(re.findall(r"[^\dA-Za-z,.()\s-]", s))
+        if letters <= 2 and junk <= 2 and digits >= letters:
+            return "bad", None
+    return "text", None
+
+
+def split_row(line):
+    """A statement line -> (label, [(center, kind, value, text)]): the text cells make the label, the number
+    cells (to the right of it, or to the left in the rare layout that prints them first) are the values."""
+    cells = [(a, b, t) + classify_cell(t) for a, b, t in _cells(line)]
+    label = " ".join(c[2] for c in cells if c[3] == "text")
+    values = [((c[0] + c[1]) / 2.0, c[3], c[4], c[2]) for c in cells if c[3] != "text"]
+    return label, values
+
+
+def strip_serial(label):
+    return SERIAL_RX.sub("", label, count=1).strip()
+
+
+def norm_label(label):
+    return " ".join(re.sub(r"[^a-z ]+", " ", strip_serial(label).lower()).split())
+
+
+def match_row(norm, eps_context):
+    if eps_context or EPS_CONTEXT_RX.search(norm):
+        if EPS_BASIC_RX.search(norm):
+            return ["eps_basic", "eps_diluted"] if "diluted" in norm else ["eps_basic"]
+        if EPS_DILUTED_RX.search(norm):
+            return ["eps_diluted"]
+    for key, rx in ROW_RX:
+        if rx.search(norm):
+            return [key]
+    return []
+
+
+def _month_end(year, month):
+    year += (month - 1) // 12
+    month = (month - 1) % 12 + 1
+    return datetime.date(year, month, calendar_module.monthrange(year, month)[1])
+
+
+def _make_date(day, month, year):
+    year = int(year)
+    if year < 100:
+        year += 2000
+    if not 1990 <= year <= 2099:
+        return None
+    try:
+        return datetime.date(year, int(month), int(day))
+    except ValueError:
+        return None
+
+
+def dates_on_line(line):
+    """Every date on the line as (center, day, month, year, span); day or year is None when the header prints
+    them on another line ('30 September' over '2026', 'September' over '30,2026')."""
+    out, spans = [], []
+
+    def free(m):
+        return not any(m.start() < e and m.end() > s for s, e in spans)
+
+    for m in DMY_RX.finditer(line):
+        if free(m) and _make_date(m.group(1), m.group(2), m.group(3)):
+            spans.append((m.start(), m.end()))
+            out.append(((m.start() + m.end()) / 2.0, int(m.group(1)), int(m.group(2)), int(m.group(3)) + (2000 if len(m.group(3)) == 2 else 0), spans[-1]))
+    for m in DMON_RX.finditer(line):
+        day, month, year = int(m.group(1)), MONTHS[m.group(2).lower()[:3]], m.group(3) or m.group(4)
+        if free(m) and 1 <= day <= 31 and (not year or _make_date(day, month, year)):
+            spans.append((m.start(), m.end()))
+            out.append(((m.start() + m.end()) / 2.0, day, month, int(year) + (2000 if year and len(year) == 2 else 0) if year else None, spans[-1]))
+    for m in MOND_RX.finditer(line):
+        month, day, year = MONTHS[m.group(1).lower()[:3]], int(m.group(2)), m.group(3)
+        if free(m) and 1 <= day <= 31 and (not year or _make_date(day, month, year)):
+            spans.append((m.start(), m.end()))
+            out.append(((m.start() + m.end()) / 2.0, day, month, int(year) if year else None, spans[-1]))
+    months_only = [m for m in MONTH_ONLY_RX.finditer(line) if free(m)]
+    if len(months_only) >= 2:
+        for m in months_only:
+            spans.append((m.start(), m.end()))
+            out.append(((m.start() + m.end()) / 2.0, None, MONTHS[m.group(1).lower()[:3]], None, spans[-1]))
+    out.sort(key=lambda d: d[0])
+    return out
+
+
+def header_columns(lines):
+    """Column dates from a statement's header lines, left to right, as [(center, date)]. A 'Quarter ended
+    30.09.2026' group label is ignored when the columns carry their own dates."""
+    per_line, completions = [], []     # completions: [line, center, day or None, year, used]
+    for i, line in enumerate(lines):
+        if TITLE_RX.search(line):
+            per_line.append([])
+            continue
+        dated = dates_on_line(line)
+        per_line.append(dated)
+        taken = [d[4] for d in dated]
+        for m in DAY_YEAR_RX.finditer(line):
+            completions.append([i, (m.start() + m.end()) / 2.0, int(m.group(1)), int(m.group(2)), False])
+        for m in BARE_YEAR_RX.finditer(line):
+            if not any(m.start() < e and m.end() > s for s, e in taken):
+                completions.append([i, (m.start() + m.end()) / 2.0, None, int(m.group(1)), False])
+    most = max([len(d) for d in per_line] or [0])
+    found = []
+    for i, dated in enumerate(per_line):
+        if most >= 3 and len(dated) <= 2 and GROUP_LABEL_RX.search(lines[i]):
+            continue
+        for center, day, month, year, span in dated:
+            if year is None or day is None:
+                best = None
+                for c in completions:
+                    if c[4] or not i < c[0] <= i + YEAR_PAIR_LINES or abs(c[1] - center) > YEAR_PAIR_CHARS:
+                        continue
+                    if day is None and c[2] is None:
+                        continue
+                    if best is None or abs(c[1] - center) < abs(best[1] - center):
+                        best = c
+                if best is None:
+                    continue
+                best[4] = True
+                day, year = day if day is not None else best[2], best[3]
+            d = _make_date(day, month, year)
+            if d is not None:
+                found.append((center, d))
+    found.sort(key=lambda f: f[0])
+    columns = []
+    for center, d in found:
+        if columns and abs(center - columns[-1][0]) < 3:
+            continue
+        columns.append((center, d))
+    return columns
+
+
+def column_spans(dates, anchor=None):
+    """Column dates in order -> [{'date', 'start', 'end', 'kind'}]. The first time a date appears it is a
+    quarter (this one, the preceding, the year-earlier); the second time a year-to-date column; a date that
+    is none of those is the full year. This is SEBI's Regulation 33 column layout."""
+    if not dates:
+        return []
+    q = anchor if anchor in dates else dates[0]
+    q_prev, q_year = _month_end(q.year, q.month - 3), _month_end(q.year - 1, q.month)
+    extras = sorted({d for d in dates if d not in (q, q_prev, q_year)}, reverse=True)
+    if extras:
+        fy_end_month = extras[0].month
+    elif dates.count(q_prev) > 1:
+        fy_end_month = q_prev.month
+    elif dates.count(q) > 1:
+        fy_end_month = q.month
+    else:
+        fy_end_month = 3
+    seen, out = {}, []
+    for d in dates:
+        n = seen.get(d, 0)
+        seen[d] = n + 1
+        if n == 0 and d in (q, q_prev, q_year):
+            start, kind = _month_end(d.year, d.month - 3) + datetime.timedelta(days=1), "quarter"
+        else:
+            fy_start_month = fy_end_month % 12 + 1
+            start_year = d.year if (d.month > fy_end_month or fy_end_month == 12) else d.year - 1
+            start, kind = datetime.date(start_year, fy_start_month, 1), "cumulative"
+        out.append({"date": d.isoformat(), "start": start.isoformat(), "end": d.isoformat(), "kind": kind})
+    return out
+
+
+def span_label(col):
+    if col["kind"] == "quarter":
+        return "quarter to %s" % col["end"]
+    words = {"Q1": "quarter", "H1": "half year", "9M": "nine months", "the year": "year"}
+    return "%s to %s" % (words[ytd_label((col["start"], col["end"]))], col["end"])
+
+
+def unit_of(lines):
+    """(factor, word, the line) from a 'Rs. in lakhs' style line, or (None, None, None)."""
+    for line in lines:
+        s = " ".join(line.split())
+        if len(s) > 120 or not RUPEE_RX.search(s):
+            continue
+        m = UNIT_RX.search(s)
+        if m:
+            word = (m.group(1) or m.group(2)).lower()
+            word = UNIT_WORDS.get(word, word)
+            return PDF_SCALES[word], word, s
+        if RUPEES_ONLY_RX.search(s) and len(s) < 60:
+            return 1.0, "rupees", s
+    return None, None, None
+
+
+def document_unit(pages):
+    """The unit every page of the filing agrees on, as (factor, word, line, page), else (None,) * 4."""
+    found = {}
+    for n, page in enumerate(pages):
+        factor, word, line = unit_of(page.splitlines())
+        if word and word not in found:
+            found[word] = (factor, word, line, n + 1)
+    if len(found) == 1:
+        return list(found.values())[0]
+    return None, None, None, None
+
+
+def assign_values(values, centers, zone=(None, None)):
+    """Number cells -> one per column (None where unread): by order when the counts match, else by position.
+    Cells left of the first column (serial numbers) and outside the zone (the other basis, side by side)
+    are ignored."""
+    n = len(centers)
+    gaps = [b - a for a, b in zip(centers, centers[1:])] or [16.0]
+    spacing = sorted(gaps)[len(gaps) // 2]
+    limits = [max(4.0, min(gaps[max(0, i - 1)], gaps[min(i, len(gaps) - 1)]) / 2.0) for i in range(n)]
+    lo = centers[0] - spacing if zone[0] is None else max(zone[0], centers[0] - spacing)
+    inside = [v for v in values if v[0] >= lo and (zone[1] is None or v[0] < zone[1])]
+    out = [None] * n
+    if len(inside) == n:
+        return [v for v in inside], len(inside)
+    claims = {}
+    for v in inside:
+        gap, i = min((abs(v[0] - c), i) for i, c in enumerate(centers))
+        if gap > limits[i] or (i in claims and claims[i][0] <= gap):
+            continue
+        claims[i] = (gap, v)
+    for i, (gap, v) in claims.items():
+        out[i] = v
+    return out, len(inside)
+
+
+def _decimals(text):
+    m = re.search(r"\.(\d+)\)?$", text.replace(" ", ""))
+    return len(m.group(1)) if m else 0
+
+
+def implausible(assigned, key):
+    """Column indexes whose number is an OCR slip: more decimals than the rest of the row (12.16135 for
+    12,161.35), or, for revenue and expense rows, many times off the row's other figures (34638 for 346.38)."""
+    cells = [(i, a) for i, a in enumerate(assigned) if a is not None and a[1] == "num"]
+    out = []
+    decs = [_decimals(a[3]) for i, a in cells]
+    if decs and max(decs) > 2 and sorted(decs)[len(decs) // 2] <= 2:
+        out += [i for (i, a), d in zip(cells, decs) if d > 2]
+    if key in PLAUSIBLE_KEYS:
+        nums = [abs(a[2]) for i, a in cells if a[2] and i not in out]
+        if len(nums) >= 3:
+            med = sorted(nums)[len(nums) // 2]
+            out += [i for i, a in cells if a[2] and i not in out
+                    and (abs(a[2]) < med / PLAUSIBLE_RATIO or abs(a[2]) > med * PLAUSIBLE_RATIO)]
+    return out
+
+
+def _continues(last, assigned):
+    """A line without a label of its own whose numbers fall only under the columns the row above left blank."""
+    landed = [j for j, a in enumerate(assigned) if a is not None]
+    return bool(landed) and all(last["assigned"][j] is None for j in landed)
+
+
+def _basis_words(text):
+    low = text.lower()
+    return {w for w in ("consolidated", "standalone") if w in low}
+
+
+def _read_rows(parsed, lines, header_end, centers, zone=(None, None)):
+    """The key rows of one column group -> ({key: {label, line, assigned}}, number cells per row (mode))."""
+    rows, eps_context, last, widths = {}, False, None, []
+    for i in range(header_end, len(parsed)):
+        label, values = parsed[i]
+        if not values:
+            if EPS_CONTEXT_RX.search(norm_label(label)):
+                eps_context = True
+            if label.strip():
+                last = None
+            continue
+        own = strip_serial(label)
+        if not own:   # the numbers sit on their own line: the label is the line above (and below)
+            before = strip_serial(lines[i - 1]) if i > 0 and not parsed[i - 1][1] else ""
+            after = strip_serial(parsed[i + 1][0]) if i + 1 < len(parsed) and not parsed[i + 1][1] else ""
+            own = (before + " " + after).strip()
+        norm = norm_label(own)
+        if EPS_CONTEXT_RX.search(norm):
+            eps_context = True
+        keys = [k for k in match_row(norm, eps_context) if k not in rows]
+        assigned, width = assign_values(values, centers, zone)
+        if not keys:
+            if last is not None and _continues(last, assigned):
+                for j, a in enumerate(assigned):
+                    if a is not None:
+                        last["assigned"][j] = a
+            continue
+        widths.append(width)
+        last = {"assigned": assigned, "label": " ".join(own.split()), "line": i}
+        for key in keys:
+            rows[key] = last
+    mode = max(set(widths), key=widths.count) if widths else 0
+    return rows, mode
+
+
+def _finish_rows(rows, spans):
+    """Drop unreadable and implausible cells; -> ({key: {label, line, values}}, [unread notes])."""
+    done, unread = {}, []
+    for key in PDF_KEYS:
+        row = rows.get(key)
+        if row is None:
+            unread.append({"row": key, "label": None, "columns": [], "why": "no row found"})
+            continue
+        assigned = row["assigned"]
+        bad = [j for j, a in enumerate(assigned) if a is not None and a[1] == "bad"]
+        odd = implausible(assigned, key)
+        cells = [None if (a is None or j in bad or j in odd) else a[2] for j, a in enumerate(assigned)]
+        missing = [j for j, c in enumerate(cells) if c is None]
+        done[key] = {"label": row["label"], "line": row["line"], "values": cells}
+        if missing and not (key == "exceptional" and not bad and not odd):
+            why = "no number under the column"
+            if bad and set(missing) <= set(bad):
+                why = "unreadable number"
+            elif odd and set(missing) <= set(odd):
+                why = "looks wrong against the rest of the row (an OCR slip)"
+            unread.append({"row": key, "label": row["label"], "columns": [span_label(spans[j]) for j in missing], "why": why})
+    return done, unread
+
+
+def parse_statement(lines, page, doc_unit=(None, None, None, None)):
+    """One statement's lines (a page, maybe two) -> [statement dicts], one per basis found in the columns.
+    A statement whose columns or profit rows could not be read comes back with 'problem' set."""
+    parsed = [split_row(line) for line in lines]
+    header_end = None
+    for i, (label, values) in enumerate(parsed):
+        if len(values) >= 2 and match_row(norm_label(label), False):
+            header_end = i
+            break
+    if header_end is None:
+        return []
+    header = lines[:header_end]
+    title_idx = next((i for i, l in enumerate(header) if TITLE_RX.search(l)), None)
+    title = " ".join(header[title_idx].split()) if title_idx is not None else ""
+    title_text = title + " " + (" ".join(header[title_idx + 1].split())
+                                if title_idx is not None and title_idx + 1 < len(header) else "")
+    columns = header_columns(header)
+    anchor = next((_make_date(day, month, year) for center, day, month, year, span in dates_on_line(title_text)
+                   if day and year), None)
+    factor, unit, unit_line, unit_page = unit_of(header) + (page,)
+    if factor is None:
+        factor, unit, unit_line, unit_page = unit_of(lines) + (page,)
+    if factor is None:
+        factor, unit, unit_line, unit_page = doc_unit
+    low = title_text.lower()
+    audited = "unaudited" if "unaudited" in low else ("audited" if "audited" in low else None)
+    groups = [("single", columns, (None, None))]   # side by side: a header line naming both bases splits the columns
+    for line in header:
+        if TITLE_RX.search(line):
+            continue
+        words = sorted((m.start(), m.group(0).lower()) for m in re.finditer(r"standalone|consolidated", line, re.I))
+        if len(words) >= 2 and len(columns) >= 6 and len(columns) % 2 == 0:
+            boundary = (words[0][0] + words[1][0]) / 2.0 + len(words[0][1]) / 2.0
+            left = [c for c in columns if c[0] < boundary]
+            right = [c for c in columns if c[0] >= boundary]
+            if len(left) == len(right):
+                groups = [(words[0][1], left, (None, boundary)), (words[1][1], right, (boundary, None))]
+                break
+    title_basis = _basis_words(title_text)
+    body = "\n".join(lines[header_end:])
+    out = []
+    for gname, cols, zone in groups:
+        if gname == "single":
+            basis = list(title_basis)[0] if len(title_basis) == 1 else None
+        else:
+            basis = gname
+        inferred = False
+        if basis is None and CONSOLIDATED_HINT_RX.search(body):
+            basis, inferred = "consolidated", True
+        stmt = {"page": page, "title": title or None, "basis": basis, "basis_inferred": inferred, "audited": audited,
+                "unit": unit, "unit_factor": factor, "unit_line": unit_line, "unit_page": unit_page,
+                "columns": [], "rows": {}, "unread": [], "bank": False, "problem": None,
+                "side_by_side": gname != "single"}
+        centers = [c[0] for c in cols]
+        if not centers:
+            stmt["problem"] = "no column dates could be read in the header"
+            out.append(stmt)
+            continue
+        spans = column_spans([c[1] for c in cols], anchor)
+        rows, mode = _read_rows(parsed, lines, header_end, centers, zone)
+        stmt["columns"] = spans
+        dates_read = ", ".join(c["date"] for c in spans)
+        if mode > len(spans):
+            stmt["problem"] = ("%d columns of numbers under %d readable column dates (%s): the header could not be "
+                               "read" % (mode, len(spans), dates_read))
+        elif not any(c["kind"] == "quarter" for c in spans) or any(
+                c["kind"] == "cumulative" and not CUMULATIVE_DAYS[0] <= days((c["start"], c["end"])) <= CUMULATIVE_DAYS[1]
+                for c in spans):
+            stmt["problem"] = "the column dates (%s) do not form a Regulation 33 layout" % dates_read
+        elif not (("revenue" in rows or "total_income" in rows) and ("pat" in rows or "pbt" in rows)):
+            stmt["problem"] = "its profit rows could not be read (rows found: %s)" % (
+                ", ".join(PDF_ROW_NAMES[k] for k in PDF_KEYS if k in rows) or "none")
+        stmt["rows"], stmt["unread"] = _finish_rows(rows, spans)
+        stmt["bank"] = bool(rows.get("revenue")) and norm_label(rows["revenue"]["label"]).startswith("interest earned")
+        out.append(stmt)
+    return out
+
+
+def parse_results_pdf(text):
+    """pdftotext -layout output -> {'statements': usable ones, 'unusable': the rest, 'pages', 'text_lines',
+    'scanned', 'entity'}."""
+    pages = text.split("\f")
+    if pages and not pages[-1].strip():
+        pages = pages[:-1]
+    text_lines = sum(1 for p in pages for l in p.splitlines() if l.strip())
+    doc_unit = document_unit(pages)
+    statements, unusable, entity = [], [], None
+    for i, page in enumerate(pages):
+        lines = page.splitlines()
+        for extra in range(1, MAX_BLOCK_PAGES):
+            nxt = pages[i + extra].splitlines() if i + extra < len(pages) else None
+            if nxt and not any(TITLE_RX.search(l) for l in nxt[:30]) and not header_columns(nxt[:40]):
+                lines = lines + nxt
+        for stmt in parse_statement(lines, i + 1, doc_unit):
+            if stmt["problem"] and not ("result" in (stmt["title"] or "").lower() or "revenue" in stmt["rows"]
+                                        or "total_income" in stmt["rows"]):
+                continue      # a cash-flow or balance-sheet page, not a results table
+            (unusable if stmt["problem"] else statements).append(stmt)
+            if entity is None:
+                for l in page.splitlines()[:12]:
+                    if re.search(r"\b(limited|ltd\.?|bank)\b", l, re.I) and len(l.strip()) < 80 \
+                            and not TITLE_RX.search(l) and not re.search(r"\d{3}", l):
+                        entity = " ".join(l.split())
+                        break
+    scanned = not statements and not unusable and text_lines < SPARSE_LINES_PER_PAGE * max(1, len(pages))
+    return {"statements": statements, "unusable": unusable, "pages": len(pages), "text_lines": text_lines,
+            "scanned": scanned, "entity": entity}
+
+
+def describe_problems(parsed, link=None):
+    """One plain sentence on why nothing could be read, for the error line."""
+    where = " Open it yourself: %s" % link if link else ""
+    if parsed["scanned"]:
+        return ("the PDF has no text layer (%d lines of text over %d pages: a scanned filing); the numbers "
+                "cannot be read by a script.%s" % (parsed["text_lines"], parsed["pages"], where))
+    if parsed["unusable"]:
+        bits = ["page %d (%s): %s" % (s["page"], s["basis"] or "basis not stated", s["problem"]) for s in parsed["unusable"]]
+        return "a results statement was found but not read: %s.%s" % ("; ".join(bits), where)
+    return ("no results statement found in the PDF's text (%d pages, %d lines): looked for a page with a revenue "
+            "or interest-earned row and a profit row under column dates.%s" % (parsed["pages"], parsed["text_lines"], where))
+
+
+def choose_statement(parsed, wanted=None):
+    """The statement to use: --consolidated/--standalone, else consolidated, else standalone, else the first."""
+    stmts = parsed["statements"]
+    if not stmts:
+        raise ResultsError(describe_problems(parsed))
+    labelled = {s["basis"] for s in stmts if s["basis"]}
+    if wanted:
+        for s in stmts:
+            if s["basis"] == wanted:
+                return s
+        if labelled:
+            raise ResultsError("no %s statement in the PDF; it carries: %s" % (
+                wanted, ", ".join("%s (page %d)" % (s["basis"] or "basis not stated", s["page"]) for s in stmts)))
+        return stmts[0]
+    for basis in ("consolidated", "standalone"):
+        for s in stmts:
+            if s["basis"] == basis:
+                return s
+    return stmts[0]
+
+
+def periods_from_statement(stmt, scale_override=None):
+    """{key: {(start, end): rupees (EPS as is)}} plus the unit label and derivation notes."""
+    factor, unit = stmt["unit_factor"], stmt["unit"]
+    if scale_override:
+        word = re.sub(r"^in\s+|^rs\.?\s*|^inr\s*", "", scale_override.strip().lower())
+        if word not in PDF_SCALES:
+            raise ResultsError("unknown --scale %r: pass lakh, crore, million or rupees" % scale_override)
+        factor, unit = PDF_SCALES[word], word
+    if factor is None:
+        raise ResultsError("the PDF's statement (page %d) does not say its unit (no 'Rs in lakhs / crore' line could "
+                           "be read anywhere in the filing): open it, read the unit line and pass --scale lakh, "
+                           "--scale crore or --scale rupees" % stmt["page"])
+    spans = [(c["start"], c["end"]) for c in stmt["columns"]]
+    out, notes = {}, []
+    for key, row in stmt["rows"].items():
+        bucket = {}
+        for span, value in zip(spans, row["values"]):
+            if value is None or span in bucket:
+                continue
+            bucket[span] = value if key in PER_SHARE else value * factor
+        if bucket:
+            out[key] = bucket
+    rev, ti, oi = out.get("revenue", {}), out.get("total_income", {}), out.get("other_income", {})
+    derived = []
+    for span in spans:
+        if span not in rev and span in ti and span in oi:
+            rev[span] = ti[span] - oi[span]
+            derived.append(span[1])
+    if derived:
+        notes.append("revenue for %s is total income minus other income (the revenue cell was not read)"
+                     % ", ".join(sorted(set(derived))))
+    if rev:
+        out["revenue"] = rev
+    if stmt.get("unit_page") and stmt["unit_page"] != stmt["page"] and not scale_override:
+        notes.append("the unit line (%s) was read on page %d, not on the statement's page" % (stmt["unit_line"], stmt["unit_page"]))
+    return out, unit, notes
+
+
+def analyse_pdf(parsed, basis=None, scale=None, quarters=6, name=None, source_path=None, url=None):
+    """The same report as analyse(), from a results PDF's text."""
+    stmt = choose_statement(parsed, basis)
+    periods_by_key, unit, notes = periods_from_statement(stmt, scale)
+    if not ("revenue" in periods_by_key or "pat" in periods_by_key):
+        raise ResultsError("the statement on page %d: neither the revenue nor the net profit row could be read "
+                           "(rows read: %s)" % (stmt["page"], ", ".join(PDF_ROW_NAMES[k] for k in PDF_KEYS if k in stmt["rows"]) or "none"))
+    core = analyse_periods(periods_by_key, quarters, stmt["bank"])
+    unread = []
+    for u in stmt["unread"]:
+        if u["why"] == "no row found":
+            unread.append("%s: no row found" % PDF_ROW_NAMES[u["row"]])
+        else:
+            unread.append("%s (%s): %s not read (%s)" % (PDF_ROW_NAMES[u["row"]], u["label"], ", ".join(u["columns"]), u["why"]))
+    if stmt["basis_inferred"]:
+        notes.append("the statement's title does not say standalone or consolidated; read as consolidated because "
+                     "it carries a non-controlling interest or share-of-joint-venture line")
+    pdf = {"url": url, "path": source_path, "page": stmt["page"], "title": stmt["title"], "unit_line": stmt["unit_line"],
+           "columns": stmt["columns"], "unread": unread, "notes": notes, "side_by_side": stmt["side_by_side"],
+           "statements": [{"page": s["page"], "basis": s["basis"] or "not stated", "title": s["title"],
+                           "problem": s["problem"]} for s in parsed["statements"] + parsed["unusable"]]}
+    result = {"entity": name or parsed.get("entity"), "filed_symbol": None, "scrip_code": None,
+              "basis": stmt["basis"] or "not stated in the PDF", "scale": [unit], "audited": stmt["audited"],
+              "bank": stmt["bank"], "files": [os.path.basename(source_path or url or "")],
+              "concepts": {k: [stmt["rows"][k]["label"]] for k in stmt["rows"]},
+              "source": PDF_SOURCE, "pdf": pdf}
+    result.update(core)
+    return result
+
+
+# ---- the command: --pdf PATH_OR_URL and --today
+
+def pdf_text_for(source, offline=None):
+    """A path, a URL or (--offline DIR) DIR/*<guid>.txt -> (text, local path, url). A .txt is pdftotext output."""
+    url = source if re.match(r"https?://", source, re.I) else None
+    if url and offline:
+        saved = sorted(glob.glob(os.path.join(offline, "*%s.txt" % pdf_guid(url))))
+        if saved:
+            with open(saved[0], encoding="utf-8", errors="replace") as fh:
+                return fh.read(), saved[0], url
+        raise ResultsError("offline: no saved text for %s in %s" % (pdf_guid(url), offline))
+    if url:
+        path, fetched = cached_pdf(url)
+    else:
+        path = source
+        if not os.path.isfile(path):
+            raise ResultsError("no such file: %s" % path)
+    if path.lower().endswith(".txt"):
+        with open(path, encoding="utf-8", errors="replace") as fh:
+            return fh.read(), path, url
+    return _pdf_to_text(path), path, url
+
+
+def today_filings(symbol, name, code, now, offline=None):
+    """Today's results filings for the company from BSE's feed -> (candidates best first, all of its filings)."""
+    text = bse_feed_cached(now, offline)
+    items = parse_rss(text, "BSE")
+    return results_filings(items, name, code)
+
+
+def facts_from_pdf(args, symbol, name, basis, now):
+    """-> (result or None, [stderr lines]). Reads --pdf, or today's results filing from BSE's feed (--today)."""
+    lines, sources = [], []
+    if args.today:
+        try:
+            candidates, mine = today_filings(symbol, name, args.bse_code, now, args.offline)
+        except ResultsError as exc:
+            return None, ["BSE announcements: %s" % exc]
+        if not candidates:
+            who = ("scrip code %s" % args.bse_code) if args.bse_code else name
+            return None, ["nothing from %s in today's BSE announcements looks like a results filing (%d other "
+                          "filing%s from it today%s)" % (who, len(mine), "" if len(mine) == 1 else "s",
+                                                        ": " + "; ".join(it["description"][:70] for it in mine[:3]) if mine else "")]
+        sources = [(it["link"], it) for it in candidates[:PDF_MAX_TRIES]]
+    else:
+        sources = [(args.pdf, None)]
+    for source, item in sources:
+        try:
+            text, path, url = pdf_text_for(source, args.offline)
+        except ResultsError as exc:
+            lines.append("%s" % exc)
+            continue
+        parsed = parse_results_pdf(text)
+        if not parsed["statements"]:
+            lines.append("%s: %s" % (os.path.basename(path), describe_problems(parsed, url or path)))
+            continue
+        try:
+            result = analyse_pdf(parsed, basis, args.scale, args.quarters, name, path, url)
+        except ResultsError as exc:
+            lines.append("%s: %s" % (os.path.basename(path), exc))
+            continue
+        if item is not None:
+            result["pdf"]["filing"] = {"company": item["title"], "description": item["description"],
+                                       "published": item["published"].isoformat() if item["published"] else None,
+                                       "scrip": item["scrip"]}
+            if not name and result["entity"] is None:
+                result["entity"] = re.sub(r"\s*\(\d+\)\s*$", "", item["title"])
+        return result, lines
+    return None, lines
+
+
 # ---------------------------------------------------------------- Kite (the company name)
 
 def company_name(symbol, now, fallback=None):
@@ -1064,25 +1956,41 @@ def parse_now(text):
 
 def cmd_facts(args, now):
     symbol = kite.normalize_symbol(args.symbol)
-    instances, failed = [], 0
-    for path in args.file:
-        try:
-            instances.append(read_file(path))
-        except ResultsError as exc:
-            print("results: %s" % exc, file=sys.stderr)
-            failed += 1
-    if not instances:
+    if sum(1 for x in (args.file, args.pdf, args.today) if x) != 1:
+        print("results: facts wants exactly one of --file PATH (XBRL), --pdf PATH_OR_URL or --today", file=sys.stderr)
         return 2
     name, note = company_name(symbol, now, args.name)
-    basis = "consolidated" if args.consolidated else ("standalone" if args.standalone else None)
-    try:
-        result = analyse(instances, basis, args.scale, args.quarters, name)
-    except ResultsError as exc:
-        print("results: %s" % exc, file=sys.stderr)
+    if args.today and not (name or args.bse_code):
+        print("results: --today needs the company name to match BSE's feed: log in to Kite (%s), or pass --name "
+              "or --bse-code CODE" % (note or "").split(":")[0], file=sys.stderr)
         return 2
+    basis = "consolidated" if args.consolidated else ("standalone" if args.standalone else None)
+    failed = 0
+    if args.file:
+        instances = []
+        for path in args.file:
+            try:
+                instances.append(read_file(path))
+            except ResultsError as exc:
+                print("results: %s" % exc, file=sys.stderr)
+                failed += 1
+        if not instances:
+            return 2
+        try:
+            result = analyse(instances, basis, args.scale, args.quarters, name)
+        except ResultsError as exc:
+            print("results: %s" % exc, file=sys.stderr)
+            return 2
+    else:
+        result, problems = facts_from_pdf(args, symbol, name, basis, now)
+        for line in problems:
+            print("results: %s" % line, file=sys.stderr)
+        if result is None:
+            return 2 if not problems else 1
+        failed = len(problems)
     if note:
-        print("results: no Kite session (%s); the company name comes from the file"
-              % note.split(":")[0], file=sys.stderr)
+        print("results: no Kite session (%s); the company name comes from the %s"
+              % (note.split(":")[0], "file" if args.file else "PDF or the feed"), file=sys.stderr)
     doc = {"symbol": symbol, "facts": result, "changes": changes(result)}
     if args.json:
         print(json.dumps(doc, indent=2))
@@ -1171,12 +2079,18 @@ def main(argv=None):
     sub = ap.add_subparsers(dest="cmd")
     f = sub.add_parser("facts", parents=[common], help="the quarters table from downloaded XBRL results files")
     f.add_argument("symbol", help="Kite trading symbol, e.g. RELIANCE")
-    f.add_argument("--file", action="append", required=True, metavar="PATH",
+    f.add_argument("--file", action="append", metavar="PATH",
                    help="an Ind AS XBRL results file you downloaded from NSE or BSE (repeat for more quarters)")
+    f.add_argument("--pdf", metavar="PATH_OR_URL",
+                   help="the results PDF from BSE's announcements feed (its link, or a saved file; a .txt from "
+                        "pdftotext -layout is read as is)")
+    f.add_argument("--today", action="store_true",
+                   help="fetch today's results filing for the company from BSE's announcements feed")
+    f.add_argument("--bse-code", metavar="CODE", help="match the BSE feed by scrip code instead of the company name")
     g = f.add_mutually_exclusive_group()
     g.add_argument("--consolidated", action="store_true")
     g.add_argument("--standalone", action="store_true")
-    f.add_argument("--scale", help="lakh, crore, million or rupees, when the file does not say")
+    f.add_argument("--scale", help="lakh, crore, million or rupees, when the file or PDF does not say")
     f.add_argument("--quarters", type=int, default=6)
     f.add_argument("--metrics", metavar="FILE", help="merge a row for this company into this JSON")
     f.add_argument("--name", help="company name to print (skips the Kite lookup)")

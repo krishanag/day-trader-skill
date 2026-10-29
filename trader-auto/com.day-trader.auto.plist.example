@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  trader-auto scheduler for macOS launchd: starts run-day.sh at 09:10 IST, Monday to Friday.
+
+  1. Replace /PATH/TO/PROJECT with your project folder (the one with trader/ and .env)
+     and /PATH/TO/python3 with the python3 you run the pack with (`which python3`).
+  2. cp this file ~/Library/LaunchAgents/com.day-trader.auto.plist
+  3. launchctl load ~/Library/LaunchAgents/com.day-trader.auto.plist
+     (launchctl unload ... stops it being scheduled; the kill switch, auto.py stop, halts a running day)
+
+  launchd fires StartCalendarInterval on the Mac's own clock. The TZ below only affects
+  the scripts; if the Mac is not set to India time, change Hour / Minute to 09:10 IST in
+  the Mac's zone. The Mac must be awake at 09:10 (System Settings > Energy, or `caffeinate`).
+
+  The Kite login is still a human step each morning before 09:10: run
+  `python3 trader-kite/login.py` in the project folder (your browser opens Zerodha's
+  page, you type your password and TOTP there). Without today's session every tick
+  writes "login-needed" to the log and does nothing else.
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.day-trader.auto</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/PATH/TO/PROJECT/day-trader-skill/trader-auto/run-day.sh</string>
+  </array>
+  <key>WorkingDirectory</key>
+  <string>/PATH/TO/PROJECT</string>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>TZ</key>
+    <string>Asia/Kolkata</string>
+    <key>PYTHON</key>
+    <string>/PATH/TO/python3</string>
+    <key>PATH</key>
+    <string>/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin</string>
+  </dict>
+  <key>StartCalendarInterval</key>
+  <array>
+    <dict><key>Weekday</key><integer>1</integer><key>Hour</key><integer>9</integer><key>Minute</key><integer>10</integer></dict>
+    <dict><key>Weekday</key><integer>2</integer><key>Hour</key><integer>9</integer><key>Minute</key><integer>10</integer></dict>
+    <dict><key>Weekday</key><integer>3</integer><key>Hour</key><integer>9</integer><key>Minute</key><integer>10</integer></dict>
+    <dict><key>Weekday</key><integer>4</integer><key>Hour</key><integer>9</integer><key>Minute</key><integer>10</integer></dict>
+    <dict><key>Weekday</key><integer>5</integer><key>Hour</key><integer>9</integer><key>Minute</key><integer>10</integer></dict>
+  </array>
+  <key>StandardOutPath</key>
+  <string>/PATH/TO/PROJECT/trader/auto/launchd.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/PATH/TO/PROJECT/trader/auto/launchd.err.log</string>
+  <key>RunAtLoad</key>
+  <false/>
+</dict>
+</plist>

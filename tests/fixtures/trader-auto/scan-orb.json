@@ -1,0 +1,92 @@
+{
+  "created_by": "trader-scanner",
+  "created_at": "2026-10-29T09:41:00+05:30",
+  "mode": "orb",
+  "as_of": "2026-10-29T09:41:00+05:30",
+  "universe": 6,
+  "scanned": 6,
+  "failed": 0,
+  "unconfirmed": 0,
+  "source": "kite",
+  "or_minutes": 15,
+  "interval": "5minute",
+  "filters": {
+    "min_price": 50.0,
+    "min_value": 0.0
+  },
+  "input": {
+    "symbols": [
+      "RELIANCE",
+      "SJVN",
+      "ZEEL",
+      "TCS",
+      "ICICIBANK",
+      "HUDCO"
+    ]
+  },
+  "note": "A scan is a list of charts that match a rule, not a list of stocks to buy.",
+  "hits": [
+    {
+      "symbol": "SJVN",
+      "name": "SJVN",
+      "setup": "orb",
+      "price": 52.6,
+      "cas": false,
+      "tick_size": 0.01,
+      "opening_range": {
+        "high": 52.21,
+        "low": 50.5,
+        "minutes": 15
+      },
+      "at": "09:40",
+      "pct_over": 0.75,
+      "detail": "closed above the 15-minute range at 09:40 (+0.75 %)"
+    },
+    {
+      "symbol": "RELIANCE",
+      "name": "RELIANCE INDUSTRIES",
+      "setup": "orb",
+      "price": 1174.4,
+      "cas": true,
+      "tick_size": 0.1,
+      "opening_range": {
+        "high": 1170.5,
+        "low": 1155.6,
+        "minutes": 15
+      },
+      "at": "09:40",
+      "pct_over": 0.33,
+      "detail": "closed above the 15-minute range at 09:40 (+0.33 %)"
+    },
+    {
+      "symbol": "HUDCO",
+      "name": "HOUSING & URBAN DEVELOPMENT CORPORATION",
+      "setup": "orb",
+      "price": 148.75,
+      "cas": true,
+      "tick_size": 0.01,
+      "opening_range": {
+        "high": 148.7,
+        "low": 147.05,
+        "minutes": 15
+      },
+      "at": "09:45",
+      "pct_over": 0.03,
+      "detail": "closed above the 15-minute range at 09:45 (+0.03 %)"
+    }
+  ],
+  "counts": {
+    "requested": 6,
+    "illiquid": 0,
+    "flat": 0,
+    "candidates": 6,
+    "unconfirmed": 0,
+    "fetched": 6,
+    "unusable": 0,
+    "scanned": 6,
+    "confirmed": 6,
+    "hits": 3
+  },
+  "errors": {},
+  "seconds": 2.4
+}

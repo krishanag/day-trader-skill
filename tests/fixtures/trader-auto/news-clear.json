@@ -1,0 +1,24 @@
+{
+  "checked": "2026-10-29T09:41:00+05:30",
+  "moves": [],
+  "items": [
+    {
+      "id": "g1",
+      "feed": "google",
+      "source": "Economic Times",
+      "kind": "headline",
+      "symbol": "RELIANCE",
+      "title": "RIL shares edge up as crude softens",
+      "summary": "",
+      "link": "https://example.invalid/a",
+      "time": "2026-10-29T09:05:00+05:30",
+      "touches": [
+        "RELIANCE"
+      ],
+      "tags": [],
+      "important": false,
+      "new": true
+    }
+  ],
+  "notes": []
+}

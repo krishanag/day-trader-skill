@@ -7,6 +7,7 @@ import stat
 import tempfile
 import unittest
 import urllib.error
+import urllib.parse
 
 from _load import load
 
@@ -324,6 +325,337 @@ class Login(Base):
         self.assertIn(("checksum=" + kite.checksum("key", "Rq1", "sec")).encode(), req.data)
         self.assertEqual(rec["access_token"], "AT")
         self.assertEqual(saved["user_id"], "AB1234")
+
+
+# ---------------------------------------------------------------- orders
+
+CO_BODY = {"variety": "co", "exchange": "NSE", "tradingsymbol": "RELIANCE",
+           "transaction_type": "BUY", "order_type": "MARKET", "quantity": 8,
+           "product": "MIS", "trigger_price": 1163.0, "validity": "DAY", "tag": "dtsorb"}
+
+REGULAR_BODY = {"variety": "regular", "exchange": "NSE", "tradingsymbol": "RELIANCE",
+                "transaction_type": "SELL", "order_type": "SL-M", "quantity": 8,
+                "product": "MIS", "trigger_price": 1163.0, "price": None, "validity": "DAY"}
+
+
+def form(req):
+    """The decoded form body of a FakeNet request as a dict (single values)."""
+    pairs = urllib.parse.parse_qsl(req.data.decode(), keep_blank_values=True)
+    return dict(pairs)
+
+
+def order(order_id, status, **extra):
+    row = {"order_id": order_id, "status": status, "tradingsymbol": "RELIANCE", "exchange": "NSE",
+           "transaction_type": "BUY", "product": "MIS", "variety": "co", "quantity": 8,
+           "filled_quantity": 0, "average_price": 0, "parent_order_id": None}
+    row.update(extra)
+    return row
+
+
+class PlaceOrder(Base):
+    def test_cover_order_posts_the_body_as_form_fields_to_its_variety(self):
+        self.net.answers.append(ok({"order_id": "251029000000001"}))
+        k = kite.Kite("key", "tok")
+        self.assertEqual(k.place_order(CO_BODY), "251029000000001")
+        req = self.net.requests[0]
+        self.assertEqual(req.get_method(), "POST")
+        self.assertEqual(req.full_url, kite.API + "/orders/co")
+        self.assertEqual(req.get_header("Authorization"), "token key:tok")
+        body = form(req)
+        self.assertNotIn("variety", body)
+        self.assertEqual(body["tradingsymbol"], "RELIANCE")
+        self.assertEqual(body["transaction_type"], "BUY")
+        self.assertEqual(body["order_type"], "MARKET")
+        self.assertEqual(body["quantity"], "8")
+        self.assertEqual(body["product"], "MIS")
+        self.assertEqual(body["trigger_price"], "1163.0")
+        self.assertEqual(body["tag"], "dtsorb")
+
+    def test_regular_order_drops_none_fields_and_uses_its_own_url(self):
+        self.net.answers.append(ok({"order_id": "2"}))
+        kite.Kite("key", "tok").place_order(REGULAR_BODY)
+        req = self.net.requests[0]
+        self.assertEqual(req.full_url, kite.API + "/orders/regular")
+        body = form(req)
+        self.assertNotIn("price", body)
+        self.assertEqual(body["order_type"], "SL-M")
+
+    def test_place_order_never_mutates_the_body_it_is_given(self):
+        self.net.answers.append(ok({"order_id": "3"}))
+        body = dict(CO_BODY)
+        kite.Kite("key", "tok").place_order(body)
+        self.assertEqual(body, CO_BODY)
+
+    def test_rejected_order_is_a_kite_error_not_a_login_problem(self):
+        self.net.answers.append(http_error(400, "InputException", "Insufficient funds"))
+        with self.assertRaisesRegex(kite.KiteError, "InputException Insufficient funds"):
+            kite.Kite("key", "tok").place_order(CO_BODY)
+
+    def test_order_calls_use_the_other_throttle_not_quote(self):
+        kinds = []
+        saved = kite._throttle
+        kite._throttle = kinds.append
+        try:
+            self.net.answers.append(ok({"order_id": "4"}))
+            kite.Kite("key", "tok").place_order(CO_BODY)
+        finally:
+            kite._throttle = saved
+        self.assertEqual(kinds, ["other"])
+
+
+class ValidateOrder(Base):
+    """Bad bodies never reach the network."""
+
+    def bad(self, pattern, **changes):
+        body = dict(CO_BODY)
+        for key, val in changes.items():
+            if val is None:
+                body.pop(key, None)
+            else:
+                body[key] = val
+        with self.assertRaisesRegex(kite.KiteError, pattern):
+            kite.Kite("key", "tok").place_order(body)
+        self.assertEqual(self.net.requests, [])
+
+    def test_variety_must_be_one_kite_knows(self):
+        self.bad("variety", variety="bracket")
+        self.bad("variety", variety=None)
+
+    def test_transaction_type_is_buy_or_sell(self):
+        self.bad("transaction_type", transaction_type="LONG")
+
+    def test_product_is_mis_cnc_nrml_or_mtf(self):
+        self.bad("product", product="BO")
+
+    def test_order_type_is_one_of_four(self):
+        self.bad("order_type", order_type="STOP")
+
+    def test_quantity_is_a_positive_whole_number(self):
+        self.bad("quantity", quantity=0)
+        self.bad("quantity", quantity=-3)
+        self.bad("quantity", quantity=2.5)
+        self.bad("quantity", quantity="8")
+        self.bad("quantity", quantity=True)
+
+    def test_cover_order_needs_a_trigger(self):
+        self.bad("trigger_price", trigger_price=None)
+
+    def test_sl_and_sl_m_need_a_trigger(self):
+        self.bad("trigger_price", variety="regular", order_type="SL-M", trigger_price=None)
+        self.bad("trigger_price", variety="regular", order_type="SL", trigger_price=None, price=1160.0)
+
+    def test_limit_and_sl_need_a_price(self):
+        self.bad("price", variety="regular", order_type="LIMIT", trigger_price=None)
+        self.bad("price", variety="regular", order_type="SL")
+
+    def test_body_must_be_a_dict(self):
+        with self.assertRaisesRegex(kite.KiteError, "dict"):
+            kite.Kite("key", "tok").place_order(["RELIANCE"])
+
+    def test_a_good_regular_limit_order_passes(self):
+        self.net.answers.append(ok({"order_id": "5"}))
+        body = dict(CO_BODY, variety="regular", order_type="LIMIT", price=1174.4, trigger_price=None)
+        self.assertEqual(kite.Kite("key", "tok").place_order(body), "5")
+        self.assertNotIn("trigger_price", form(self.net.requests[0]))
+
+
+class ModifyAndCancel(Base):
+    def test_modify_puts_the_fields_to_the_variety_and_id(self):
+        self.net.answers.append(ok({"order_id": "9"}))
+        got = kite.Kite("key", "tok").modify_order("regular", "9", {"quantity": 5, "price": None})
+        self.assertEqual(got, "9")
+        req = self.net.requests[0]
+        self.assertEqual(req.get_method(), "PUT")
+        self.assertEqual(req.full_url, kite.API + "/orders/regular/9")
+        self.assertEqual(form(req), {"quantity": "5"})
+
+    def test_modify_second_leg_sends_parent_order_id_as_a_field(self):
+        self.net.answers.append(ok({"order_id": "10"}))
+        kite.Kite("key", "tok").modify_order("co", "10", {"trigger_price": 1165.0}, parent_order_id="8")
+        self.assertEqual(form(self.net.requests[0]), {"trigger_price": "1165.0", "parent_order_id": "8"})
+
+    def test_cancel_without_parent_has_no_query_string(self):
+        self.net.answers.append(ok({"order_id": "11"}))
+        self.assertEqual(kite.Kite("key", "tok").cancel_order("regular", "11"), "11")
+        req = self.net.requests[0]
+        self.assertEqual(req.get_method(), "DELETE")
+        self.assertEqual(req.full_url, kite.API + "/orders/regular/11")
+        self.assertIsNone(req.data)
+
+    def test_cancel_second_leg_sends_parent_order_id_in_the_query(self):
+        self.net.answers.append(ok({"order_id": "12"}))
+        kite.Kite("key", "tok").cancel_order("co", "12", parent_order_id="8")
+        req = self.net.requests[0]
+        self.assertEqual(req.get_method(), "DELETE")
+        self.assertEqual(req.full_url, kite.API + "/orders/co/12?parent_order_id=8")
+        self.assertEqual(req.get_header("Authorization"), "token key:tok")
+
+    def test_modify_and_cancel_refuse_an_unknown_variety_offline(self):
+        k = kite.Kite("key", "tok")
+        with self.assertRaisesRegex(kite.KiteError, "variety"):
+            k.cancel_order("bracket", "1")
+        with self.assertRaisesRegex(kite.KiteError, "variety"):
+            k.modify_order("bo", "1", {"quantity": 1})
+        self.assertEqual(self.net.requests, [])
+
+
+class OrderBook(Base):
+    def test_orders_trades_and_history_hit_their_endpoints(self):
+        k = kite.Kite("key", "tok")
+        self.net.answers.extend([ok([order("1", "COMPLETE")]), ok([order("1", "OPEN"), order("1", "COMPLETE")]),
+                                 ok([{"trade_id": "t1", "order_id": "1"}]), ok([{"trade_id": "t1"}])])
+        self.assertEqual(k.orders()[0]["order_id"], "1")
+        self.assertEqual([o["status"] for o in k.order_history("1")], ["OPEN", "COMPLETE"])
+        self.assertEqual(k.order_trades("1")[0]["trade_id"], "t1")
+        self.assertEqual(k.trades(), [{"trade_id": "t1"}])
+        urls = [r.full_url for r in self.net.requests]
+        self.assertEqual(urls, [kite.API + "/orders", kite.API + "/orders/1",
+                                kite.API + "/orders/1/trades", kite.API + "/trades"])
+        self.assertTrue(all(r.get_method() == "GET" for r in self.net.requests))
+
+    def test_empty_order_book_is_an_empty_list(self):
+        self.net.answers.append(ok(None))
+        self.assertEqual(kite.Kite("key", "tok").orders(), [])
+
+    def test_positions_return_net_and_day(self):
+        net = [{"tradingsymbol": "RELIANCE", "product": "MIS", "quantity": 8, "average_price": 1174.6}]
+        self.net.answers.append(ok({"net": net, "day": net}))
+        pos = kite.Kite("key", "tok").positions()
+        self.assertEqual(self.net.requests[0].full_url, kite.API + "/portfolio/positions")
+        self.assertEqual(pos["net"][0]["quantity"], 8)
+        self.assertEqual(len(pos["day"]), 1)
+
+    def test_positions_always_have_both_lists(self):
+        self.net.answers.append(ok({}))
+        self.assertEqual(kite.Kite("key", "tok").positions(), {"net": [], "day": []})
+
+
+class CoverOrders(Base):
+    BOOK = [order("8", "COMPLETE", filled_quantity=8, average_price=1174.6),
+            order("9", "TRIGGER PENDING", transaction_type="SELL", order_type="SL-M",
+                  parent_order_id="8", trigger_price=1163.0),
+            order("20", "COMPLETE", tradingsymbol="INFY")]
+
+    def test_cover_order_legs_finds_parent_and_open_second_leg(self):
+        self.net.answers.append(ok(self.BOOK))
+        legs = kite.Kite("key", "tok").cover_order_legs("8")
+        self.assertEqual(legs["parent"]["order_id"], "8")
+        self.assertEqual(legs["second_leg"]["order_id"], "9")
+
+    def test_cover_order_legs_without_an_open_leg(self):
+        book = [self.BOOK[0], dict(self.BOOK[1], status="COMPLETE")]
+        self.net.answers.append(ok(book))
+        legs = kite.Kite("key", "tok").cover_order_legs("8")
+        self.assertEqual(legs["parent"]["order_id"], "8")
+        self.assertIsNone(legs["second_leg"])
+
+    def test_cover_order_legs_for_an_unknown_parent(self):
+        self.net.answers.append(ok(self.BOOK))
+        self.assertEqual(kite.Kite("key", "tok").cover_order_legs("77"), {"parent": None, "second_leg": None})
+
+    def test_exit_cover_order_cancels_the_second_leg_with_the_parent_id(self):
+        self.net.answers.extend([ok(self.BOOK), ok({"order_id": "9"})])
+        self.assertEqual(kite.Kite("key", "tok").exit_cover_order("8"), "9")
+        req = self.net.requests[1]
+        self.assertEqual(req.get_method(), "DELETE")
+        self.assertEqual(req.full_url, kite.API + "/orders/co/9?parent_order_id=8")
+
+    def test_exit_cover_order_with_no_open_leg_is_a_clear_error_and_cancels_nothing(self):
+        book = [self.BOOK[0], dict(self.BOOK[1], status="COMPLETE")]
+        self.net.answers.append(ok(book))
+        with self.assertRaisesRegex(kite.KiteError, "no open second leg for cover order 8.*COMPLETE"):
+            kite.Kite("key", "tok").exit_cover_order("8")
+        self.assertEqual(len(self.net.requests), 1)
+
+    def test_exit_cover_order_for_an_unknown_parent_cancels_nothing(self):
+        self.net.answers.append(ok(self.BOOK))
+        with self.assertRaisesRegex(kite.KiteError, "no open second leg for cover order 77"):
+            kite.Kite("key", "tok").exit_cover_order("77")
+        self.assertEqual(len(self.net.requests), 1)
+
+
+class WaitForStatus(Base):
+    def test_polls_history_until_a_final_status_and_sleeps_between_polls(self):
+        waits = []
+        kite._sleep = waits.append
+        self.net.answers.extend([ok([order("1", "OPEN PENDING")]),
+                                 ok([order("1", "OPEN PENDING"), order("1", "OPEN")]),
+                                 ok([order("1", "OPEN"), order("1", "COMPLETE", filled_quantity=8,
+                                                                 average_price=1174.6)])])
+        final = kite.Kite("key", "tok").wait_for_status("1", timeout=30, every=0.5)
+        self.assertEqual(final["status"], "COMPLETE")
+        self.assertEqual(final["average_price"], 1174.6)
+        self.assertEqual(len(self.net.requests), 3)
+        self.assertEqual([w for w in waits if w == 0.5], [0.5, 0.5])   # the rest is the 10/s throttle
+
+    def test_rejected_is_final_too(self):
+        self.net.answers.append(ok([order("1", "REJECTED", status_message="Insufficient funds")]))
+        final = kite.Kite("key", "tok").wait_for_status("1")
+        self.assertEqual(final["status"], "REJECTED")
+        self.assertEqual(final["status_message"], "Insufficient funds")
+
+    def test_gives_up_after_the_timeout_with_the_last_status(self):
+        clock = iter([0.0, 10.0, 20.0, 31.0, 40.0, 50.0])
+        saved = kite._clock
+        kite._clock = lambda: next(clock)
+        try:
+            self.net.answers.extend([ok([order("1", "OPEN")])] * 4)
+            with self.assertRaisesRegex(kite.KiteError, "order 1 is still OPEN after 30"):
+                kite.Kite("key", "tok").wait_for_status("1", timeout=30)
+        finally:
+            kite._clock = saved
+        self.assertLessEqual(len(self.net.requests), 4)
+
+    def test_custom_wanted_statuses(self):
+        self.net.answers.append(ok([order("1", "TRIGGER PENDING")]))
+        final = kite.Kite("key", "tok").wait_for_status("1", wanted=("TRIGGER PENDING",))
+        self.assertEqual(final["status"], "TRIGGER PENDING")
+
+
+class Charges(Base):
+    """Zerodha equity intraday charges, estimated from the published rates."""
+
+    def test_worked_example_eight_reliance_shares(self):
+        c = kite.estimate_charges(8 * 1174.40, 8 * 1185.80)
+        self.assertEqual(c["brokerage"], 5.66)   # 0.03 % of each leg, both under Rs 20
+        self.assertEqual(c["stt"], 2.37)         # 0.025 % of the sell value
+        self.assertEqual(c["exchange"], 0.58)    # NSE 0.00307 % of turnover
+        self.assertEqual(c["sebi"], 0.02)        # Rs 10 per crore of turnover
+        self.assertEqual(c["stamp"], 0.28)       # 0.003 % of the buy value
+        self.assertEqual(c["gst"], 1.13)         # 18 % of brokerage + exchange + SEBI
+        self.assertEqual(c["total"], 10.04)
+        self.assertEqual(sorted(c), ["brokerage", "exchange", "gst", "sebi", "stamp", "stt", "total"])
+
+    def test_brokerage_is_capped_at_twenty_rupees_per_executed_order(self):
+        c = kite.estimate_charges(100000.0, 100000.0)
+        self.assertEqual(c["brokerage"], 40.0)
+
+    def test_one_leg_only_charges_that_leg(self):
+        c = kite.estimate_charges(9395.2, 0.0)
+        self.assertEqual(c["brokerage"], 2.82)
+        self.assertEqual(c["stt"], 0.0)
+        self.assertEqual(c["stamp"], 0.28)
+
+    def test_delivery_uses_the_cnc_rates(self):
+        c = kite.estimate_charges(10000.0, 10000.0, product="CNC")
+        self.assertEqual(c["brokerage"], 0.0)
+        self.assertEqual(c["stt"], 20.0)          # 0.1 % on both sides
+        self.assertEqual(c["stamp"], 1.5)         # 0.015 % on the buy side
+
+    def test_unknown_product_and_negative_values_are_refused(self):
+        with self.assertRaisesRegex(kite.KiteError, "product"):
+            kite.estimate_charges(1.0, 1.0, product="NRML")
+        with self.assertRaisesRegex(kite.KiteError, "negative"):
+            kite.estimate_charges(-1.0, 1.0)
+
+    def test_estimate_never_touches_the_network(self):
+        kite.estimate_charges(9395.2, 9486.4)
+        self.assertEqual(self.net.requests, [])
+
+    def test_the_docstring_says_estimate_and_cites_the_page(self):
+        doc = kite.estimate_charges.__doc__.lower()
+        self.assertIn("estimate", doc)
+        self.assertIn("zerodha.com/charges", doc)
 
 
 if __name__ == "__main__":

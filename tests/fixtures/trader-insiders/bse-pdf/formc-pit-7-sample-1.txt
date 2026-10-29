@@ -1,0 +1,50 @@
+                                                                                   FORM C
+                                      Securities and Exchange Board of India (Prohibition of Insider Trading) Regulations, 2015
+                                                [Regulation 7 (2) read with Regulation 6 (2) - Continual Disclosure]
+
+Name of the company: Sample Fine Chemicals Limited
+ISIN of the company: INE000A01010
+
+Details of change in holding of Securities of Promoter, Member of the Promoter Group, Designated Person or Director of a listed company and immediate relatives of such persons and other such persons as mentioned in Regulation 6(2).
+
+Name, PAN,       Category of     Securities held prior to    Securities acquired/Disposed                        Securities held post        Date of allotment advice/    Date of        Mode of           Exchange on which the trade was executed
+CIN/DIN, &       Person          acquisition/disposal                                                            acquisition/disposal        acquisition of shares/ sale  intimation to  acquisition /
+address with     (Promoters/                                                                                                                 of shares specify            company        disposal (on
+contact nos.     KMP /                                                                                                                                                                   market/public/
+                 Directors/                                                                                                                                                              rights/
+                 immediate                                                                                                                                                               preferential
+                 relative to/                                                                                                                                                            offer / off
+                 others etc.)                                                                                                                                                            market/Inter-se
+                                                                                                                                                                                         transfer, ESOPs
+                                                                                                                                                                                         etc.)
+                                 Type of     No. and % of    Type of     No.         Value       Transaction     Type of     No. and % of    From          To
+                                 security    share- holding  security                (Rs.)       Type (Buy/      security    share- holding
+                                 (For eg. -                  (For eg. -                          Sale/Pledge/    (For eg. -
+                                 Shares,                     Shares,                             Revoke/         Shares,
+                                 Warrants,                   Warrants,                           Invoke)         Warrants,
+                                 Convertible                 Convertible                                         Convertible
+                                 Debentures                  Debentures                                          Debentures
+                                 etc.)                       etc.)                                               etc.)
+1                2               3           4               5           6           7           8               9           10              11            12             13             14                15
+Ramesh Kumar     Promoter        Equity      12,50,000       Equity      25,000      37,50,000   Buy             Equity      12,75,000       27-10-2026    27-10-2026     28-10-2026     Market Purchase   NSE
+Sharma                           Shares      (4.17%)         Shares                                              Shares      (4.25%)
+PAN: AAAPS1234A
+DIN: 00001234
+12, Sample
+Road,
+Mumbai 400001
+
+Details of trading in derivatives (Specify type of contract, Futures or Options etc)
+Type of contract     Contract             Buy                                       Sell                                     Exchange on which the trade was executed
+                     specifications
+                                          Notional Value    Number of units         Notional Value    Number of units (contracts * lot size)
+                                                            (contracts * lot size)
+16                   17                   18                19                      20                21                     22
+Nil                  Nil                  Nil               Nil                     Nil               Nil                    Nil
+
+Note: "Securities" shall have the meaning as defined under regulation 2(1)(i) of SEBI (Prohibition of Insider Trading) Regulations, 2015.
+
+Name & Signature: Priya Sample
+Designation: Company Secretary & Compliance Officer
+Date: 29-10-2026
+Place: Mumbai

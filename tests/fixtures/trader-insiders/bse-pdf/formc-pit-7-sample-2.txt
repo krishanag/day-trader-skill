@@ -1,0 +1,67 @@
+Sample Motors Limited
+Regd. Office: 1, Sample Industrial Estate, Pune 411001
+
+29th October, 2026
+
+To,
+BSE Limited                                                   National Stock Exchange of India Limited
+Phiroze Jeejeebhoy Towers                                     Exchange Plaza, Bandra Kurla Complex
+Dalal Street, Mumbai 400 001                                  Bandra (East), Mumbai 400 051
+Scrip Code: 500999                                            Symbol: SAMPLEMOT
+
+Sub: Disclosure under Regulation 7(2) of SEBI (Prohibition of Insider Trading) Regulations, 2015
+
+Dear Sir / Madam,
+
+Pursuant to Regulation 7(2) read with Regulation 6(2) of SEBI (Prohibition of Insider Trading) Regulations, 2015, please
+find enclosed the disclosures received by the Company in Form C.
+
+Kindly take the same on record.
+
+Yours faithfully,
+For Sample Motors Limited
+
+Sunita Sample
+Company Secretary
+
+                                                                                   FORM C
+                                     Securities and Exchange Board of India (Prohibition of Insider Trading) Regulations, 2015
+                                              [Regulation 7 (2) read with Regulation 6(2) - Continual Disclosure]
+Name of the company:  Sample Motors Limited
+ISIN of the company:  INE000B01012
+Details of change in holding of Securities of Promoter, Member of the Promoter Group, Designated Person or Director of a listed
+company and immediate relatives of such persons and other such persons as mentioned in Regulation 6(2).
+Name, PAN, CIN/DIN   Category of        Securities held prior to acquisition /   Securities acquired / Disposed                          Securities held post acquisition /       Date of allotment advice /    Date of        Mode of             Exchange on which the trade was executed
+& address with       Person             disposal                                                                                         disposal                                 acquisition of shares / sale  intimation to  acquisition /
+contact nos.         (Promoters/ KMP /                                                                                                                                            of shares specify             company        disposal (on
+                     Directors/                                                                                                                                                                                                market / public /
+                     immediate                                                                                                                                                                                                 rights /
+                     relative to /                                                                                                                                                                                             preferential offer
+                     others etc.)                                                                                                                                                                                              / off market /
+                                                                                                                                                                                                                               Inter-se transfer,
+                                                                                                                                                                                                                               ESOPs etc.)
+                                        Type of       No.          % of share-   Type of     No.           Value (Rs.)     Transaction   Type of      No.          % of share-    From           To
+                                        security                   holding       security                                  Type (Buy/    security                  holding
+                                                                                                                           Sale/
+                                                                                                                           Pledge/
+                                                                                                                           Revoke/
+                                                                                                                           Invoke)
+Anita Sample         Immediate          Equity        40,000       0.013         Equity      15,000        20,25,000       Sale          Equity       25,000       0.008          22-10-2026     23-10-2026     28-10-2026     Market Sale         NSE
+PAN: AAAPS5678B      Relative of        Shares                                   Shares                                                  Shares
+4, Sample Lane,      Designated Person
+Pune 411002
+Vikram Sample        Designated Person  Equity        1,200        0.000         Equity      1,500         Nil             Buy           Equity       2,700        0.001          27-10-2026     27-10-2026     27-10-2026     ESOP                NA
+PAN: AAAPS9012C                         Shares                                   Shares                                                  Shares
+
+Details of trading in derivatives (Specify type of contract, Futures or Options etc)
+Type of contract       Contract specifications            Buy                                              Sell                                                 Exchange on which the trade was executed
+                                                          Notional Value        Number of units            Notional Value        Number of units (contracts * lot size)
+                                                                                (contracts * lot size)
+Stock Futures          SAMPLEMOT 24-Nov-2026 FUT          Nil                   Nil                        12,45,000             500                            NSE
+
+Note: "Securities" shall have the meaning as defined under regulation 2(1)(i) of SEBI (Prohibition of Insider Trading) Regulations, 2015.
+
+Name & Signature: Sunita Sample
+Designation: Company Secretary & Compliance Officer
+Date: 29-10-2026
+Place: Pune

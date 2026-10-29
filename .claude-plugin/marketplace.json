@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "day-trader-skill",
-      "description": "Twelve Claude skills for day trading NSE stocks through Zerodha: the Kite login, a chart scanner, a news monitor, an entry timer, an exit planner, a time machine that replays 10,000 sessions, a budget manager, a risk manager, an order executor (paper by default, never without your yes), price alerts, an insider tracker and a results analyst.",
+      "description": "Thirteen Claude skills for day trading NSE stocks through Zerodha: the Kite login, a chart scanner, a news monitor, an entry timer, an exit planner, a time machine that replays 10,000 sessions, a budget manager, a risk manager, an order executor (paper by default, never without your yes), price alerts, an insider tracker, a results analyst, and an unattended auto trader that runs the loop inside hard limits.",
       "source": "./",
       "category": "productivity",
       "homepage": "https://github.com/krishanag/day-trader-skill"

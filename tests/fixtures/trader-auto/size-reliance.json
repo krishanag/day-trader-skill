@@ -1,0 +1,104 @@
+{
+  "sizing": {
+    "symbol": "RELIANCE",
+    "exchange": "NSE",
+    "side": "buy",
+    "setup": "orb",
+    "date": "2026-10-29",
+    "entry_time": "09:40",
+    "entry_plan": 1174.4,
+    "entry": 1174.4,
+    "entry_from": "plan",
+    "stop": 1163.0,
+    "target": 1185.8,
+    "tick_size": 0.1,
+    "tick_from": "kite",
+    "snapped": [],
+    "cas": true,
+    "risk_per_share": 11.4,
+    "reward_risk": 1.0,
+    "budget_inr": 10000.0,
+    "cash_buffer_pct": 10,
+    "cash_buffer": 1000.0,
+    "cash_available": 27000.0,
+    "mis_leverage_x": 3.0,
+    "max_loss_per_trade_inr": 200.0,
+    "limits": [
+      {
+        "name": "max loss",
+        "inr": 200.0,
+        "per": 11.4,
+        "shares": 17,
+        "binds": true
+      },
+      {
+        "name": "position cap",
+        "inr": 10000.0,
+        "per": 1174.4,
+        "shares": 8,
+        "binds": false
+      },
+      {
+        "name": "max order",
+        "inr": 30000.0,
+        "per": 1174.4,
+        "shares": 25,
+        "binds": false
+      },
+      {
+        "name": "cash",
+        "inr": 27000.0,
+        "per": 1174.4,
+        "shares": 22,
+        "binds": false
+      }
+    ],
+    "qty": 17,
+    "bound_by": "max loss",
+    "cost": 19964.8,
+    "max_loss_inr": 193.8,
+    "flat_by": "15:05",
+    "order_style": "co",
+    "order_type": "MARKET",
+    "refusal": null
+  },
+  "orders": [
+    {
+      "symbol": "RELIANCE",
+      "exchange": "NSE",
+      "side": "buy",
+      "qty": 17,
+      "product": "MIS",
+      "order_style": "co",
+      "kite": {
+        "variety": "co",
+        "exchange": "NSE",
+        "tradingsymbol": "RELIANCE",
+        "transaction_type": "BUY",
+        "order_type": "MARKET",
+        "quantity": 17,
+        "product": "MIS",
+        "trigger_price": 1163.0,
+        "validity": "DAY",
+        "tag": "dtsorb"
+      },
+      "stop_leg": null,
+      "stop": 1163.0,
+      "target": 1185.8,
+      "why": "opening-range breakout on RELIANCE: 17 shares, bound by your Rs 200 max loss per trade (17 x 11.40 = Rs 193.80 at the stop)",
+      "plan": {
+        "entry": 1174.4,
+        "stop": 1163.0,
+        "target": 1185.8,
+        "risk_per_share": 11.4,
+        "max_loss_inr": 193.8,
+        "setup": "orb",
+        "entry_time": "09:40",
+        "flat_by": "15:05"
+      }
+    }
+  ],
+  "notes": [
+    "Cash Rs 9,980.00 is your live Kite balance (no trader/portfolio.json)."
+  ]
+}

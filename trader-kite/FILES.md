@@ -27,9 +27,10 @@ with a matching change to every reader and writer.
 - Data always comes from `kite.Kite.connect()` (today's session). When there
   is no session the tool prints `kite.LoginNeeded`'s message and exits 1; it
   does not fall back to any other source.
-- Orders: no script ever places, modifies or cancels an order. Only
+- Orders: no skill script places, modifies or cancels an order. Only
   `/trader-broker` writes a ticket, and Claude calls the Kite MCP server only
-  after the user types yes.
+  after the user types yes. The two exceptions, trader-auto and the one-share
+  probe, are spelled out in "Orders through kite.py" at the end of this file.
 - Times: IST everywhere. `HH:MM` 24-hour strings in config and plans
   (`"15:05"`), ISO 8601 with `+05:30` for timestamps
   (`"2026-10-29T10:20:00+05:30"`). Dates `YYYY-MM-DD`. Use `nse.IST`,
@@ -342,11 +343,14 @@ already `placed` or `filled` today is a duplicate.
 `fills.json`: a list of fills with `order_hash`, `kite_order_id`,
 `filled_qty`, `average_price`, `at`.
 
-Exiting a cover order through Zerodha's kite-mcp-server: its `cancel_order`
-tool takes no `parent_order_id`, so the exit is
-`cancel_order {"variety": "co", "order_id": "<the stop-leg order id>"}`;
-Kite exits the position at market when the second leg is cancelled. The
-broker records the stop leg's id at fill time for this.
+Exiting a cover order through Zerodha's kite-mcp-server: the stock server's
+`cancel_order` tool drops `parent_order_id` (its Kite library never sends
+it), so the pack runs the patched build in `../kite-mcp-server` (see its
+PATCH.md): `cancel_order {"variety": "co", "order_id": "<the stop-leg order
+id>", "parent_order_id": "<the entry order id>"}`. Kite exits the position
+at market when the second leg is cancelled. The broker records both ids at
+fill time for this. The same patch reads the pack's session file
+(`KITE_SESSION_FILE`) instead of logging in a second time.
 
 ## trader/timemachine.json (trader-timemachine): `{plan, mc, history, verdict}`
 
@@ -366,3 +370,74 @@ the close histogram.
   EBITDA, PAT, EPS quarter on quarter and year on year, plus the upcoming
   results calendar for a symbol so a day trade is not held into a result.
   Writes `trader/results.json`.
+
+## Orders through kite.py (trader-auto and the one-share probe)
+
+`kite.py` carries Kite Connect's order calls so that exactly two callers can
+use them without the MCP server in between:
+
+- **trader-auto**, the unattended runner, which places the orders the rest of
+  the pack has already proposed, risk-checked and the user has approved for
+  the day, and exits them at the stop, the target or `flat_by`.
+- **the explicit one-share probe command**, which the user runs by hand to
+  prove the key, the session and the order path work with one share of a
+  liquid stock before any size goes through.
+
+Every other skill still never places, modifies or cancels an order. The
+scanner, news, entry, exit, timemachine, budget, risk, alerts, insiders and
+results tools read data only; `/trader-broker` writes tickets and ledgers and
+Claude calls the Kite MCP tool after the user's yes. A pull request that adds
+an order call anywhere else is wrong by definition.
+
+```python
+k = kite.Kite.connect()
+k.place_order(order["kite"])                      # POST /orders/<variety>, the orders.json body as is -> order_id
+k.modify_order("regular", oid, {"trigger_price": 1165.0})            # PUT /orders/<variety>/<id> -> order_id
+k.modify_order("co", leg_id, {"trigger_price": 1165.0}, parent_order_id=oid)   # the CO second leg
+k.cancel_order("regular", oid)                    # DELETE /orders/<variety>/<id> -> order_id
+k.cancel_order("co", leg_id, parent_order_id=oid) # DELETE ...?parent_order_id=: exits the CO position at market
+k.orders()                                        # today's order book, a list of order dicts
+k.order_history(oid)                              # one order's states, oldest first, a list
+k.order_trades(oid); k.trades()                   # fills for one order / the whole day
+k.positions()                                     # {"net": [...], "day": [...]} from /portfolio/positions
+k.cover_order_legs(oid)                           # {"parent": order or None, "second_leg": the OPEN second leg or None}
+k.exit_cover_order(oid)                           # cancel the open second leg (with parent_order_id) -> leg order_id
+k.wait_for_status(oid, timeout=30)                # poll order_history until COMPLETE / REJECTED / CANCELLED -> order dict
+kite.estimate_charges(buy_value, sell_value)      # {"brokerage","stt","exchange","sebi","stamp","gst","total"}, an estimate
+```
+
+Rules the client enforces:
+
+- `place_order` takes the `kite` dict exactly as `orders.json` holds it
+  (`variety` inside) and checks it before anything is sent: variety in
+  `regular co amo iceberg auction`, `transaction_type` BUY or SELL, product
+  in `MIS CNC NRML MTF`, order type in `MARKET LIMIT SL SL-M`, a positive
+  whole `quantity`, `trigger_price` for `co`, `SL` and `SL-M`, `price` for
+  `LIMIT` and `SL`. Null fields are dropped. A bad body raises `KiteError`
+  with a plain message and never reaches Kite.
+- Placed is not filled. After `place_order`, call `wait_for_status` and read
+  `status`, `filled_quantity`, `average_price` and `status_message` (the
+  reason on a REJECTED order) from the dict it returns. It polls through the
+  module's `_sleep`, so tests stub it.
+- A cover order's exit is `exit_cover_order(parent_order_id)`: it reads the
+  order book, finds the second leg whose `parent_order_id` matches and whose
+  status is not COMPLETE / REJECTED / CANCELLED, and cancels it with
+  `parent_order_id` in the query, which Kite documents as exiting the
+  position at market. With no open leg it raises
+  `KiteError("no open second leg for cover order ...")` and cancels nothing;
+  check `positions()` before placing any other exit.
+- Order calls run on the `other` throttle (10 a second). Kite also caps
+  orders at 400 a minute, 5000 a day and 25 modifications per order; a 429
+  is retried three times, every other rejection is raised at once with
+  Kite's `error_type` and message (`InputException`, `OrderException`,
+  `MarginException` ...). A `TokenException` is `LoginNeeded`.
+- `estimate_charges(buy_value, sell_value, product="MIS")` is an estimate
+  from the rates on https://zerodha.com/charges/ as read on 2026-10-29:
+  brokerage 0.03 % or Rs 20 per executed order, whichever is lower; STT
+  0.025 % on the sell side; NSE transaction charge 0.00307 % of turnover;
+  SEBI Rs 10 per crore; stamp duty 0.003 % on the buy side; GST 18 % on
+  brokerage + transaction + SEBI charges. For 8 RELIANCE bought at 1174.40
+  and sold at 1185.80 that is Rs 10.04 against a gross of Rs 91.20. The
+  contract note is the only exact figure.
+- Tests for all of it live in `tests/test_kite.py` and are offline: a
+  `FakeNet` answers every call, so the suite never places anything.
